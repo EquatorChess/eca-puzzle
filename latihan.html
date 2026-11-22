@@ -505,7 +505,7 @@ const instruksi=()=>M.rating<700&&rakNow&&INSTRUKSI[rakNow.id]?INSTRUKSI[rakNow.
 /* ===== teks ===== */
 const I18N={
 id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan Hari Ini',heroP:'10 soal yang pas untuk kemampuanmu.',temaH:'Latih satu tema',temaP:'Pilih tema yang ingin diasah. Kesulitan tetap mengikuti ratingmu.',stR:'Rating',stH:'Hari ini',stS:'Hari beruntun',stHr:'hari',go:'Mulai',chal:'Tantangan +200',
- ulangT:'Ulangi soal gagal',ulangX:(a,b)=>a?a+' soal siap diulang':b+' soal menunggu',foot:'Soal dari database puzzle Lichess. Prototipe: hasil belum masuk rating resmi.',
+ ulangT:'Ulangi soal gagal',ulangX:(a,b)=>a?a+' soal siap diulang':b+' soal menunggu',foot:'Soal dari database puzzle Lichess. Setelah masuk, hasilmu tercatat dan ikut menghitung ratingmu.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Latihan Puzzle',
  w:'Putih jalan',b:'Hitam jalan',lawan:'Lawan jalan…',hint:'Petunjuk',hintC:'−0,5',sol:'Lihat solusi',next:'Lanjut',hasil:'Lihat hasil',again:'Coba lagi',
  lichess:'Lihat di Lichess ↗',lapor:'Laporkan soal',batal:'Batal',kirim:'Kirim',rating:'Rating soal',
@@ -521,7 +521,7 @@ id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+
  lagi:'Main lagi',menu:'Menu latihan',rL:{1:'Benar',5:'Dengan petunjuk',0:'Belum tepat'},muatGagal:'Soal tidak bisa dimuat. Periksa sinyal, lalu coba lagi.',kosong:'Belum ada soal yang cocok di sini.',
  mat:'Checkmate!',skak:'Check!',ulangNama:'Ulangi soal gagal'},
 en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s Practice',heroP:'10 puzzles that fit your level.',temaH:'Practice one theme',temaP:'Pick a theme to sharpen. Difficulty still follows your rating.',stR:'Rating',stH:'Today',stS:'Day streak',stHr:'days',go:'Start',chal:'Challenge +200',
- ulangT:'Retry missed puzzles',ulangX:(a,b)=>a?a+' ready to retry':b+' waiting',foot:'Puzzles from the Lichess puzzle database. Prototype: results do not count for the official rating yet.',
+ ulangT:'Retry missed puzzles',ulangX:(a,b)=>a?a+' ready to retry':b+' waiting',foot:'Puzzles from the Lichess puzzle database. When you are signed in, results are saved and count toward your rating.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Puzzle Practice',
  w:'White to move',b:'Black to move',lawan:'Opponent moves…',hint:'Hint',hintC:'−0.5',sol:'Show solution',next:'Next',hasil:'See results',again:'Try again',
  lichess:'View on Lichess ↗',lapor:'Report puzzle',batal:'Cancel',kirim:'Send',rating:'Puzzle rating',
@@ -591,6 +591,26 @@ const M=(()=>{const s=LS.get('eca.lat.murid',null);
  return s&&!s.id?s:{kelas:'Beginner',rating:700,n:0}})();
 const simpanM=()=>LS.set('eca.lat.murid',M);
 {const k=KELAS.find(x=>x[0]===Q.get('kelas'));if(k&&!M.id&&M.kelas!==k[0]){M.kelas=k[0];M.rating=k[2];M.n=0;simpanM()}}
+/* ===== kirim hasil ke API (hanya murid yang sudah masuk; antrean offline eca.lat.antre) =====
+   Rating resmi dihitung server (hanya percobaan pertama tiap soal). Rating lokal tetap dihitung langsung supaya terasa seketika,
+   lalu diganti nilai server setelah antrean kosong. */
+const API_URL="https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSytESMJeKdrebcxwR4JmX-RZfgiTJk1IM8jxFMLQ/exec",ANTRE='eca.lat.antre';let kirimSibuk=false;
+const tokenMurid=()=>{try{return JSON.parse(localStorage.getItem('eca.token')||'null')}catch(e){return null}};
+function antreSoal(me,rakId){if(!API_URL||API_URL.indexOf('__')===0||!M.id||!tokenMurid())return;
+ const res=me.lihat?'L':me.salah?'K':me.hint?'D':'M',q=LS.get(ANTRE,[]);
+ q.push({aksi:'latihan',rak:rakId,soal:{id:me.p.id,rating:me.p.rating,tema:[].concat(me.p.tema||[]).join(','),res,hints:me.hint?1:0,miss:me.salah,detik:Math.round((Date.now()-me.t0)/1000)}});
+ LS.set(ANTRE,q.slice(-300));kuras()}
+function kuras(){if(kirimSibuk)return;const q=LS.get(ANTRE,[]);if(!q.length)return;const tk=tokenMurid();if(!tk){return}
+ kirimSibuk=true;
+ fetch(API_URL,{method:'POST',body:JSON.stringify(Object.assign({token:tk},q[0]))}).then(r=>r.json()).then(j=>{
+  const q2=LS.get(ANTRE,[]);kirimSibuk=false;
+  if(j&&j.keluar){try{localStorage.removeItem('eca.token');localStorage.removeItem('eca.profil')}catch(e){}LS.set(ANTRE,[]);return}
+  if(j&&!j.ok&&/tidak dikenal/i.test(j.pesan||'')){return}/* API belum diperbarui: simpan antrean, coba lagi saat halaman dibuka berikutnya */
+  q2.shift();LS.set(ANTRE,q2);
+  if(j&&j.ok&&!q2.length){M.rating=j.rating;M.dasar=j.rating;M.n=j.soal;simpanM();
+   const pf=LS.get('eca.profil',null);if(pf){pf.rating=j.rating;pf.soal=j.soal;if(j.gelar)pf.gelar=j.gelar;LS.set('eca.profil',pf)}}
+  kuras()},()=>{kirimSibuk=false;setTimeout(kuras,8000)})}
+window.addEventListener('online',kuras);setTimeout(kuras,1500);
 function elo(rs,skor){const k=M.n<30?40:20,h=1/(1+Math.pow(10,(rs-M.rating)/400));M.rating=Math.max(100,Math.round(M.rating+k*(skor-h)));M.n++;simpanM()}
 
 /* ===== data rak ===== */
@@ -689,7 +709,7 @@ function pillUI(pop){$('vS').textContent=streak;$('vP').textContent=fmt(skor);$(
 
 /* ===== satu soal ===== */
 async function mulaiSoal(){const p=sesi[idx].p;hideMsg();$('rev').hidden=true;$('stp').hidden=true;$('menu').hidden=true;
- const pos0=parseFen(p.fen);const me=cur={p,pos0,pos:pos0,ply:0,hist:[],salah:0,hint:false,hintPly:-1,lihat:false,done:false,lock:true,sel:-1,last:null,P:null,k:0};
+ const pos0=parseFen(p.fen);const me=cur={p,pos0,pos:pos0,ply:0,hist:[],salah:0,hint:false,hintPly:-1,lihat:false,done:false,lock:true,sel:-1,last:null,P:null,k:0,t0:Date.now()};
  flip=pos0.turn==='w';buildBoard();loadPos(pos0);updateCheck(pos0);clearOv();
  dockUI();pawnsUI();mood('mikir');$('turn').innerHTML='<i class="'+(pos0.turn==='w'?'b':'w')+'"></i><span>'+tx('lawan')+'</span>';
  await wait(650);if(cur!==me)return;
@@ -754,7 +774,7 @@ async function salah(me){me.salah++;if(streak){streak=0;pillUI()}SX.play('salah'
 
 function hasil(me){return me.lihat||me.salah?0:me.hint?.5:1}
 async function selesaiSoal(me,info){me.done=true;const r=hasil(me);sesi[idx].r=r;skor+=r;tandai(me.p.id);catatHari();
- if(rakNow.id==='ulang')ulangSelesai(me.p.id,r>0);else{if(r===0)catatGagal(me.p,rakNow.id);elo(me.p.rating,r)}
+ if(rakNow.id==='ulang')ulangSelesai(me.p.id,r>0);else{if(r===0)catatGagal(me.p,rakNow.id);elo(me.p.rating,r)}antreSoal(me,rakNow.id);
  if(r>0){streak++;best=Math.max(best,streak)}
  if(info&&info.mate)floatTxt(me.last.t,tx('mat'),'#2c7a3c');
  if(!me.lihat){setTimeout(()=>{if(r>0&&streak>1)SX.play('beruntun',streak-1);else SX.play('benar')},info&&(info.cap||info.chk)?170:120);
