@@ -1,0 +1,86 @@
+[
+ {
+  "paket": "fork_beginner",
+  "tema": "fork",
+  "pita": "beginner",
+  "jumlah": 300,
+  "tersedia": 1567
+ },
+ {
+  "paket": "fork_intermediate",
+  "tema": "fork",
+  "pita": "intermediate",
+  "jumlah": 300,
+  "tersedia": 69134
+ },
+ {
+  "paket": "fork_elite",
+  "tema": "fork",
+  "pita": "elite",
+  "jumlah": 300,
+  "tersedia": 113358
+ },
+ {
+  "paket": "pin_beginner",
+  "tema": "pin",
+  "pita": "beginner",
+  "jumlah": 215,
+  "tersedia": 215
+ },
+ {
+  "paket": "pin_intermediate",
+  "tema": "pin",
+  "pita": "intermediate",
+  "jumlah": 300,
+  "tersedia": 30032
+ },
+ {
+  "paket": "pin_elite",
+  "tema": "pin",
+  "pita": "elite",
+  "jumlah": 300,
+  "tersedia": 66714
+ },
+ {
+  "paket": "mate1_beginner",
+  "tema": "mate1",
+  "pita": "beginner",
+  "jumlah": 300,
+  "tersedia": 5679
+ },
+ {
+  "paket": "mate1_intermediate",
+  "tema": "mate1",
+  "pita": "intermediate",
+  "jumlah": 300,
+  "tersedia": 43357
+ },
+ {
+  "paket": "mate1_elite",
+  "tema": "mate1",
+  "pita": "elite",
+  "jumlah": 300,
+  "tersedia": 10734
+ },
+ {
+  "paket": "mate2_beginner",
+  "tema": "mate2",
+  "pita": "beginner",
+  "jumlah": 300,
+  "tersedia": 2928
+ },
+ {
+  "paket": "mate2_intermediate",
+  "tema": "mate2",
+  "pita": "intermediate",
+  "jumlah": 300,
+  "tersedia": 78182
+ },
+ {
+  "paket": "mate2_elite",
+  "tema": "mate2",
+  "pita": "elite",
+  "jumlah": 300,
+  "tersedia": 67408
+ }
+]

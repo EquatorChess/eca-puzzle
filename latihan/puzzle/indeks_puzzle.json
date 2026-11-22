@@ -1,0 +1,154 @@
+[
+ {
+  "paket": "puzzle_L1",
+  "nama": "Puzzle Starter",
+  "jumlah": 500,
+  "rating": [
+   534,
+   699
+  ],
+  "komposisi": {
+   "mat": 169,
+   "akhir": 89,
+   "ganda": 89,
+   "korban": 39,
+   "makan": 48,
+   "pin": 6,
+   "jalur": 59,
+   "lain": 1
+  }
+ },
+ {
+  "paket": "puzzle_L2",
+  "nama": "Puzzle Beginner A",
+  "jumlah": 500,
+  "rating": [
+   700,
+   899
+  ],
+  "komposisi": {
+   "ganda": 64,
+   "mat": 145,
+   "pin": 44,
+   "akhir": 64,
+   "makan": 54,
+   "korban": 54,
+   "jalur": 74,
+   "lain": 1
+  }
+ },
+ {
+  "paket": "puzzle_L3",
+  "nama": "Puzzle Beginner B",
+  "jumlah": 500,
+  "rating": [
+   900,
+   1099
+  ],
+  "komposisi": {
+   "mat": 140,
+   "korban": 50,
+   "ganda": 60,
+   "jalur": 70,
+   "makan": 50,
+   "akhir": 60,
+   "lain": 30,
+   "pin": 40
+  }
+ },
+ {
+  "paket": "puzzle_L4",
+  "nama": "Puzzle Intermediate A",
+  "jumlah": 500,
+  "rating": [
+   1100,
+   1299
+  ],
+  "komposisi": {
+   "jalur": 70,
+   "mat": 140,
+   "akhir": 60,
+   "makan": 50,
+   "pin": 40,
+   "ganda": 60,
+   "lain": 30,
+   "korban": 50
+  }
+ },
+ {
+  "paket": "puzzle_L5",
+  "nama": "Puzzle Intermediate B",
+  "jumlah": 500,
+  "rating": [
+   1300,
+   1499
+  ],
+  "komposisi": {
+   "mat": 140,
+   "makan": 50,
+   "akhir": 60,
+   "jalur": 70,
+   "ganda": 60,
+   "pin": 40,
+   "korban": 50,
+   "lain": 30
+  }
+ },
+ {
+  "paket": "puzzle_L6",
+  "nama": "Puzzle Intermediate C",
+  "jumlah": 500,
+  "rating": [
+   1500,
+   1699
+  ],
+  "komposisi": {
+   "pin": 40,
+   "mat": 140,
+   "jalur": 70,
+   "korban": 50,
+   "ganda": 60,
+   "akhir": 60,
+   "makan": 50,
+   "lain": 30
+  }
+ },
+ {
+  "paket": "puzzle_L7",
+  "nama": "Puzzle Advanced",
+  "jumlah": 500,
+  "rating": [
+   1700,
+   1898
+  ],
+  "komposisi": {
+   "makan": 50,
+   "pin": 40,
+   "mat": 140,
+   "akhir": 60,
+   "korban": 50,
+   "jalur": 70,
+   "lain": 30,
+   "ganda": 60
+  }
+ },
+ {
+  "paket": "puzzle_L8",
+  "nama": "Puzzle Elite",
+  "jumlah": 500,
+  "rating": [
+   1900,
+   2500
+  ],
+  "komposisi": {
+   "mat": 140,
+   "jalur": 70,
+   "akhir": 60,
+   "ganda": 60,
+   "korban": 50,
+   "makan": 50,
+   "pin": 40,
+   "lain": 30
+  }
+ }
+]
