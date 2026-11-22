@@ -44,26 +44,41 @@ main{max-width:1100px;margin:0 auto;padding:8px 10px calc(var(--dock) + 26px)}
 .kls button{font:800 14px var(--head);min-height:40px;padding:0 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .kls button[aria-pressed=true]{background:var(--maroon);border-color:var(--maroon);color:#fff}
 @media (prefers-color-scheme:dark){.kls button[aria-pressed=true]{background:var(--jambu);border-color:var(--jambu);color:#3a0a12}}
-.hero{position:relative;background:var(--maroon);color:#F1ECE5;border-radius:24px;padding:16px 16px 16px 118px;min-height:150px;box-shadow:0 6px 0 var(--maroon-d);overflow:hidden}
-.hero .hk{position:absolute;left:10px;bottom:-6px;width:100px}.hero .hk svg{overflow:visible}
-.hero small{font:800 12.5px var(--head);letter-spacing:.7px;text-transform:uppercase;color:#F5B651}
-.hero h2{margin:2px 0 2px;font:800 26px/1.1 var(--head)}
-.hero p{margin:0 0 12px;font-size:14.5px;color:#e7d9d4}
-.hero .row{display:flex;gap:8px;flex-wrap:wrap}
-.hero .btn{min-height:46px}
-.btn.chal{background:transparent;color:#F5B651;border:2px solid #F5B65188;box-shadow:none;padding:10px 12px;font-size:13.5px}
+.hero{background:var(--maroon);color:#F1ECE5;border-radius:26px;padding:18px 16px 16px;box-shadow:0 7px 0 var(--maroon-d);overflow:hidden;position:relative}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(closest-side,#F2A53240,transparent);pointer-events:none}
+.hrow{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.hero .hk{width:104px;flex:none}.hero .hk svg{overflow:visible;width:100%;height:auto}
+.hx{min-width:0;flex:1}
+.hero h2{margin:0 0 6px;font:800 32px/1.05 var(--head);color:#fff;letter-spacing:-.3px}
+.lvl{display:inline-block;background:var(--kunyit);color:#3a0a12;font:800 17px/1 var(--head);padding:7px 14px;border-radius:99px}
+.hero p{margin:8px 0 0;font-size:16.5px;line-height:1.3;color:#eadfda}
+.hst{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 14px;position:relative;z-index:1}
+.hst div{background:#ffffff1c;border-radius:14px;padding:9px 6px 8px;text-align:center}
+.hst b{display:block;font:800 24px/1.1 var(--head);color:#fff}.hst b small{font-size:15px;color:#e7d9d4;font-weight:700}
+.hst span{display:block;margin-top:2px;font:800 11.5px/1.2 var(--head);letter-spacing:.6px;text-transform:uppercase;color:#F5B651}
+.hst.done div:nth-child(2) b{color:#9BE7A9}
+.hero .row{display:flex;gap:10px;position:relative;z-index:1}
+.hero .btn{min-height:58px}
+.hero .btn.big{flex:2;font-size:19px;letter-spacing:.8px}.hero .btn.big svg{width:24px;height:24px}
+.btn.chal{flex:1;background:transparent;color:#F5B651;border:2px solid #F5B651aa;box-shadow:none;padding:8px 10px;font-size:14px;line-height:1.15;text-align:center}
+@media (max-width:359px){.hero h2{font-size:27px}.hero .hk{width:84px}}
 .ulang{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:10px 14px;color:var(--ink);cursor:pointer;text-align:left;font-size:15px;min-height:58px}
 .ulang .ui{width:38px;height:38px;border-radius:12px;background:var(--kunyit);display:grid;place-items:center;flex:none;color:#3a0a12}
 .ulang .ui svg{width:22px;height:22px}
 .ulang b{display:block;font:800 17px var(--head)}.ulang small{color:var(--ink2)}
-.rak{margin-top:18px}
-.rak h3{margin:0 2px 8px;font:800 13px var(--head);letter-spacing:.7px;text-transform:uppercase;color:var(--hd);display:flex;align-items:center;gap:8px}
-.rak h3 i{width:12px;height:12px;border-radius:4px;background:var(--c);display:inline-block}
+.temas{margin-top:30px}
+.temas h2{margin:0;font:800 21px/1.2 var(--head);color:var(--ink)}
+.temas .sub{margin:2px 0 10px;font-size:15px;color:var(--ink2)}
+.fams{display:flex;gap:6px;overflow-x:auto;margin:0 -10px 8px;padding:2px 10px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.fams::-webkit-scrollbar{display:none}
+.fm{flex:none;display:flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:800 14.5px var(--head);cursor:pointer;white-space:nowrap}
+.fm i{width:11px;height:11px;border-radius:50%;background:var(--c);flex:none}
+.fm[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 @media (min-width:560px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.tl{display:flex;align-items:center;gap:8px;min-height:62px;padding:8px 10px;border-radius:16px;border:0;border-bottom:5px solid var(--s);background:var(--m);color:var(--t);color:color-mix(in srgb,var(--t) 78%,#000);font:800 15.5px/1.15 var(--head);text-align:left;cursor:pointer}
-.tl .ti{width:34px;height:40px;flex:none}.tl .ti svg{width:100%;height:100%;overflow:visible}
-.tl:active{transform:translateY(3px);border-bottom-width:2px}
+.tl{display:flex;align-items:center;gap:8px;min-height:54px;padding:6px 10px 6px 8px;border-radius:14px;border:2px solid var(--line);border-left:6px solid var(--s);background:var(--card);color:var(--ink);font:800 15px/1.15 var(--head);text-align:left;cursor:pointer}
+.tl .ti{width:26px;height:32px;flex:none}.tl .ti svg{width:100%;height:100%;overflow:visible}
+.tl:active{transform:translateY(2px)}
 .foot{margin:22px 2px 0;font-size:13.5px;color:var(--ink2);text-align:center}
 /* ===== bermain ===== */
 .stage{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
@@ -134,7 +149,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .dk-msg .ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;color:#fff;font:800 19px var(--head)}
 #dock.ok .ic{background:var(--ok)}#dock.no .ic{background:#AA3F3F}#dock.info .ic{background:var(--maroon)}
 .dk-msg b{display:block;font:800 19px/1.15 var(--head)}.dk-msg small{display:block;font-size:14px;line-height:1.3}
-.dk-b{flex:1;display:flex;gap:10px}.dk-b .btn{flex:1}
+.dk-b{flex:1;display:flex;gap:10px;justify-content:center}.dk-b .btn{flex:1}
+.dk-b.solo .btn{flex:0 1 280px}
+.btn.tool{background:var(--card);color:var(--ink);border:2px solid var(--kunyit-d);box-shadow:0 4px 0 var(--kunyit-d);padding:9px 14px;text-transform:none;letter-spacing:0;font-size:16px}
+.btn.tool svg{color:var(--kunyit-d)}
+.btn.tool .cnt{background:var(--kunyit);color:#3a0a12;font-weight:800}
+.btn.tool.sol{border-color:var(--line);box-shadow:0 4px 0 var(--line)}.btn.tool.sol svg{color:var(--ink2)}
 @media (min-width:700px){.dk-msg{flex:1 1 auto}.dk-b{flex:0 0 auto;min-width:320px}}
 #dock.go .dk-in{animation:slide .28s ease-out}
 .modal{position:fixed;inset:0;z-index:55;background:#0007;display:grid;place-items:center;padding:16px}
@@ -184,11 +204,17 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
  <section id="home">
   <div class="hello" id="hello"></div>
   <div class="kls" id="kls" role="group" hidden></div>
-  <div class="hero"><div class="hk" id="heroK"></div>
-   <small data-i="heroS"></small><h2 id="heroT"></h2><p data-i="heroP"></p>
-   <div class="row"><button class="btn kun" id="bGo"><span data-i="go"></span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button><button class="btn chal" id="bChal" data-i="chal"></button></div></div>
+  <div class="hero">
+   <div class="hrow"><div class="hk" id="heroK"></div>
+    <div class="hx"><h2 data-i="heroS"></h2><span class="lvl" id="heroT"></span><p data-i="heroP"></p></div></div>
+   <div class="hst" id="hst"></div>
+   <div class="row"><button class="btn kun big" id="bGo"><span data-i="go"></span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button><button class="btn chal" id="bChal" data-i="chal"></button></div></div>
   <button class="ulang" id="bUlang" hidden><span class="ui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span><span><b data-i="ulangT"></b><small id="ulangX"></small></span></button>
-  <div id="raks"></div>
+  <section class="temas" id="temaSec" hidden aria-labelledby="temaH">
+   <h2 id="temaH" data-i="temaH"></h2><p class="sub" data-i="temaP"></p>
+   <div class="fams" id="fams" role="group" data-ia="temaH"></div>
+   <div class="tiles" id="raks"></div>
+  </section>
   <div class="err" id="hErr" hidden></div>
   <p class="foot" data-i="foot"></p>
  </section>
@@ -383,61 +409,61 @@ addEventListener('pointerdown',e=>{lookX=e.clientX;lookY=e.clientY;lookSoon()},{
    [nama ID, penjelasan ID, nama EN, penjelasan EN]. Urutan PRIO = urutan tampil (yang paling khas dulu).
    Tag teknis (short, long, crushing, advantage, master, oneMove, ...) tidak ditampilkan. */
 const TEMA={
- backRankMate:['Mat baris belakang','Raja terkurung pionnya sendiri di baris paling belakang.','Back-rank mate','The king is trapped on the back rank by its own pawns.'],
- smotheredMate:['Mat tercekik','Kuda memberi mat pada raja yang terkurung bidaknya sendiri.','Smothered mate','A knight mates a king boxed in by its own pieces.'],
- anastasiaMate:['Mat Anastasia','Kuda dan benteng atau menteri mengurung raja di pinggir papan.','Anastasia\'s mate','A knight and a rook or queen trap the king on the edge.'],
- arabianMate:['Mat Arab','Kuda dan benteng bekerja sama mengurung raja di sudut.','Arabian mate','A knight and a rook team up to trap the king in the corner.'],
- hookMate:['Mat kail','Benteng, kuda, dan pion bekerja sama mengurung raja.','Hook mate','A rook, knight and pawn work together to trap the king.'],
- bodenMate:['Mat Boden','Dua gajah dari arah bersilang memberi mat.','Boden\'s mate','Two bishops on crossing diagonals deliver mate.'],
- doubleBishopMate:['Mat dua gajah','Dua gajah berdampingan memberi mat.','Double bishop mate','Two bishops side by side deliver mate.'],
- dovetailMate:['Mat ekor burung','Menteri memberi mat dari dekat; raja terhalang bidaknya sendiri.','Dovetail mate','The queen mates up close while the king is blocked by its own pieces.'],
- swallowstailMate:['Mat ekor walet','Menteri memberi mat dari depan; kedua sisi raja terhalang.','Swallow\'s tail mate','The queen mates from the front; both sides of the king are blocked.'],
- epauletteMate:['Mat epolet','Raja diapit bidaknya sendiri di kiri dan kanan.','Epaulette mate','The king is hemmed in by its own pieces on both sides.'],
- cornerMate:['Mat sudut','Raja terkurung di sudut papan.','Corner mate','The king is trapped in the corner.'],
- killBoxMate:['Mat kotak','Benteng dan menteri mengurung raja dalam kotak kecil.','Kill box mate','A rook and queen trap the king in a small box.'],
- morphysMate:['Mat Morphy','Gajah dan benteng mengurung raja di sudut.','Morphy\'s mate','A bishop and rook trap the king in the corner.'],
- operaMate:['Mat Opera','Benteng dan gajah memberi mat di baris belakang.','Opera mate','A rook and bishop deliver mate on the back rank.'],
- pillsburysMate:['Mat Pillsbury','Benteng dan gajah bekerja sama di sayap raja.','Pillsbury\'s mate','A rook and bishop work together on the king\'s side.'],
- triangleMate:['Mat segitiga','Menteri dan benteng membentuk segitiga di sekitar raja.','Triangle mate','The queen and rook form a triangle around the king.'],
- vukovicMate:['Mat Vukovic','Benteng dan kuda memberi mat, dibantu bidak lain.','Vukovic mate','A rook and knight deliver mate with help from another piece.'],
- blindSwineMate:['Mat dua benteng di baris ketujuh','Dua benteng di baris ketujuh menyerang raja bersama-sama.','Blind swine mate','Two rooks on the seventh rank attack the king together.'],
- fork:['Garpu','Satu bidak menyerang dua sasaran sekaligus.','Fork','One piece attacks two targets at once.'],
+ backRankMate:['Back-rank mate','Raja terkurung pionnya sendiri di baris paling belakang.','Back-rank mate','The king is trapped on the back rank by its own pawns.'],
+ smotheredMate:['Smothered mate','Kuda memberi checkmate pada raja yang terkurung bidaknya sendiri.','Smothered mate','A knight mates a king boxed in by its own pieces.'],
+ anastasiaMate:['Anastasia\'s mate','Kuda dan benteng atau menteri mengurung raja di pinggir papan.','Anastasia\'s mate','A knight and a rook or queen trap the king on the edge.'],
+ arabianMate:['Arabian mate','Kuda dan benteng bekerja sama mengurung raja di sudut.','Arabian mate','A knight and a rook team up to trap the king in the corner.'],
+ hookMate:['Hook mate','Benteng, kuda, dan pion bekerja sama mengurung raja.','Hook mate','A rook, knight and pawn work together to trap the king.'],
+ bodenMate:['Boden\'s mate','Dua gajah dari arah bersilang memberi checkmate.','Boden\'s mate','Two bishops on crossing diagonals deliver mate.'],
+ doubleBishopMate:['Double bishop mate','Dua gajah berdampingan memberi checkmate.','Double bishop mate','Two bishops side by side deliver mate.'],
+ dovetailMate:['Dovetail mate','Menteri memberi checkmate dari dekat; raja terhalang bidaknya sendiri.','Dovetail mate','The queen mates up close while the king is blocked by its own pieces.'],
+ swallowstailMate:['Swallow\'s tail mate','Menteri memberi checkmate dari depan; kedua sisi raja terhalang.','Swallow\'s tail mate','The queen mates from the front; both sides of the king are blocked.'],
+ epauletteMate:['Epaulette mate','Raja diapit bidaknya sendiri di kiri dan kanan.','Epaulette mate','The king is hemmed in by its own pieces on both sides.'],
+ cornerMate:['Corner mate','Raja terkurung di sudut papan.','Corner mate','The king is trapped in the corner.'],
+ killBoxMate:['Kill box mate','Benteng dan menteri mengurung raja dalam kotak kecil.','Kill box mate','A rook and queen trap the king in a small box.'],
+ morphysMate:['Morphy\'s mate','Gajah dan benteng mengurung raja di sudut.','Morphy\'s mate','A bishop and rook trap the king in the corner.'],
+ operaMate:['Opera mate','Benteng dan gajah memberi checkmate di baris belakang.','Opera mate','A rook and bishop deliver mate on the back rank.'],
+ pillsburysMate:['Pillsbury\'s mate','Benteng dan gajah bekerja sama di sayap raja.','Pillsbury\'s mate','A rook and bishop work together on the king\'s side.'],
+ triangleMate:['Triangle mate','Menteri dan benteng membentuk segitiga di sekitar raja.','Triangle mate','The queen and rook form a triangle around the king.'],
+ vukovicMate:['Vukovic mate','Benteng dan kuda memberi checkmate, dibantu bidak lain.','Vukovic mate','A rook and knight deliver mate with help from another piece.'],
+ blindSwineMate:['Blind swine mate','Dua benteng di baris ketujuh menyerang raja bersama-sama.','Blind swine mate','Two rooks on the seventh rank attack the king together.'],
+ fork:['Fork','Satu bidak menyerang dua sasaran sekaligus.','Fork','One piece attacks two targets at once.'],
  pin:['Pin','Bidak lawan tidak bisa pindah tanpa membuka bidak yang lebih berharga di belakangnya.','Pin','A piece cannot move without exposing a more valuable piece behind it.'],
- skewer:['Tusuk sate','Bidak berharga diserang; saat ia menyingkir, bidak di belakangnya dimakan.','Skewer','A valuable piece is attacked; when it moves away, the piece behind it falls.'],
- discoveredAttack:['Serangan terbuka','Satu bidak pindah dan membuka serangan bidak lain di belakangnya.','Discovered attack','Moving one piece uncovers an attack by another piece.'],
- discoveredCheck:['Skak terbuka','Satu bidak pindah dan membuka skak dari bidak lain.','Discovered check','Moving one piece uncovers a check by another piece.'],
- doubleCheck:['Skak ganda','Raja diskak dua bidak sekaligus, jadi raja harus pindah.','Double check','The king is checked by two pieces at once, so it must move.'],
- hangingPiece:['Bidak tak terjaga','Bidak lawan tidak dijaga dan bisa dimakan gratis.','Hanging piece','An enemy piece is undefended and can be taken for free.'],
- trappedPiece:['Bidak terjebak','Bidak lawan tidak punya petak aman untuk lari.','Trapped piece','An enemy piece has no safe square to escape to.'],
- capturingDefender:['Singkirkan pembela','Makan bidak yang menjaga, lalu sasarannya jatuh.','Remove the defender','Capture the defender, then the target falls.'],
- deflection:['Pembelokan','Memaksa bidak lawan meninggalkan tugas menjaganya.','Deflection','Force an enemy piece away from the job of defending.'],
- attraction:['Pancingan','Memancing bidak lawan, sering raja, ke petak yang buruk.','Attraction','Lure an enemy piece, often the king, onto a bad square.'],
- clearance:['Membuka jalan','Memindahkan bidak sendiri supaya petak atau jalurnya terbuka untuk bidak lain.','Clearance','Move your own piece out of the way to open a square or line.'],
- interference:['Penghalangan','Menaruh bidak di antara bidak lawan supaya jagaannya terputus.','Interference','Place a piece between enemy pieces to cut their defence.'],
- intermezzo:['Langkah sela','Sebelum membalas, mainkan dulu langkah yang lebih kuat.','Intermezzo','Before the expected reply, play a stronger in-between move.'],
- xRayAttack:['Serangan tembus','Bidak menyerang atau menjaga petak menembus bidak lain.','X-ray attack','A piece attacks or defends a square through another piece.'],
- sacrifice:['Pengorbanan','Memberikan bidak demi keuntungan yang lebih besar.','Sacrifice','Give up material to gain something bigger.'],
- quietMove:['Langkah tenang','Langkah tanpa skak atau makan yang menyiapkan ancaman.','Quiet move','A move with no check or capture that sets up a threat.'],
- defensiveMove:['Langkah bertahan','Langkah tepat untuk menyelamatkan posisi.','Defensive move','The precise move that saves the position.'],
+ skewer:['Skewer','Bidak berharga diserang; saat ia menyingkir, bidak di belakangnya dimakan.','Skewer','A valuable piece is attacked; when it moves away, the piece behind it falls.'],
+ discoveredAttack:['Discovered attack','Satu bidak pindah dan membuka serangan bidak lain di belakangnya.','Discovered attack','Moving one piece uncovers an attack by another piece.'],
+ discoveredCheck:['Discovered check','Satu bidak pindah dan membuka check dari bidak lain.','Discovered check','Moving one piece uncovers a check by another piece.'],
+ doubleCheck:['Double check','Raja kena check dari dua bidak sekaligus, jadi raja harus pindah.','Double check','The king is checked by two pieces at once, so it must move.'],
+ hangingPiece:['Hanging piece','Bidak lawan tidak dijaga dan bisa dimakan gratis.','Hanging piece','An enemy piece is undefended and can be taken for free.'],
+ trappedPiece:['Trapped piece','Bidak lawan tidak punya petak aman untuk lari.','Trapped piece','An enemy piece has no safe square to escape to.'],
+ capturingDefender:['Remove the defender','Makan bidak yang menjaga, lalu sasarannya jatuh.','Remove the defender','Capture the defender, then the target falls.'],
+ deflection:['Deflection','Memaksa bidak lawan meninggalkan tugas menjaganya.','Deflection','Force an enemy piece away from the job of defending.'],
+ attraction:['Attraction','Memancing bidak lawan, sering raja, ke petak yang buruk.','Attraction','Lure an enemy piece, often the king, onto a bad square.'],
+ clearance:['Clearance','Memindahkan bidak sendiri supaya petak atau jalurnya terbuka untuk bidak lain.','Clearance','Move your own piece out of the way to open a square or line.'],
+ interference:['Interference','Menaruh bidak di antara bidak lawan supaya jagaannya terputus.','Interference','Place a piece between enemy pieces to cut their defence.'],
+ intermezzo:['Intermezzo','Sebelum membalas, mainkan dulu langkah yang lebih kuat.','Intermezzo','Before the expected reply, play a stronger in-between move.'],
+ xRayAttack:['X-ray attack','Bidak menyerang atau menjaga petak menembus bidak lain.','X-ray attack','A piece attacks or defends a square through another piece.'],
+ sacrifice:['Sacrifice','Memberikan bidak demi keuntungan yang lebih besar.','Sacrifice','Give up material to gain something bigger.'],
+ quietMove:['Quiet move','Langkah tanpa check atau makan yang menyiapkan ancaman.','Quiet move','A move with no check or capture that sets up a threat.'],
+ defensiveMove:['Defensive move','Langkah tepat untuk menyelamatkan posisi.','Defensive move','The precise move that saves the position.'],
  zugzwang:['Zugzwang','Lawan wajib jalan, dan setiap langkahnya memperburuk posisinya.','Zugzwang','The opponent must move, and every move makes things worse.'],
- promotion:['Promosi','Pion sampai di ujung papan dan menjadi bidak baru.','Promotion','A pawn reaches the last rank and becomes a new piece.'],
- underPromotion:['Promosi kecil','Pion dipromosikan menjadi kuda, gajah, atau benteng.','Underpromotion','A pawn promotes to a knight, bishop or rook.'],
- advancedPawn:['Pion maju','Pion yang sudah dekat petak promosi menjadi senjata.','Advanced pawn','A pawn close to promotion becomes a weapon.'],
+ promotion:['Promotion','Pion sampai di ujung papan dan menjadi bidak baru.','Promotion','A pawn reaches the last rank and becomes a new piece.'],
+ underPromotion:['Underpromotion','Pion dipromosikan menjadi kuda, gajah, atau benteng.','Underpromotion','A pawn promotes to a knight, bishop or rook.'],
+ advancedPawn:['Advanced pawn','Pion yang sudah dekat petak promosi menjadi senjata.','Advanced pawn','A pawn close to promotion becomes a weapon.'],
  enPassant:['En passant','Makan pion yang baru maju dua petak dengan aturan khusus.','En passant','Capture a pawn that just moved two squares, by the special rule.'],
- exposedKing:['Raja terbuka','Raja lawan kurang terlindungi dan bisa diserang.','Exposed king','The enemy king is poorly protected and can be attacked.'],
- attackingF2F7:['Serang f2/f7','Menyerang petak lemah f2 atau f7 di dekat raja.','Attacking f2/f7','Attack the weak f2 or f7 square next to the king.'],
- kingsideAttack:['Serangan sayap raja','Serangan ke raja yang sudah rokade pendek.','Kingside attack','An attack on a king that castled short.'],
- queensideAttack:['Serangan sayap menteri','Serangan ke raja yang sudah rokade panjang.','Queenside attack','An attack on a king that castled long.'],
- mateIn1:['Mat 1 langkah','Skakmat dengan satu langkah.','Mate in 1','Checkmate in one move.'],
- mateIn2:['Mat 2 langkah','Skakmat dalam dua langkah.','Mate in 2','Checkmate in two moves.'],
- mateIn3:['Mat 3 langkah','Skakmat dalam tiga langkah.','Mate in 3','Checkmate in three moves.'],
- mateIn4:['Mat 4 langkah','Skakmat dalam empat langkah.','Mate in 4','Checkmate in four moves.'],
- mateIn5:['Mat 5 langkah atau lebih','Skakmat dalam lima langkah atau lebih.','Mate in 5+','Checkmate in five or more moves.'],
- mate:['Skakmat','Raja lawan diskak dan tidak bisa lolos.','Checkmate','The enemy king is in check and cannot escape.'],
+ exposedKing:['Exposed king','Raja lawan kurang terlindungi dan bisa diserang.','Exposed king','The enemy king is poorly protected and can be attacked.'],
+ attackingF2F7:['Attacking f2/f7','Menyerang petak lemah f2 atau f7 di dekat raja.','Attacking f2/f7','Attack the weak f2 or f7 square next to the king.'],
+ kingsideAttack:['Kingside attack','Serangan ke raja yang sudah melakukan castling pendek.','Kingside attack','An attack on a king that castled short.'],
+ queensideAttack:['Queenside attack','Serangan ke raja yang sudah melakukan castling panjang.','Queenside attack','An attack on a king that castled long.'],
+ mateIn1:['Mate in 1','Checkmate dengan satu langkah.','Mate in 1','Checkmate in one move.'],
+ mateIn2:['Mate in 2','Checkmate dalam dua langkah.','Mate in 2','Checkmate in two moves.'],
+ mateIn3:['Mate in 3','Checkmate dalam tiga langkah.','Mate in 3','Checkmate in three moves.'],
+ mateIn4:['Mate in 4','Checkmate dalam empat langkah.','Mate in 4','Checkmate in four moves.'],
+ mateIn5:['Mate in 5+','Checkmate dalam lima langkah atau lebih.','Mate in 5+','Checkmate in five or more moves.'],
+ mate:['Checkmate','Raja lawan kena check dan tidak bisa lolos.','Checkmate','The enemy king is in check and cannot escape.'],
  /* babak (chip kecil, tanpa penjelasan) */
- opening:['Pembukaan','','Opening',''],middlegame:['Babak tengah','','Middlegame',''],endgame:['Akhir permainan','','Endgame',''],
- pawnEndgame:['Akhir pion','','Pawn endgame',''],rookEndgame:['Akhir benteng','','Rook endgame',''],bishopEndgame:['Akhir gajah','','Bishop endgame',''],
- knightEndgame:['Akhir kuda','','Knight endgame',''],queenEndgame:['Akhir menteri','','Queen endgame',''],queenRookEndgame:['Akhir menteri dan benteng','','Queen and rook endgame','']};
+ opening:['Opening','','Opening',''],middlegame:['Middlegame','','Middlegame',''],endgame:['Endgame','','Endgame',''],
+ pawnEndgame:['Pawn endgame','','Pawn endgame',''],rookEndgame:['Rook endgame','','Rook endgame',''],bishopEndgame:['Bishop endgame','','Bishop endgame',''],
+ knightEndgame:['Knight endgame','','Knight endgame',''],queenEndgame:['Queen endgame','','Queen endgame',''],queenRookEndgame:['Queen and rook endgame','','Queen and rook endgame','']};
 const PRIO=['backRankMate','smotheredMate','anastasiaMate','arabianMate','hookMate','bodenMate','doubleBishopMate','dovetailMate','swallowstailMate','epauletteMate','cornerMate','killBoxMate','morphysMate','operaMate','pillsburysMate','triangleMate','vukovicMate','blindSwineMate',
  'fork','pin','skewer','discoveredCheck','doubleCheck','discoveredAttack','capturingDefender','deflection','attraction','clearance','interference','intermezzo','xRayAttack','trappedPiece','hangingPiece','zugzwang','quietMove','defensiveMove','underPromotion','promotion','enPassant','sacrifice','advancedPawn','exposedKing','attackingF2F7','kingsideAttack','queensideAttack',
  'mateIn1','mateIn2','mateIn3','mateIn4','mateIn5','mate'];
@@ -469,31 +495,31 @@ const KELAS=[['Starter',0,400],['Beginner',700,700],['Intermediate',1200,1200],[
 const LEVEL=[[0,'Starter'],[700,'Beginner A'],[950,'Beginner B'],[1200,'Intermediate A'],[1400,'Intermediate B'],[1600,'Intermediate C'],[1800,'Advanced A'],[2000,'Advanced B'],[2200,'Elite']];
 const levelDari=r=>{let k=LEVEL[0][1];for(const x of LEVEL)if(r>=x[0])k=x[1];return k};
 /* instruksi hanya untuk murid Starter di rak tema (keputusan 22 Nov 18.50) */
-const INSTRUKSI={mat1:['Cari skakmat dalam 1 langkah!','Find checkmate in 1 move!'],mat2:['Cari skakmat dalam 2 langkah!','Find checkmate in 2 moves!'],mat3:['Cari skakmat dalam 3 langkah!','Find checkmate in 3 moves!'],
- backrank:['Cari skakmat di baris belakang!','Find the back-rank mate!'],polamat:['Cari skakmat!','Find checkmate!'],garpu:['Cari garpu: serang dua bidak sekaligus!','Find a fork: attack two pieces at once!'],
- gantung:['Cari bidak lawan yang tidak dijaga!','Find the undefended piece!'],terjebak:['Tangkap bidak lawan yang tidak bisa lari!','Trap the piece that cannot escape!'],pembela:['Singkirkan bidak penjaga!','Remove the defender!'],
- pin:['Cari pin!','Find the pin!'],tusuk:['Cari tusuk sate!','Find the skewer!'],terbuka:['Cari serangan terbuka!','Find the discovered attack!'],skakterbuka:['Cari skak terbuka!','Find the discovered check!'],skakganda:['Cari skak ganda!','Find the double check!']};
+const INSTRUKSI={mat1:['Cari checkmate dalam 1 langkah!','Find checkmate in 1 move!'],mat2:['Cari checkmate dalam 2 langkah!','Find checkmate in 2 moves!'],mat3:['Cari checkmate dalam 3 langkah!','Find checkmate in 3 moves!'],
+ backrank:['Cari back-rank mate!','Find the back-rank mate!'],polamat:['Cari checkmate!','Find checkmate!'],garpu:['Cari fork: serang dua bidak sekaligus!','Find a fork: attack two pieces at once!'],
+ gantung:['Cari hanging piece: bidak lawan yang tidak dijaga!','Find the hanging piece: an undefended enemy piece!'],terjebak:['Cari trapped piece: bidak lawan yang tidak bisa lari!','Find the trapped piece: it cannot escape!'],pembela:['Remove the defender: singkirkan bidak penjaga!','Remove the defender!'],
+ pin:['Cari pin!','Find the pin!'],tusuk:['Cari skewer!','Find the skewer!'],terbuka:['Cari discovered attack!','Find the discovered attack!'],skakterbuka:['Cari discovered check!','Find the discovered check!'],skakganda:['Cari double check!','Find the double check!']};
 const instruksi=()=>M.rating<700&&rakNow&&INSTRUKSI[rakNow.id]?INSTRUKSI[rakNow.id][LANG==='en'?1:0]:'';
 
 /* ===== teks ===== */
 const I18N={
-id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan hari ini',heroP:'10 soal sesuai kemampuanmu',go:'Mulai',chal:'Tantangan +200',
+id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan Hari Ini',heroP:'10 soal yang pas untuk kemampuanmu.',temaH:'Latih satu tema',temaP:'Pilih tema yang ingin diasah. Kesulitan tetap mengikuti ratingmu.',stR:'Rating',stH:'Hari ini',stS:'Hari beruntun',stHr:'hari',go:'Mulai',chal:'Tantangan +200',
  ulangT:'Ulangi soal gagal',ulangX:(a,b)=>a?a+' soal siap diulang':b+' soal menunggu',foot:'Soal dari database puzzle Lichess. Prototipe: hasil belum masuk rating resmi.',
- kel:{mat:'Skakmat',dasar:'Taktik Dasar',garis:'Taktik Garis',lanjut:'Taktik Lanjut',akhir:'Akhir Permainan',buka:'Pembukaan',pro:'Tantangan Master'},judul:'Latihan Puzzle',
+ kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Latihan Puzzle',
  w:'Putih jalan',b:'Hitam jalan',lawan:'Lawan jalan…',hint:'Petunjuk',hintC:'−0,5',sol:'Lihat solusi',next:'Lanjut',hasil:'Lihat hasil',again:'Coba lagi',
  lichess:'Lihat di Lichess ↗',lapor:'Laporkan soal',batal:'Batal',kirim:'Kirim',rating:'Rating soal',
  lapPh:'Catatan tambahan (opsional)',lapOk:'Terima kasih! Laporan disimpan di HP ini (prototipe: belum terkirim ke Sheet).',lapPilih:'Pilih salah satu alasan dulu.',
  lapA:['Jawabanku benar, tetapi ditolak','Posisi atau langkahnya aneh','Terlalu mudah','Terlalu sulit','Lainnya'],
  stp0:'Awal',stp1:'Mundur',stp2:'Maju',stp3:'Akhir',rev:'Lihat ulang',more:'Lainnya',sndOn:'Suara nyala',sndOff:'Suara mati',kvOn:'Suara Kudi nyala',kvOff:'Suara Kudi mati',boardAria:'Papan catur',
  okT:['Hebat!','Betul sekali!','Pintar!'],okRun:'Wah, benar terus!',okRun5:'Lima kali benar! Luar biasa!',okHint:'Benar, dengan petunjuk.',okLate:'Benar! Tadi sempat salah, jadi belum dihitung.',
- noT:'Belum tepat',noX:'Coba lagi, ya. Petunjuk bisa membantu.',noX2:'Sedikit lagi! Perhatikan semua skak dan makan.',noX3:'Masih belum tepat. Coba lagi atau lihat jawabannya.',
+ noT:'Belum tepat',noX:'Coba lagi, ya. Petunjuk bisa membantu.',noX2:'Sedikit lagi! Perhatikan semua check dan makan.',noX3:'Masih belum tepat. Coba lagi atau lihat jawabannya.',
  solT:'Ini jawabannya',solX:'Perhatikan langkah-langkahnya, ya.',hintSay:'Lihat kotak yang menyala.',illegal:'Bidak itu tidak bisa ke sana.',
  mulai:'Siap? Kita mulai!',giliran:{w:'Giliran putih!',b:'Giliran hitam!'},tema:'Tema',
  outT:'Keluar dari sesi?',outX:'Soal yang sudah selesai tetap tercatat.',outNo:'Tetap main',outYes:'Keluar',
  sumA:'Luar biasa!',sumB:'Selesai! Kerja bagus hari ini!',sumC:'Terus berlatih, ya!',tB:'Benar sendiri',tP:'Dengan petunjuk',tS:'Belum tepat',tSk:'Skor',tRun:'Beruntun terbaik',
  lagi:'Main lagi',menu:'Menu latihan',rL:{1:'Benar',5:'Dengan petunjuk',0:'Belum tepat'},muatGagal:'Soal tidak bisa dimuat. Periksa sinyal, lalu coba lagi.',kosong:'Belum ada soal yang cocok di sini.',
- mat:'Mat!',skak:'Skak!',ulangNama:'Ulangi soal gagal'},
-en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s practice',heroP:'10 puzzles that fit your level',go:'Start',chal:'Challenge +200',
+ mat:'Checkmate!',skak:'Check!',ulangNama:'Ulangi soal gagal'},
+en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s Practice',heroP:'10 puzzles that fit your level.',temaH:'Practice one theme',temaP:'Pick a theme to sharpen. Difficulty still follows your rating.',stR:'Rating',stH:'Today',stS:'Day streak',stHr:'days',go:'Start',chal:'Challenge +200',
  ulangT:'Retry missed puzzles',ulangX:(a,b)=>a?a+' ready to retry':b+' waiting',foot:'Puzzles from the Lichess puzzle database. Prototype: results do not count for the official rating yet.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Puzzle Practice',
  w:'White to move',b:'Black to move',lawan:'Opponent moves…',hint:'Hint',hintC:'−0.5',sol:'Show solution',next:'Next',hasil:'See results',again:'Try again',
@@ -508,7 +534,7 @@ en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,hel
  outT:'Leave this session?',outX:'Finished puzzles are still saved.',outNo:'Keep playing',outYes:'Leave',
  sumA:'Amazing!',sumB:'All done! Great work today!',sumC:'Keep practicing!',tB:'Solved alone',tP:'With a hint',tS:'Missed',tSk:'Score',tRun:'Best streak',
  lagi:'Play again',menu:'Practice menu',rL:{1:'Correct',5:'With a hint',0:'Missed'},muatGagal:'Puzzles could not be loaded. Check your connection and try again.',kosong:'No puzzles fit here yet.',
- mat:'Mate!',skak:'Check!',ulangNama:'Retry missed puzzles'}};
+ mat:'Checkmate!',skak:'Check!',ulangNama:'Retry missed puzzles'}};
 const tx=(k,...a)=>{let s=I18N[LANG][k];if(s===undefined)s=I18N.id[k];return typeof s==='function'?s(...a):s};
 const fmt=v=>String(v).replace('.',LANG==='id'?',':'.');
 
@@ -563,6 +589,7 @@ const M=(()=>{const s=LS.get('eca.lat.murid',null);
  if(PROF&&PROF.rating){if(!s||s.id!==PROF.id||s.dasar!==PROF.rating)return{id:PROF.id,nama:PROF.nama,dasar:PROF.rating,rating:PROF.rating,n:PROF.soal||0};return s}
  return s&&!s.id?s:{kelas:'Beginner',rating:700,n:0}})();
 const simpanM=()=>LS.set('eca.lat.murid',M);
+{const k=KELAS.find(x=>x[0]===Q.get('kelas'));if(k&&!M.id&&M.kelas!==k[0]){M.kelas=k[0];M.rating=k[2];M.n=0;simpanM()}}
 function elo(rs,skor){const k=M.n<30?40:20,h=1/(1+Math.pow(10,(rs-M.rating)/400));M.rating=Math.max(100,Math.round(M.rating+k*(skor-h)));M.n++;simpanM()}
 
 /* ===== data rak ===== */
@@ -594,22 +621,33 @@ function ulangSelesai(id,ok){let a=gagalList();const x=a.find(x=>x.p.id===id);if
 
 /* ===== menu latihan ===== */
 let rakNow=null,tantangan=false;
-const nmRak=r=>!r?'':r.id==='campur'?'Puzzle '+levelDari(M.rating):r.id==='ulang'?tx('ulangNama'):(LANG==='en'?r.nama_en:r.nama);
+const nmRak=r=>!r?'':r.id==='campur'?'Puzzle '+levelDari(M.rating):r.id==='ulang'?tx('ulangNama'):r.nama_en;
+/* catatan harian: soal hari ini dan hari beruntun (lokal di HP) */
+const tglKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function catatHari(){const t=tglKey(new Date());let h=LS.get('eca.lat.hari',null);if(!h||h.t!==t)h={t,n:0};h.n++;LS.set('eca.lat.hari',h);
+ let r=LS.get('eca.lat.runtun',{last:'',n:0});if(r.last!==t){r.n=r.last===tglKey(new Date(Date.now()-864e5))?r.n+1:1;r.last=t;LS.set('eca.lat.runtun',r)}}
+function statHari(){const t=tglKey(new Date()),h=LS.get('eca.lat.hari',null),r=LS.get('eca.lat.runtun',{last:'',n:0});
+ return{n:h&&h.t===t?h.n:0,st:r.last===t||r.last===tglKey(new Date(Date.now()-864e5))?r.n:0}}
+let famNow=null;
 function renderHome(){const H=$('hello'),K=$('kls');
  if(M.id){H.innerHTML=tx('hello',escH(M.nama||''),M.rating);K.hidden=true}
  else{H.textContent=tx('helloTamu');K.hidden=false;K.innerHTML='';
   for(const[k,,r0]of KELAS){const b=document.createElement('button');b.type='button';b.textContent=k;b.setAttribute('aria-pressed',String(M.kelas===k));
    b.onclick=()=>{if(M.kelas!==k){M.kelas=k;M.rating=r0;M.n=0;simpanM()}renderHome()};K.appendChild(b)}}
  $('heroK').innerHTML=kudiSvg('senang');$('heroT').textContent='Puzzle '+levelDari(M.rating);
+ const sh=statHari(),T=SESI_N;$('hst').className='hst'+(sh.n>=T?' done':'');
+ $('hst').innerHTML=[[M.rating,tx('stR')],[sh.n+'<small>/'+T+'</small>',tx('stH')],[sh.st+' <small>'+escH(tx('stHr'))+'</small>',tx('stS')]].map(([a,b])=>'<div><b>'+a+'</b><span>'+escH(b)+'</span></div>').join('');
  const g=gagalList(),due=g.filter(x=>x.due<=Date.now()).length;$('bUlang').hidden=!g.length;$('ulangX').textContent=tx('ulangX',due,g.length);
- const R=$('raks');R.innerHTML='';if(!IDX)return;const t=targetR(false);
- for(const kel of IDX.keluarga){const rs=IDX.rak.filter(r=>r.keluarga===kel.id&&r.tahap<=TAHAP&&tersedia(r,t)>=MIN_RAK);if(!rs.length)continue;
-  const sec=document.createElement('section');sec.className='rak';sec.style.setProperty('--c',kel.sisi);
-  sec.innerHTML='<h3><i></i></h3><div class="tiles"></div>';sec.querySelector('h3').append(tx('kel')[kel.id]||(LANG==='en'?kel.nama_en:kel.nama));
-  const T=sec.querySelector('.tiles');
-  for(const r of rs){const b=document.createElement('button');b.className='tl';b.style.cssText='--m:'+kel.muka+';--s:'+kel.sisi+';--t:'+kel.tepi;
-   b.innerHTML='<span class="ti">'+pcSvg(r.ikon)+'</span><span></span>';b.lastChild.textContent=nmRak(r);b.onclick=()=>mulaiRak(r,false);T.appendChild(b)}
-  R.appendChild(sec)}}
+ renderTema()}
+function renderTema(){const R=$('raks'),C=$('fams');R.innerHTML='';C.innerHTML='';if(!IDX)return;const t=targetR(false);
+ const ada=IDX.keluarga.map(kel=>({kel,rs:IDX.rak.filter(r=>r.keluarga===kel.id&&r.tahap<=TAHAP&&tersedia(r,t)>=MIN_RAK)})).filter(x=>x.rs.length);
+ $('temaSec').hidden=!ada.length;if(!ada.length)return;
+ if(!ada.some(x=>x.kel.id===famNow))famNow=ada[0].kel.id;
+ for(const{kel}of ada){const b=document.createElement('button');b.type='button';b.className='fm';b.style.setProperty('--c',kel.sisi);b.setAttribute('aria-pressed',String(kel.id===famNow));
+  b.innerHTML='<i></i><span></span>';b.lastChild.textContent=tx('kel')[kel.id]||kel.nama_en;b.onclick=()=>{famNow=kel.id;renderTema()};C.appendChild(b)}
+ const A=ada.find(x=>x.kel.id===famNow);
+ for(const r of A.rs){const b=document.createElement('button');b.className='tl';b.style.setProperty('--s',A.kel.sisi);
+  b.innerHTML='<span class="ti">'+pcSvg(r.ikon)+'</span><span></span>';b.lastChild.textContent=nmRak(r);b.onclick=()=>mulaiRak(r,false);R.appendChild(b)}}
 function tampil(id){for(const x of['home','play','sum'])$(x).hidden=x!==id;$('dock').hidden=id!=='play';
  const inHome=id==='home';$('bBackT').textContent=tx(inHome?'back':'backPlay');$('bBack').setAttribute('href',inHome?'index.html':'#');
  $('hdT').textContent=inHome?tx('judul'):nmRak(rakNow);window.scrollTo(0,0)}
@@ -667,17 +705,18 @@ function oppMove(){const m=findM(cur.pos,cur.p.moves[cur.ply]);if(!m)return;doMo
 const IC={ok:'✓',no:'✗',info:'!'};
 const ikHint='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z"/></svg>';
 const ikNext='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-function dock(kind,t,x,btns){const D=$('dock');D.className=kind||'';$('dkMsg').hidden=!t;
+function dock(kind,t,x,btns){const D=$('dock'),sig=kind+'|'+(t||'');const baru=D.dataset.sig!==sig;D.dataset.sig=sig;D.className=kind||'';$('dkMsg').hidden=!t;
  if(t){$('dkIc').textContent=IC[kind]||'';$('dkT').textContent=t;$('dkX').textContent=x||'';$('dkX').hidden=!x}
- const B=$('dkB');B.innerHTML='';for(const[l,c,f,id]of btns){const b=document.createElement('button');b.className='btn '+c;if(id)b.id=id;b.innerHTML=l;b.onclick=f;B.appendChild(b)}
- if(kind){void D.offsetWidth;D.classList.add('go');const b=B.querySelector('button');if(b)b.focus({preventScroll:true})}}
+ const B=$('dkB');B.innerHTML='';B.className='dk-b'+(btns.length<2?' solo':'');for(const[l,c,f,id]of btns){const b=document.createElement('button');b.className='btn '+c;if(id)b.id=id;b.innerHTML=l;b.onclick=f;B.appendChild(b)}
+ if(kind&&baru){void D.offsetWidth;D.classList.add('go');if(kind==='ok'){const b=B.querySelector('button');if(b)b.focus({preventScroll:true})}}}
+const ikSol='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
 function dockUI(){if(!cur)return;
  if(cur.done)return dock(cur.dk.kind,cur.dk.t,cur.dk.x,[[escH(tx(idx>=sesi.length-1?'hasil':'next'))+ikNext,'ok',lanjut,'bNext']]);
- if(cur.lihat||$('dock').classList.contains('no'))return;
- const b=[[ikHint+'<span>'+escH(tx('hint'))+'</span><span class="cnt">'+escH(tx('hintC'))+'</span>','kun',pakaiHint,'bHint']];
- if(cur.salah>=SALAH_SOLUSI)b.push([escH(tx('sol')),'ghost',lihatSolusi,'bSol']);
- dock('',null,null,b);$('bHint').disabled=cur.hint||cur.lock}
-function hideMsg(){$('dock').className='';$('dkMsg').hidden=true}
+ if(cur.lihat)return;
+ const b=[[ikHint+'<span>'+escH(tx('hint'))+'</span><span class="cnt">'+escH(tx('hintC'))+'</span>','tool',pakaiHint,'bHint']];
+ if(cur.salah>=SALAH_SOLUSI)b.push([ikSol+'<span>'+escH(tx('sol'))+'</span>','tool sol',lihatSolusi,'bSol']);
+ const m=cur.msg;dock(m?'no':'',m?m.t:null,m?m.x:null,b);$('bHint').disabled=cur.hint||cur.lock}
+function hideMsg(){const D=$('dock');D.className='';D.dataset.sig='';$('dkMsg').hidden=true}
 
 /* ===== input papan (ketuk atau seret), sama dengan puzzle v3 ===== */
 function dotsFor(s){view.dots.innerHTML='';for(const m of legal(cur.pos).filter(m=>m.f===s)){const[x,y]=xy(m.t);
@@ -701,7 +740,7 @@ async function tryMove(f,t){const me=cur,exp=me.p.moves[me.ply];const C=legal(me
  const m=C.find(m=>uciOf(m)===exp)||C.find(m=>!m.p||m.p==='q');
  const info=moveInfo(me.pos,m),ok=uciOf(m)===exp||info.mate;
  me.lock=true;select(-1);doMove(m);
- if(ok){me.ply++;if(info.mate||me.ply>=me.p.moves.length)return selesaiSoal(me,info);
+ if(ok){me.msg=null;me.ply++;if(info.mate||me.ply>=me.p.moves.length)return selesaiSoal(me,info);
   floatTxt(m.t,info.chk?tx('skak'):'✓','#2c7a3c');dockUI();await wait(480);if(cur!==me)return;oppMove();me.lock=false;dockUI()}
  else salah(me)}
 
@@ -709,12 +748,10 @@ async function salah(me){me.salah++;if(streak){streak=0;pillUI()}SX.play('salah'
  await wait(650);if(cur!==me)return;
  const h=me.hist.pop();me.pos=h.pos;me.last=h.last;loadPos(me.pos);clearOv();showLast(me.last);updateCheck(me.pos);if(me.hintPly===me.ply)hintSq();
  const n=me.salah,x=n>=SALAH_SOLUSI?tx('noX3'):n===2?tx('noX2'):tx('noX');say('',n>=SALAH_SOLUSI?'tak_apa':n===2?'hampir':'coba_lagi');
- const b=[[escH(tx('again')),'no',()=>{hideMsg();me.lock=false;mood('mikir');turnUI();dockUI()}]];
- if(n>=SALAH_SOLUSI)b.push([escH(tx('sol')),'ghost',lihatSolusi]);
- dock('no',tx('noT'),x,b)}
+ me.msg={t:tx('noT'),x};me.lock=false;mood('mikir');turnUI();dockUI()}
 
 function hasil(me){return me.lihat||me.salah?0:me.hint?.5:1}
-async function selesaiSoal(me,info){me.done=true;const r=hasil(me);sesi[idx].r=r;skor+=r;tandai(me.p.id);
+async function selesaiSoal(me,info){me.done=true;const r=hasil(me);sesi[idx].r=r;skor+=r;tandai(me.p.id);catatHari();
  if(rakNow.id==='ulang')ulangSelesai(me.p.id,r>0);else{if(r===0)catatGagal(me.p,rakNow.id);elo(me.p.rating,r)}
  if(r>0){streak++;best=Math.max(best,streak)}
  if(info&&info.mate)floatTxt(me.last.t,tx('mat'),'#2c7a3c');
