@@ -35,6 +35,36 @@
     if (j && !j.ok) { ls.del('eca.pelatih'); pelatih = null; if (!(token && profil)) { pita(); gerbang(); } }
   }, function () {});
 
+  /* ---------- akses puzzle: tugas aktif selalu terbuka, lalu pengecualian pelatih, lalu aturan kelas ---------- */
+  var KELAS = ['Starter', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], KAT = null, segar = false, blok = null, tungguT = null;
+  function terkunci() {
+    if (pelatih || !token || !profil || !profil.akses || !KAT) return false;
+    var a = profil.akses;
+    if (a.tugas.some(function (t) { return t.kode === KODE; })) return false;
+    var ov = a.pengecualian[KODE]; if (ov) return ov !== 'Buka';
+    var e = KAT.filter(function (x) { return x.kode === KODE; })[0]; if (!e) return false;
+    if (e.level !== '' && e.level != null) return Number(e.level) > a.kelasMaks;
+    return KELAS.indexOf(e.kelas) > KELAS.indexOf(profil.kelas);
+  }
+  function tutupBlok() { if (blok) { blok.remove(); blok = null; document.documentElement.style.overflow = ''; } }
+  function bukaBlok(judul, isi, tombol) {
+    tutupBlok();
+    blok = document.createElement('div'); blok.setAttribute('role', 'dialog'); blok.setAttribute('aria-modal', 'true');
+    blok.style.cssText = 'position:fixed;inset:0;z-index:2147483000;background:rgba(90,15,26,.94);display:flex;align-items:center;justify-content:center;padding:18px;font-family:Atkinson,system-ui,sans-serif';
+    blok.innerHTML = '<div style="background:#fff;border-radius:26px;border:3px solid #5A0F1A;max-width:420px;width:100%;padding:26px 22px;text-align:center;color:#3F322F">' +
+      '<div style="font:800 1.5rem/1.2 Gabarito,system-ui,sans-serif;color:#5A0F1A">' + judul + '</div><p style="margin:10px 0 18px;font-size:1.05rem;line-height:1.5">' + isi + '</p>' +
+      (tombol ? '<a href="index.html" style="display:block;background:#5A0F1A;color:#fff;text-decoration:none;font:800 1.05rem Atkinson,system-ui,sans-serif;padding:14px;border-radius:16px;box-shadow:0 4px 0 #3A0A12">\u2190 Kembali ke beranda</a>' : '') + '</div>';
+    document.body.appendChild(blok); document.documentElement.style.overflow = 'hidden';
+  }
+  /* Profil di HP bisa lama (tugas atau akses baru belum terbaca): kalau tampak terkunci, tunggu profil terbaru dulu. */
+  function cekAkses() {
+    if (!KAT || !token || !profil || pelatih) return;
+    if (!terkunci()) { clearTimeout(tungguT); tutupBlok(); return; }
+    if (!segar) { bukaBlok('Memeriksa akses\u2026', 'Sebentar, ya.', false); clearTimeout(tungguT); tungguT = setTimeout(function () { segar = true; cekAkses(); }, 4000); return; }
+    bukaBlok('Puzzle ini belum dibuka', 'Tanya pelatihmu supaya puzzle ini dibuka untukmu.', true);
+  }
+  fetch('katalog_publik.json').then(function (r) { return r.json(); }).then(function (j) { KAT = j.set || []; cekAkses(); }, function () {});
+
   /* ---------- pita status di atas halaman ---------- */
   var bar = document.createElement('div');
   bar.setAttribute('role', 'status');
@@ -74,8 +104,8 @@
 
   function terima(o, j) {
     if (o.aksi === 'soal' && profil) { profil.rating = j.rating; ls.set('eca.profil', profil); pita(); }
-    if (o.aksi === 'set' && j.profil) { profil = j.profil; ls.set('eca.profil', profil); pita(); kartuHasil(o.ringkas.ratingAwal, profil.rating, j.naikLevel); }
-    if (o.aksi === 'profil' && j.profil) { profil = j.profil; ratingAwal = profil.rating; ls.set('eca.profil', profil); pita(); }
+    if (o.aksi === 'set' && j.profil) { profil = j.profil; ls.set('eca.profil', profil); pita(); kartuHasil(o.ringkas.ratingAwal, profil.rating, j.naikLevel); perbaruiKembali(); }
+    if (o.aksi === 'profil' && j.profil) { profil = j.profil; ratingAwal = profil.rating; ls.set('eca.profil', profil); segar = true; pita(); cekAkses(); perbaruiKembali(); }
   }
 
   /* ---------- kait ke pemain puzzle ---------- */
@@ -113,13 +143,23 @@
   };
 
   /* ---------- tombol kembali ke beranda di layar hasil ---------- */
+  function tugasBerikut() {
+    var T = profil && profil.akses ? profil.akses.tugas : [];
+    return T.filter(function (t) { return !t.selesai && t.kode !== KODE; })[0] || null;
+  }
   function tombolKembali() {
     var sum = document.getElementById('sum'); if (!sum || document.getElementById('ecaKembali')) return;
     var h = sum.querySelector('h2'); if (!h) return;
-    var a = document.createElement('a'); a.id = 'ecaKembali'; a.href = 'index.html';
-    a.textContent = bahasaEn() ? '\u2190 Back to home' : '\u2190 Kembali ke beranda';
+    var a = document.createElement('a'); a.id = 'ecaKembali';
     a.style.cssText = 'display:block;max-width:420px;margin:12px auto;background:#5A0F1A;color:#fff;text-decoration:none;text-align:center;font:800 1.1rem Atkinson,system-ui,sans-serif;padding:15px;border-radius:18px;box-shadow:0 5px 0 #3A0A12';
-    h.insertAdjacentElement('afterend', a);
+    h.insertAdjacentElement('afterend', a); perbaruiKembali();
+  }
+  /* Kalau masih ada PR lain: "Lanjut ke tugas berikutnya". Kalau tidak: "Kembali ke beranda". */
+  function perbaruiKembali() {
+    var a = document.getElementById('ecaKembali'); if (!a) return;
+    var n = tugasBerikut(), en = bahasaEn();
+    if (n) { a.href = n.kode + '.html'; a.textContent = en ? 'Next assignment \u2192' : 'Lanjut ke tugas berikutnya \u2192'; }
+    else { a.href = 'index.html'; a.textContent = en ? '\u2190 Back to home' : '\u2190 Kembali ke beranda'; }
   }
 
   /* ---------- kartu rating di layar hasil ---------- */

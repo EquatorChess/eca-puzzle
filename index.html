@@ -239,6 +239,22 @@ body.murid #cm,body.murid #bRuang{display:none}
 .kartu svg{width:90px;height:34px;flex:none}
 .lc.lock{opacity:.55!important;cursor:not-allowed;background:var(--panel2)}
 .lc.lock b::before{content:"🔒 ";font-size:.85em}
+.pr.lock{opacity:.6}.pr.lock .tt span:last-child{color:var(--muted)}
+.pr .pel{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font:800 .7rem var(--bf);background:#FFF0C9;color:#7A5200}
+.pr .pel.ok{background:#E4DFD8;color:#6B625C}
+.tgbox{max-width:620px;margin:0 auto 16px;background:#fff;border:3px solid var(--gold);border-radius:24px;padding:14px 14px 16px;box-shadow:0 6px 0 #D9902A;text-align:left}
+.tgbox h2{font:800 1.15rem/1.25 var(--hf);color:var(--maroon)}
+.tgbox .sb{margin:2px 0 4px;font-size:.88rem;color:var(--muted)}
+.tgbox .tg{display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;border:2.5px solid var(--line);margin-top:10px;background:var(--panel2)}
+.tgbox .tg .tt{flex:1;min-width:0}.tgbox .tg .tt b{display:block;font:800 1rem/1.25 var(--hf);color:var(--maroon)}
+.tgbox .tg .tt span{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
+.tgbox .tg .cat{color:var(--text)!important;font-style:italic}
+.tgbox .tg.done{background:#E4DFD8;border-color:#CFC7BD}
+.tgbox .tg.done .tt b{color:#7C726C;text-decoration:line-through}
+.tgbox .tg .cek{flex:none;width:46px;height:46px;border-radius:50%;background:#5E5650;color:#fff;font:800 30px/46px var(--bf);text-align:center}
+.tgbox .tg.done .tt span{color:#8D837D}
+.tgbox.sudah{border-color:#CFC7BD;box-shadow:0 6px 0 #CFC7BD}
+
 .tb2{display:flex;gap:6px;margin:12px 0 6px}
 .tb2 button{flex:1;border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:8px;font-weight:800;cursor:pointer;color:var(--muted)}
 .tb2 button[aria-pressed=true]{background:var(--maroon);border-color:var(--maroon);color:#fff}
@@ -263,6 +279,7 @@ body.murid #cm,body.murid #bRuang{display:none}
 <section class="hero" id="hero" aria-labelledby="hi">
   <div class="wrap">
     <span class="cloud c1" aria-hidden="true"></span><span class="cloud c2" aria-hidden="true"></span>
+    <div id="tugasBox" aria-live="polite"></div>
     <div class="kudirow">
       <div class="kudi" id="kudi"><svg class="kd kd-senang" viewBox="-10 -10 220 260" aria-hidden="true"><g transform="rotate(0 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="16.28" stroke-linejoin="round"/></g></g><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#F1ECE5"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#F1ECE5"/><g transform="rotate(0 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#F1ECE5"/></g></g><g transform="rotate(0 100 186)"><g transform="translate(5.4 6) scale(0.86)"><circle cx="100" cy="92" r="10.78" class="eye" fill="#5A0F1A"/><circle cx="38" cy="120" r="4.69" fill="#5A0F1A"/><path d="M34 136 q9 7 20 2" fill="none" stroke="#5A0F1A" stroke-width="5.5" stroke-linecap="round"/></g></g><path d="M132 172 L162 192 L150 200 L126 180 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/><path d="M56 160 Q100 172 144 160 L146 176 Q100 188 54 176 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/></svg><svg class="kd kd-mikir" viewBox="-10 -10 220 260" aria-hidden="true"><g transform="rotate(-9 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="16.28" stroke-linejoin="round"/></g></g><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#F1ECE5"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#F1ECE5"/><g transform="rotate(-9 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#F1ECE5"/></g></g><g transform="rotate(-9 100 186)"><g transform="translate(5.4 6) scale(0.86)"><circle cx="105" cy="86" r="10.78" class="eye" fill="#5A0F1A"/><circle cx="38" cy="120" r="4.69" fill="#5A0F1A"/><path d="M38 139 h15" fill="none" stroke="#5A0F1A" stroke-width="5.5" stroke-linecap="round"/></g></g><path d="M132 172 L162 192 L150 200 L126 180 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/><path d="M56 160 Q100 172 144 160 L146 176 Q100 188 54 176 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/></svg><div class="kshadow"></div></div>
       <div class="bubble" id="bubble"><h1 class="hi" id="hi">Hai, aku Kudi!</h1><p id="say">Pilih kelasmu, lalu ikuti jalurku atau pilih bidak.</p></div>
@@ -344,6 +361,8 @@ var KMINI='<svg class="kudimini" viewBox="0 0 232 270" aria-hidden="true"><use h
 var PED='<svg class="ped" viewBox="0 0 100 34" aria-hidden="true"><ellipse class="s1" cx="50" cy="22" rx="46" ry="11"/><rect class="s2" x="4" y="11" width="92" height="11"/><ellipse class="rim" cx="50" cy="11" rx="46" ry="10"/></svg>';
 var hero=$('#hero'),row=$('#row'),lv=$('#lv'),info=$('#info'),sub2=$('#sub2'),kudi=$('#kudi');
 var K=KL[0],fam=-1,tema=0,firstTalk=true;
+var INFO={};KL.forEach(function(k){k.fam.forEach(function(f){f.tema.forEach(function(t){t.sets.forEach(function(s){INFO[s.c]={lv:s.lv,kelas:k.id}})})});k.pr.forEach(function(g){g.items.forEach(function(it){INFO[it.c]={lv:0,kelas:k.id}})})});
+window.ECA_info=INFO;window.ECA_all=ALL;window.ECA_kelasList=KL.map(function(k){return k.id});
 var hr=new Date().getHours(),greet=hr<11?'Selamat pagi!':hr<15?'Selamat siang!':hr<18?'Selamat sore!':'Selamat malam!';
 function hop(){kudi.classList.remove('hop');void kudi.offsetWidth;kudi.classList.add('hop')}
 function talk(h,t){var b=$('#bubble');$('#hi').textContent=h;$('#say').textContent=t;b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');hop()}
@@ -354,8 +373,9 @@ function tabs(){$('#tabs').innerHTML=KL.map(function(k){return '<button data-k="
 /* Jalur Kudi */
 function jalur(){
   var j=K.jalur,el=$('#jal');if(!j.length){el.innerHTML='';return}
-  var done=j.filter(function(c){return seen[c]}).length,nx=j.filter(function(c){return !seen[c]})[0];
-  var title=nx?'Berikutnya: '+nx.toUpperCase()+' '+ALL[nx].t:'Jalur '+K.id+' selesai!';
+  var kn=window.ECA_kunci||function(){return false};
+  var done=j.filter(function(c){return seen[c]}).length,nx=j.filter(function(c){return !seen[c]&&!kn(c)})[0],tunggu=!nx&&j.some(function(c){return !seen[c]});
+  var title=nx?'Berikutnya: '+nx.toUpperCase()+' '+ALL[nx].t:tunggu?'Menunggu puzzle berikutnya dibuka pelatih':'Jalur '+K.id+' selesai!';
   el.innerHTML='<div class="jalur">'+KMINI+'<div class="jp"><span>Jalur Kudi '+K.id+' · '+done+' dari '+j.length+'</span><b>'+esc(title)+'</b><div class="bar"><i id="jbar"></i></div></div>'+(nx?'<a class="btn go" href="'+nx+'.html" data-c="'+nx+'">Main</a>':'')+'</div>';
   requestAnimationFrame(function(){requestAnimationFrame(function(){var b=$('#jbar');if(b)b.style.width=Math.round(done/j.length*100)+'%'})});
 }
@@ -381,9 +401,9 @@ function pickTema(t){
   info.innerHTML='<div class="swap"><h2>'+esc(x.nama)+'</h2><p>'+esc(x.desc)+' '+x.sets.length+' puzzle · '+ns+' soal.</p></div>';
   lv.classList.remove('sh');
   var kunci=window.ECA_kunci||function(){return false};
-  var nx=-1;x.sets.some(function(it,k){if(!seen[it.c]&&!kunci(it.lv)){nx=k;return true}});
-  lv.innerHTML=x.sets.map(function(it,k){var lk=kunci(it.lv),cls='lc'+(seen[it.c]?' vs':'')+(k===nx?' nx':'')+(lk?' lock':'');
-    if(lk)return '<span class="'+cls+'" style="--d:'+(k*38)+'ms" title="Terkunci"><b>'+lvName(it)+'</b><span>Lulus Campuran Level '+(it.lv-1)+' dulu</span></span>';
+  var nx=-1;x.sets.some(function(it,k){if(!seen[it.c]&&!kunci(it.c)){nx=k;return true}});
+  lv.innerHTML=x.sets.map(function(it,k){var lk=kunci(it.c),cls='lc'+(seen[it.c]?' vs':'')+(k===nx?' nx':'')+(lk?' lock':'');
+    if(lk)return '<span class="'+cls+'" style="--d:'+(k*38)+'ms" title="Terkunci"><b>'+lvName(it)+'</b><span>Belum dibuka pelatih</span></span>';
     return '<a class="'+cls+'" href="'+it.c+'.html" data-c="'+it.c+'" style="--d:'+(k*38)+'ms">'+(k===nx?'<i class="tag">Berikutnya</i>':'')+'<b>'+lvName(it)+'</b><span>'+it.c.toUpperCase()+' · rating ±'+it.r+' · '+it.n+' soal</span></a>'}).join('');
   requestAnimationFrame(function(){requestAnimationFrame(function(){lv.classList.add('sh')})});
   try{history.replaceState(null,'','#'+x.id)}catch(e){}
@@ -398,20 +418,25 @@ $('#tabs').addEventListener('click',function(e){var b=e.target.closest('button')
 document.addEventListener('click',function(e){var a=e.target.closest('a[data-c]');if(a){seen[a.dataset.c]=1;store.set('eca.seen',seen)}});
 if('IntersectionObserver' in window)new IntersectionObserver(function(es){hero.classList.toggle('paused',!es[0].isIntersecting)}).observe(hero);
 /* PR Kelas */
-function rows(its,gid,f,e,kl){return '<ul class="pl">'+its.map(function(it){var lab=it.lv?lvName(it)+' · rating ±'+it.r+' · ':'';return '<li class="pr" data-q="'+esc((it.c+' '+it.t+' '+(gid||'')).toLowerCase())+'"><input type="checkbox" class="pk" value="'+it.c+'" aria-label="Pilih '+it.c.toUpperCase()+'"><span class="tt"><span class="cd">'+it.c.toUpperCase()+(kl?'<span class="kl">'+kl+'</span>':'')+'</span><b>'+esc(it.t)+'</b><span>'+lab+it.n+' soal'+(seen[it.c]?' · <span style="color:var(--ok)">✓ pernah dibuka</span>':'')+'</span></span><a class="btn go" href="'+it.c+'.html" data-c="'+it.c+'">Main</a></li>'}).join('')+'</ul>'}
+function pelTag(c){var t=window.ECA_tugas&&window.ECA_tugas(c);return t?'<span class="pel'+(t.selesai?' ok':'')+'">'+(t.selesai?'✓ PR selesai':'📌 PR dari pelatih')+'</span>':''}
+function rows(its,gid,f,e,kl){return '<ul class="pl">'+its.map(function(it){var lab=it.lv?lvName(it)+' · rating ±'+it.r+' · ':'',q=esc((it.c+' '+it.t+' '+(gid||'')).toLowerCase()),cd='<span class="cd">'+it.c.toUpperCase()+(kl?'<span class="kl">'+kl+'</span>':'')+'</span>';
+  if(window.ECA_kunci&&window.ECA_kunci(it.c))return '<li class="pr lock" data-q="'+q+'"><span class="tt">'+cd+'<b>'+esc(it.t)+'</b><span>🔒 Belum dibuka pelatih</span></span></li>';
+  return '<li class="pr" data-q="'+q+'"><input type="checkbox" class="pk" value="'+it.c+'" aria-label="Pilih '+it.c.toUpperCase()+'"><span class="tt">'+cd+'<b>'+esc(it.t)+pelTag(it.c)+'</b><span>'+lab+it.n+' soal'+(seen[it.c]?' · <span style="color:var(--ok)">✓ pernah dibuka</span>':'')+'</span></span><a class="btn go" href="'+it.c+'.html" data-c="'+it.c+'">Main</a></li>'}).join('')+'</ul>'}
 function card(id,icon,title,meta,body,f,e,chip){return '<div class="theme" id="t-'+id+'" style="--f:'+f+';--e:'+e+'"><div class="th">'+icon+'<div class="sp"><h3>'+esc(title)+'</h3><p>'+meta+'</p></div><span class="tr">'+(chip?'<span class="chip">'+chip+'</span>':'')+'<button class="btn ser" data-all="'+id+'">Pilih semua</button></span></div>'+body+'</div>'}
 function cnt(its){return its.length+' puzzle · '+its.reduce(function(a,b){return a+b.n},0)+' soal'}
 function prs(){$('#h-pr').textContent='PR Kelas '+K.id;
   $('#prg').innerHTML=K.pr.length?K.pr.map(function(g,i){return card('pr'+i,KMINI,g.nama,esc(g.desc)+'<br>'+cnt(g.items),rows(g.items),'#F2DBD5','#5A0F1A')}).join(''):'<div class="soon">Belum ada PR untuk kelas ini.</div>'}
 /* semua puzzle */
-var L='';
+var q=$('#q');
+function semuaList(){var L='';
 KL.forEach(function(k){
   var fs={};k.fam.forEach(function(f){f.tema.forEach(function(t){var key=f.id+'-'+t.id;(fs[key]=fs[key]||{f:f,t:t,its:[]}).its=t.sets})});
   Object.keys(fs).forEach(function(key){var x=fs[key];L+=card('a-'+k.id+'-'+key,piece(x.f.id),x.f.nama+' · '+x.t.nama,cnt(x.its),rows(x.its,x.f.nama+' '+x.t.nama+' '+k.id,0,0,k.id),x.f.face,x.f.edge,k.id)});
   k.pr.forEach(function(g,i){L+=card('a-'+k.id+'-pr'+i,KMINI,'PR Kelas · '+g.nama,cnt(g.items),rows(g.items,g.nama+' pr kelas '+k.id),'#F2DBD5','#5A0F1A',k.id)});
 });
-$('#list').innerHTML=L;
-var q=$('#q');q.addEventListener('input',function(){var v=q.value.toLowerCase().trim(),any=false;
+$('#list').innerHTML=L;var v=q.value.toLowerCase().trim();if(v)q.dispatchEvent(new Event('input'))}
+semuaList();
+q.addEventListener('input',function(){var v=q.value.toLowerCase().trim(),any=false;
   document.querySelectorAll('#list .theme').forEach(function(t){var n=0;t.querySelectorAll('.pr').forEach(function(r){var ok=r.dataset.q.indexOf(v)>-1;r.style.display=ok?'':'none';if(ok)n++});t.style.display=n?'':'none';if(n)any=true});
   $('#empty').style.display=any?'none':'block'});
 /* mode pelatih */
@@ -439,7 +464,7 @@ tabs();jalur();drawRow(pf,pt);prs();
 $('#hi').textContent=greet+' Aku Kudi.';
 var PL=store.get('eca.pelatih',null);cm.hidden=!PL;if(PL&&store.get('eca.coach',false))coach(true);
 window.__pelatih=function(on){cm.hidden=!on;if(!on&&document.body.classList.contains('coach'))coach(false)};
-window.__ulang=function(){if(fam>=0)pickTema(tema)};window.__sapa=function(h,t){talk(h,t)};
+window.__ulang=function(){jalur();prs();semuaList();if(fam>=0)pickTema(tema)};window.__sapa=function(h,t){talk(h,t)};
 })();
 </script>
 <script>
@@ -453,9 +478,26 @@ var token=ls.get('eca.token',null),profil=ls.get('eca.profil',null);
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function av(a){var p=String(a||'kudi-merah').split('-');return '<span class="av" style="background:'+(WARNA[p[1]]||'#F2DBD5')+'"><img alt="" src="maskot/'+(p[0]||'kudi')+'.svg"></span>'}
 function api(o){return fetch(API,{method:'POST',body:JSON.stringify(o)}).then(function(r){return r.json()})}
-/* kunci level: level terbuka + level yang belum punya set Campuran terbuka otomatis */
-window.ECA_kunci=function(lv){if(!profil||!lv)return false;var buka=profil.level||1,cmp=profil.campuran||[];
-  while(buka<8&&cmp.indexOf(buka)<0)buka++;return lv>buka};
+/* akses puzzle: tugas aktif selalu terbuka, lalu pengecualian dari pelatih, lalu aturan kelas (sampai level maksimum kelas). Pelatih dan tamu tidak dikunci. */
+function kelasIdx(n){return (window.ECA_kelasList||[]).indexOf(n)}
+window.ECA_kunci=function(kode){
+  if(ls.get('eca.pelatih',null)||!profil||!profil.akses)return false;
+  var a=profil.akses;if(a.tugas.some(function(t){return t.kode===kode}))return false;
+  var ov=a.pengecualian[kode];if(ov)return ov!=='Buka';
+  var i=window.ECA_info&&window.ECA_info[kode];if(!i)return false;
+  if(i.lv)return i.lv>a.kelasMaks;
+  return kelasIdx(i.kelas)>kelasIdx(profil.kelas)};
+window.ECA_tugas=function(kode){if(!profil||!profil.akses)return null;return profil.akses.tugas.filter(function(t){return t.kode===kode})[0]||null};
+/* kotak PR paling atas: yang belum dikerjakan tampil terang, yang selesai abu-abu gelap dengan centang besar */
+function tugasBox(){var el=$('#tugasBox');if(!el)return;
+  var T=(token&&profil&&profil.akses)?profil.akses.tugas:[];
+  if(!T.length){el.innerHTML='';return}
+  var ALL=window.ECA_all||{},belum=T.filter(function(t){return !t.selesai}),sudah=T.filter(function(t){return t.selesai});
+  function item(t){var a=ALL[t.kode]||{t:t.kode.toUpperCase(),n:''};
+    return '<div class="tg'+(t.selesai?' done':'')+'">'+(t.selesai?'<span class="cek" aria-hidden="true">✓</span>':'')+'<div class="tt"><b>'+esc(t.kode.toUpperCase()+' · '+a.t)+'</b><span>'+(a.n?a.n+' soal':'')+(t.selesai?' · Sudah selesai':'')+'</span>'+(t.catatan&&!t.selesai?'<span class="cat">“'+esc(t.catatan)+'”</span>':'')+'</div>'+
+      (t.selesai?'':'<a class="btn go" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'">Kerjakan</a>')+'</div>'}
+  el.innerHTML='<div class="tgbox'+(belum.length?'':' sudah')+'"><h2>'+(belum.length?'📌 PR yang harus kamu kerjakan sekarang ('+belum.length+')':'✓ PR-mu sudah selesai semua!')+'</h2>'+
+    '<p class="sb">'+(belum.length?'Kerjakan PR dulu sebelum latihan yang lain, ya.':'Hebat! Kamu boleh latihan puzzle yang lain.')+'</p>'+belum.map(item).join('')+sudah.map(item).join('')+'</div>'}
 /* modal */
 var mdl=$('#mdl'),mb=$('#mbody');
 function buka(h){mb.innerHTML=h;mdl.classList.add('on');var f=mb.querySelector('input');if(f)setTimeout(function(){f.focus()},60)}
@@ -505,25 +547,27 @@ function langkahBuatPin(kode,nama){
 function berhasil(j){token=j.token;profil=j.profil;ls.set('eca.token',token);ls.set('eca.profil',profil);tutup();
   var balik=ls.get('eca.balik',null);if(balik){ls.del('eca.balik');location.href=balik;return}
   tampil();
-  if(window.__sapa)window.__sapa('Hai, '+profil.nama+'!','Rating-mu '+profil.rating+'. Ayo kita latihan!');
+  if(window.__sapa)window.__sapa('Hai, '+profil.nama+'!',sapaPR()||'Rating-mu '+profil.rating+'. Ayo kita latihan!');
   try{history.replaceState(null,'',location.pathname)}catch(e){}}
+function sapaPR(){var n=(profil&&profil.akses?profil.akses.tugas:[]).filter(function(t){return !t.selesai}).length;return n?'Kamu punya '+n+' PR. Kerjakan PR-mu dulu, ya!':''}
 /* tampilan header + kartu rating */
 function garis(g){if(!g||g.length<2)return '';var mn=Math.min.apply(0,g)-5,mx=Math.max.apply(0,g)+5;
   return '<svg viewBox="0 0 90 34" aria-hidden="true"><polyline fill="none" stroke="#3DB8F5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="'+g.map(function(v,i){return (i/(g.length-1)*84+3).toFixed(1)+','+(31-(v-mn)/(mx-mn)*28).toFixed(1)}).join(' ')+'"/></svg>'}
 function tampil(){
   var bm=$('#bMasuk'),ba=$('#bAkun'),kr=$('#kartuRating');
-  if(!token||!profil){document.body.classList.remove('murid');bm.hidden=false;ba.hidden=true;kr.innerHTML='';if(window.__ulang)window.__ulang();return}
+  if(!token||!profil){document.body.classList.remove('murid');bm.hidden=false;ba.hidden=true;kr.innerHTML='';tugasBox();if(window.__ulang)window.__ulang();return}
   document.body.classList.add('murid');bm.hidden=true;ba.hidden=false;ba.innerHTML=av(profil.avatar)+esc(profil.nama)+' · '+profil.rating;
   var pr=profil.gelarBerikut?Math.max(4,Math.min(100,100-Math.round(profil.kurang/3))):100;
   kr.innerHTML='<div class="kartu">'+av(profil.avatar)+'<div class="ki"><div class="kg">Rating puzzle '+esc(profil.nama)+' · Gelar <b>'+esc(profil.gelar)+'</b></div><div class="kr">'+profil.rating+'</div>'+
     '<div class="kg">'+(profil.gelarBerikut?profil.kurang+' poin lagi menuju '+esc(profil.gelarBerikut):'Gelar tertinggi!')+' · <button class="lnk" id="bPeringkat">Papan peringkat</button></div>'+
     '<div class="bar"><i style="width:'+pr+'%"></i></div></div>'+garis(profil.grafik)+'</div>';
   $('#bPeringkat').onclick=peringkat;
+  tugasBox();
   if(window.__ulang)window.__ulang();
 }
 $('#bMasuk').onclick=function(){langkahKode('')};
 $('#bAkun').onclick=function(){buka('<div class="mkudi">'+av(profil.avatar).replace('class="av"','class="av" style="width:64px;height:64px"')+'<div><h2 id="mjudul">'+esc(profil.nama)+'</h2><p>Kelas '+esc(profil.kelas)+' · Rating '+profil.rating+' · Gelar '+esc(profil.gelar)+'</p></div></div>'+
-  '<p>Level terbuka: <b>'+profil.level+'</b> · Soal dikerjakan: <b>'+profil.soal+'</b></p><button class="btn pri" id="bPr2">Papan peringkat kelas</button><button class="btn" id="bKeluar">Keluar dari HP ini</button>');
+  '<p>Soal dikerjakan: <b>'+profil.soal+'</b></p><button class="btn pri" id="bPr2">Papan peringkat kelas</button><button class="btn" id="bKeluar">Keluar dari HP ini</button>');
   $('#bPr2').onclick=peringkat;$('#bKeluar').onclick=function(){token=profil=null;ls.del('eca.token');ls.del('eca.profil');tutup();tampil()}};
 /* papan peringkat */
 function peringkat(){buka('<h2 id="mjudul">Papan peringkat '+esc(profil.kelas)+'</h2><div class="tb2" id="tb2"><button data-p="rating" aria-pressed="true">Rating tertinggi</button><button data-p="minggu" aria-pressed="false">Naik minggu ini</button></div><div id="lbx"><p>Memuat…</p></div>');
@@ -543,7 +587,7 @@ else if(/^#masuk$/.test(location.hash)&&!token)langkahKode('');
 var mp=location.hash.match(/pelatih=([A-Za-z0-9]+)/);
 if(mp){api({aksi:'cekPelatih',token:mp[1]}).then(function(j){if(j.ok){ls.set('eca.pelatih',{token:mp[1],nama:j.nama});if(window.__pelatih)window.__pelatih(true);if(window.__sapa)window.__sapa('Halo, '+j.nama+'!','Mode pelatih sudah aktif. Tekan tombol Mode pelatih di atas untuk memilih PR.')}else if(window.__sapa)window.__sapa('Tautan pelatih tidak berlaku','Buka lagi dari Ruang Pelatih ya.');try{history.replaceState(null,'',location.pathname)}catch(e){}},function(){})}
 else{var pl=ls.get('eca.pelatih',null);if(pl)api({aksi:'cekPelatih',token:pl.token}).then(function(j){if(!j.ok&&!j.galat){ls.del('eca.pelatih');if(window.__pelatih)window.__pelatih(false)}},function(){})}
-if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=profil=null;ls.del('eca.token');ls.del('eca.profil')}else if(j.ok){profil=j.profil;ls.set('eca.profil',profil)}tampil()},function(){});
+if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=profil=null;ls.del('eca.token');ls.del('eca.profil')}else if(j.ok){profil=j.profil;ls.set('eca.profil',profil)}tampil();var sp=sapaPR();if(sp&&window.__sapa)window.__sapa('Hai, '+profil.nama+'!',sp)},function(){});
 })();
 </script>
 </body>
