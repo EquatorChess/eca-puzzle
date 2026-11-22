@@ -38,15 +38,24 @@
   /* ---------- pita status di atas halaman ---------- */
   var bar = document.createElement('div');
   bar.setAttribute('role', 'status');
-  bar.style.cssText = 'font:700 13px/1.3 Atkinson,system-ui,sans-serif;padding:7px 12px;text-align:center;background:#FFF3E6;color:#5A0F1A;border-bottom:2px solid #EFE2D3';
+  bar.style.cssText = 'font:700 13px/1.3 Atkinson,system-ui,sans-serif;padding:7px 12px;text-align:center;background:#FFF3E6;color:#5A0F1A;border-bottom:2px solid #EFE2D3;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap';
+  function bahasaEn() { try { return typeof LANG !== 'undefined' && LANG === 'en'; } catch (e) { return false; } }
+  var LINK_BERANDA = '<a href="index.html" id="ecaBeranda" style="flex:none;display:inline-block;background:#5A0F1A;color:#fff;text-decoration:none;font:800 13px Atkinson,system-ui,sans-serif;padding:5px 12px;border-radius:999px">\u2190 Beranda</a>';
   function pita() {
-    if (token && profil) bar.innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1FA062;margin-right:6px"></span>' +
-      esc(profil.nama) + ' · Rating ' + profil.rating + ' · hasilmu tercatat otomatis';
-    else if (pelatih) bar.innerHTML = 'Mode pelatih: hasil tidak dicatat ke akun murid.';
-    else bar.innerHTML = 'Kamu belum masuk, jadi hasilmu tidak tercatat. <a href="index.html#masuk" style="color:#5A0F1A">Masuk dulu</a>';
+    var isi;
+    if (token && profil) isi = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1FA062;margin-right:6px"></span>' +
+      esc(profil.nama) + ' \u00b7 Rating ' + profil.rating + ' \u00b7 hasilmu tercatat otomatis';
+    else if (pelatih) isi = 'Mode pelatih: hasil tidak dicatat ke akun murid.';
+    else isi = 'Kamu belum masuk, jadi hasilmu tidak tercatat. <a href="index.html#masuk" style="color:#5A0F1A">Masuk dulu</a>';
+    bar.innerHTML = LINK_BERANDA + '<span>' + isi + '</span>';
   }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   pita(); document.body.insertBefore(bar, document.body.firstChild);
+  /* tautan Beranda juga di layar pembuka (menutupi pita di atas) */
+  var intro = document.getElementById('intro');
+  if (intro) { var ib = document.createElement('a'); ib.href = 'index.html'; ib.textContent = '\u2190 Beranda'; ib.id = 'ecaBerandaIntro';
+    ib.style.cssText = 'position:fixed;top:12px;left:12px;z-index:61;background:#5A0F1A;color:#fff;text-decoration:none;font:800 14px Atkinson,system-ui,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 3px 0 #3A0A12';
+    intro.appendChild(ib); new MutationObserver(function () { ib.style.display = intro.hidden || getComputedStyle(intro).display === 'none' ? 'none' : ''; }).observe(intro, { attributes: true }); }
 
   /* ---------- antrean kirim ---------- */
   var sibuk = false;
@@ -90,6 +99,7 @@
   var asliSum = summary, terkirim = false;
   summary = function () {
     var hasil = asliSum.apply(this, arguments);
+    try { tombolKembali(); } catch (e) {}
     try {
       if (token && !terkirim) {
         terkirim = true;
@@ -101,6 +111,16 @@
     } catch (e) {}
     return hasil;
   };
+
+  /* ---------- tombol kembali ke beranda di layar hasil ---------- */
+  function tombolKembali() {
+    var sum = document.getElementById('sum'); if (!sum || document.getElementById('ecaKembali')) return;
+    var h = sum.querySelector('h2'); if (!h) return;
+    var a = document.createElement('a'); a.id = 'ecaKembali'; a.href = 'index.html';
+    a.textContent = bahasaEn() ? '\u2190 Back to home' : '\u2190 Kembali ke beranda';
+    a.style.cssText = 'display:block;max-width:420px;margin:12px auto;background:#5A0F1A;color:#fff;text-decoration:none;text-align:center;font:800 1.1rem Atkinson,system-ui,sans-serif;padding:15px;border-radius:18px;box-shadow:0 5px 0 #3A0A12';
+    h.insertAdjacentElement('afterend', a);
+  }
 
   /* ---------- kartu rating di layar hasil ---------- */
   function kartuHasil(r0, r1, naik) {
