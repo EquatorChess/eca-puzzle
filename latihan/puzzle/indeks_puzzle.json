@@ -24,17 +24,17 @@
   "jumlah": 500,
   "rating": [
    700,
-   899
+   949
   ],
   "komposisi": {
-   "ganda": 64,
-   "mat": 145,
-   "pin": 44,
-   "akhir": 64,
-   "makan": 54,
-   "korban": 54,
-   "jalur": 74,
-   "lain": 1
+   "ganda": 63,
+   "mat": 143,
+   "akhir": 62,
+   "makan": 53,
+   "korban": 52,
+   "jalur": 73,
+   "pin": 43,
+   "lain": 11
   }
  },
  {
@@ -42,17 +42,17 @@
   "nama": "Puzzle Beginner B",
   "jumlah": 500,
   "rating": [
-   900,
-   1099
+   951,
+   1199
   ],
   "komposisi": {
    "mat": 140,
    "korban": 50,
    "ganda": 60,
+   "lain": 30,
+   "akhir": 60,
    "jalur": 70,
    "makan": 50,
-   "akhir": 60,
-   "lain": 30,
    "pin": 40
   }
  },
@@ -61,18 +61,18 @@
   "nama": "Puzzle Intermediate A",
   "jumlah": 500,
   "rating": [
-   1100,
-   1299
+   1200,
+   1399
   ],
   "komposisi": {
-   "jalur": 70,
    "mat": 140,
+   "jalur": 70,
+   "korban": 50,
    "akhir": 60,
+   "ganda": 60,
    "makan": 50,
    "pin": 40,
-   "ganda": 60,
-   "lain": 30,
-   "korban": 50
+   "lain": 30
   }
  },
  {
@@ -80,18 +80,18 @@
   "nama": "Puzzle Intermediate B",
   "jumlah": 500,
   "rating": [
-   1300,
-   1499
+   1400,
+   1599
   ],
   "komposisi": {
    "mat": 140,
-   "makan": 50,
+   "ganda": 60,
    "akhir": 60,
    "jalur": 70,
-   "ganda": 60,
-   "pin": 40,
    "korban": 50,
-   "lain": 30
+   "makan": 50,
+   "lain": 30,
+   "pin": 40
   }
  },
  {
@@ -99,54 +99,73 @@
   "nama": "Puzzle Intermediate C",
   "jumlah": 500,
   "rating": [
-   1500,
-   1699
+   1600,
+   1799
   ],
   "komposisi": {
    "pin": 40,
    "mat": 140,
    "jalur": 70,
    "korban": 50,
-   "ganda": 60,
    "akhir": 60,
    "makan": 50,
+   "ganda": 60,
    "lain": 30
   }
  },
  {
   "paket": "puzzle_L7",
-  "nama": "Puzzle Advanced",
+  "nama": "Puzzle Advanced A",
   "jumlah": 500,
   "rating": [
-   1700,
-   1898
+   1800,
+   1999
   ],
   "komposisi": {
-   "makan": 50,
-   "pin": 40,
    "mat": 140,
    "akhir": 60,
    "korban": 50,
    "jalur": 70,
-   "lain": 30,
-   "ganda": 60
+   "ganda": 60,
+   "pin": 40,
+   "makan": 50,
+   "lain": 30
   }
  },
  {
   "paket": "puzzle_L8",
+  "nama": "Puzzle Advanced B",
+  "jumlah": 500,
+  "rating": [
+   2000,
+   2199
+  ],
+  "komposisi": {
+   "jalur": 70,
+   "akhir": 60,
+   "mat": 140,
+   "makan": 50,
+   "korban": 50,
+   "pin": 40,
+   "ganda": 60,
+   "lain": 30
+  }
+ },
+ {
+  "paket": "puzzle_L9",
   "nama": "Puzzle Elite",
   "jumlah": 500,
   "rating": [
-   1900,
-   2500
+   2200,
+   2547
   ],
   "komposisi": {
+   "makan": 50,
+   "akhir": 60,
    "mat": 140,
    "jalur": 70,
-   "akhir": 60,
    "ganda": 60,
    "korban": 50,
-   "makan": 50,
    "pin": 40,
    "lain": 30
   }
