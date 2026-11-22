@@ -97,7 +97,7 @@ main{max-width:1100px;margin:0 auto;padding:6px 16px calc(var(--dock) + 30px)}
 .say{margin:4px 0 0;font-size:15px;color:var(--ink2);line-height:1.4}
 .say:empty{display:none}
 @media (min-width:900px){.kudi{width:92px}#q{font-size:20px}.say{font-size:16px}}
-.boardwrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1;background:var(--maroon);padding:7px;border-radius:22px;box-shadow:0 6px 0 var(--maroon-d);touch-action:none;user-select:none;-webkit-user-select:none}
+.boardwrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1;background:var(--maroon);padding:7px;border-radius:22px;box-shadow:0 6px 0 var(--maroon-d);touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none}
 svg#bd{width:100%;height:100%;border-radius:14px}
 .boardwrap.shake{animation:shake .38s}
 .boardwrap.flash{animation:flashok .6s}
@@ -275,7 +275,8 @@ body.xmode .sheet:not(.no) .sh-b{width:auto}body.xmode .sheet:not(.no) .sh-b .bt
 @keyframes slide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes ckp{0%,100%{opacity:.35}50%{opacity:.8}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+
+/*fix-scroll-22nov*/@media (max-width:899px){.boardwrap{max-width:min(620px,max(260px,calc(100vh - 110px)))}}</style>
 </head>
 <body>
 <div id="intro">
@@ -802,6 +803,7 @@ function select(s){cur.sel=s;clearOv();if(cur.step===0&&!cur.over)showLast(lastM
 const own=s=>{const x=cur.pos.b[s];return x&&((x===x.toUpperCase())===(cur.pos.turn==='w'))};
 function pt(e){const r=svg.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*800]}
 let drag=null;
+/*fix-scroll-22nov*/svg.addEventListener('touchstart',e=>{if(e.touches.length!==1||!cur||cur.lock||cur.over)return;const[x,y]=pt(e.touches[0]);const s=sqAt(x,y);if(s>=0&&own(s))e.preventDefault()},{passive:false});
 svg.addEventListener('pointerdown',e=>{if(!cur||cur.lock||cur.over)return;const[x,y]=pt(e);const s=sqAt(x,y);if(s<0)return;
  if(cur.sel>=0&&cur.sel!==s&&!own(s)){tryMove(cur.sel,s);return}
  if(own(s)){select(s);AU.play('tick');const pc=view.pieces.find(p=>p.sq===s);if(pc){drag={pc,s,sx:x,sy:y,moved:false};pc.el.classList.add('drag');pc.el.parentNode.appendChild(pc.el);try{svg.setPointerCapture(e.pointerId)}catch(_){}}}else select(-1)});
@@ -1019,11 +1021,11 @@ function summary(){$('play').hidden=true;$('dock').hidden=true;hideSheet();docum
   '<div class="diag"><b>Catatan untuk coach</b><br>'+dg.join('<br>')+'</div>'+
   '<p style="color:var(--ink2);font-size:15px">'+t('sumHelp')+'</p>'+
   '<div class="row" style="justify-content:center"><a class="btn wa" id="wa" href="#" target="_blank" rel="noopener">'+t('wa')+'</a><button class="btn ghost" id="cp">'+t('cpRep')+'</button><button class="btn ghost" id="cc">'+t('cpCode')+'</button></div>'+
-  '<div class="row" style="justify-content:center">'+(weak.length?'<button class="btn ghost" id="wk">'+t('weak',weak.length)+'</button>':'')+'<button class="btn kun" id="again">'+t('again')+'</button></div><p class="say" id="cpm" role="status" style="text-align:center"></p>';
+  '<div class="row" style="justify-content:center">'+(weak.length?'<button class="btn ghost" id="bWeak">'+t('weak',weak.length)+'</button>':'')+'<button class="btn kun" id="again">'+t('again')+'</button></div><p class="say" id="cpm" role="status" style="text-align:center"></p>';
  const txt=reportText();$('wa').href='https://wa.me/?text='+encodeURIComponent(txt);
  const cp=async(tx,m)=>{try{await navigator.clipboard.writeText(tx);$('cpm').textContent=m}catch(e){$('cpm').textContent=tx}};
  $('cp').onclick=()=>cp(txt,t('cpOk'));$('cc').onclick=()=>cp(encodeCode(reportData()),t('ccOk'));
- if($('wk'))$('wk').onclick=()=>{AU.play('tick');Q=weak.slice();weak.forEach(i=>{S[i]=null});el.hidden=true;$('play').hidden=false;$('dock').hidden=false;start(Q.shift())};
+ if($('bWeak'))$('bWeak').onclick=()=>{AU.play('tick');Q=weak.slice();weak.forEach(i=>{S[i]=null});el.hidden=true;$('play').hidden=false;$('dock').hidden=false;start(Q.shift())};
  $('again').onclick=()=>{AU.play('tick');Q=null;S=[];R=[];FIN=[];xp=0;combo=0;bestCombo=0;pkIdx=-1;brkDone=false;el.hidden=true;$('play').hidden=false;$('dock').hidden=false;start(0)};
  AU.play('finish');confetti(200,1.25);buzz([40,60,40,60,120]);window.scrollTo({top:0,behavior:'smooth'});}
 /* ===== rekor (disimpan di HP) ===== */
