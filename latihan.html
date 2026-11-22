@@ -607,7 +607,7 @@ function kuras(){if(kirimSibuk)return;const q=LS.get(ANTRE,[]);if(!q.length)retu
   if(j&&j.keluar){try{localStorage.removeItem('eca.token');localStorage.removeItem('eca.profil')}catch(e){}LS.set(ANTRE,[]);return}
   if(j&&!j.ok&&/tidak dikenal/i.test(j.pesan||'')){return}/* API belum diperbarui: simpan antrean, coba lagi saat halaman dibuka berikutnya */
   q2.shift();LS.set(ANTRE,q2);
-  if(j&&j.ok&&!q2.length){M.rating=j.rating;M.dasar=j.rating;M.n=j.soal;simpanM();
+  if(j&&j.ok&&j.rating!==undefined&&!q2.length){M.rating=j.rating;M.dasar=j.rating;M.n=j.soal;simpanM();
    const pf=LS.get('eca.profil',null);if(pf){pf.rating=j.rating;pf.soal=j.soal;if(j.gelar)pf.gelar=j.gelar;LS.set('eca.profil',pf)}}
   kuras()},()=>{kirimSibuk=false;setTimeout(kuras,8000)})}
 window.addEventListener('online',kuras);setTimeout(kuras,1500);
@@ -698,7 +698,8 @@ let sesi=[],idx=0,cur=null,streak=0,best=0,skor=0;
 function warnaRak(){const k=IDX&&rakNow&&IDX.keluarga.find(k=>k.id===rakNow.keluarga),st=document.documentElement.style;
  if(k){st.setProperty('--frame',k.tepi);st.setProperty('--frame-d','color-mix(in srgb,'+k.tepi+' 70%,#000)');st.setProperty('--s',k.sisi)}
  else for(const v of['--frame','--frame-d','--s'])st.removeProperty(v)}
-function mulaiSesi(list){sesi=list.map(p=>({p,r:null}));idx=0;streak=0;best=0;skor=0;warnaRak();tampil('play');pillUI();pawnsUI();SX.wake();
+let sesiT0=0,sesiR0=0;
+function mulaiSesi(list){sesiT0=Date.now();sesiR0=M.rating;sesi=list.map(p=>({p,r:null}));idx=0;streak=0;best=0;skor=0;warnaRak();tampil('play');pillUI();pawnsUI();SX.wake();
  say(instruksi()||tx('mulai'),'mulai');mulaiSoal()}
 const PIDX={1:'q',5:'n',0:'p'};
 function pawnsUI(up){const P=$('pawns');P.innerHTML='';sesi.forEach((s,i)=>{const e=document.createElement('span');
@@ -773,7 +774,7 @@ async function salah(me){me.salah++;if(streak){streak=0;pillUI()}SX.play('salah'
  me.msg={t:tx('noT'),x};me.lock=false;mood('mikir');turnUI();dockUI()}
 
 function hasil(me){return me.lihat||me.salah?0:me.hint?.5:1}
-async function selesaiSoal(me,info){me.done=true;const r=hasil(me);sesi[idx].r=r;skor+=r;tandai(me.p.id);catatHari();
+async function selesaiSoal(me,info){me.done=true;const r=hasil(me);sesi[idx].r=r;sesi[idx].l=!!me.lihat;skor+=r;tandai(me.p.id);catatHari();
  if(rakNow.id==='ulang')ulangSelesai(me.p.id,r>0);else{if(r===0)catatGagal(me.p,rakNow.id);elo(me.p.rating,r)}antreSoal(me,rakNow.id);
  if(r>0){streak++;best=Math.max(best,streak)}
  if(info&&info.mate)floatTxt(me.last.t,tx('mat'),'#2c7a3c');
@@ -818,7 +819,12 @@ function showTema(){const me=cur,lb=labelTema(me.p.tema);$('tN').textContent=lb.
 function lanjut(){hideMsg();if(idx>=sesi.length-1)return ringkasan();idx++;KV.say('lanjut');if(innerWidth<900)window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});mulaiSoal()}
 
 /* ===== ringkasan sesi ===== */
-function ringkasan(){cur=null;SX.play('selesai');tampil('sum');$('bBackT').textContent=tx('backPlay');const S=$('sum');
+/* ringkasan satu sesi ke tab 5 Hasil Set, supaya Ruang Pelatih menampilkannya seperti Homework (detail per soal ada di tab 16) */
+function kirimRingkas(){if(!API_URL||API_URL.indexOf('__')===0||!M.id||!tokenMurid()||!sesi.length)return;
+ const M1=sesi.filter(s=>s.r===1).length,D=sesi.filter(s=>s.r===.5).length,L=sesi.filter(s=>s.r===0&&s.l).length,K=sesi.filter(s=>s.r===0&&!s.l).length;
+ const q=LS.get(ANTRE,[]);q.push({aksi:'set',kodePuzzle:'latihan-'+(rakNow?rakNow.id:'campur'),ringkas:{judul:'Latihan: '+nmRak(rakNow),M:M1,D,K,L,jumlah:sesi.length,detik:Math.round((Date.now()-sesiT0)/1000),ratingAwal:sesiR0}});
+ LS.set(ANTRE,q.slice(-300));kuras()}
+function ringkasan(){cur=null;kirimRingkas();SX.play('selesai');tampil('sum');$('bBackT').textContent=tx('backPlay');const S=$('sum');
  const nB=sesi.filter(s=>s.r===1).length,nP=sesi.filter(s=>s.r===.5).length,nS=sesi.filter(s=>s.r===0).length,pc=skor/sesi.length;
  const h=pc>=.8?tx('sumA'):pc>=.5?tx('sumB'):tx('sumC');KV.say('selesai');if(pc>=.8)confetti(90,1.1);
  const ri=s=>s.r===1?1:s.r===.5?5:0;
