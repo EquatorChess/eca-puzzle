@@ -564,16 +564,24 @@ const SX=(()=>{let ctx=null,master=null,on=true;try{on=localStorage.getItem('eca
   selesai:t=>[523,659,784,1046,784,1046].forEach((f,i)=>mar(f,t+i*0.09,i===5?0.6:0.25,0.2))};
  function play(n,a){if(!on)return;const c=init();if(!c)return;if(c.state!=='running')c.resume().catch(()=>{});try{SFX[n](c.currentTime+.02,a)}catch(e){}}
  function wake(){if(!on)return;const c=init();if(c&&c.state!=='running')c.resume().catch(()=>{})}
- return{play,wake,set(v){on=v;try{localStorage.setItem('eca_snd',v?'1':'0')}catch(e){}},get on(){return on}}})();
+ return{play,wake,ctx(){return init()},set(v){on=v;try{localStorage.setItem('eca_snd',v?'1':'0')}catch(e){}},get on(){return on}}})();
 ['pointerdown','touchend','keydown'].forEach(ev=>addEventListener(ev,()=>SX.wake(),{capture:true,passive:true}));
 function sndUI(){const b=$('snd');b.setAttribute('aria-pressed',String(SX.on));b.setAttribute('aria-label',tx(SX.on?'sndOn':'sndOff'));
  b.querySelectorAll('.sw').forEach(p=>p.toggleAttribute('hidden',!SX.on));b.querySelector('.sx').toggleAttribute('hidden',SX.on)}
 $('snd').onclick=()=>{SX.set(!SX.on);sndUI()};
 
 /* ===== suara Kudi (berkas mp3 opsional; diam bila tidak ada) ===== */
-const KV=(()=>{const ada=SUARA_KUDI.length>0;let on=ada;try{on=ada&&localStorage.getItem('eca_kv')!=='0'}catch(e){}let au=null;
- function say(k){if(!on||!SUARA_KUDI.includes(k))return;try{if(au)au.pause();au=new Audio('suara/kudi_'+k+'_'+LANG+'.mp3');au.onerror=()=>{};au.play().catch(()=>{})}catch(e){}}
- return{say,ada,get on(){return on},set(v){on=v;try{localStorage.setItem('eca_kv',v?'1':'0')}catch(e){}}}})();
+const KV=(()=>{const ada=SUARA_KUDI.length>0;let on=ada;try{on=ada&&localStorage.getItem('eca_kv')!=='0'}catch(e){}let au=null,src=null,buf={},muat=false;
+ /* Suara dipasang lewat WebAudio (buffer sudah didekode di muka) supaya tidak ada jeda unduh/dekode
+    yang menggeser bunyi langkah (SFX); mulai 0,28 dtk sesudah SFX supaya urut dan tidak saling menimpa. */
+ function preload(){if(muat||!ada)return;const c=SX.ctx();if(!c)return;muat=true;
+  SUARA_KUDI.forEach(k=>{fetch('suara/kudi_'+k+'_'+LANG+'.mp3').then(r=>r.ok?r.arrayBuffer():null).then(d=>d&&new Promise((ok,no)=>c.decodeAudioData(d,ok,no))).then(b=>{if(b)buf[k]=b}).catch(()=>{})})}
+ function stop(){try{if(src){src.stop();src=null}}catch(e){}try{if(au)au.pause()}catch(e){}}
+ function say(k){if(!on||!SUARA_KUDI.includes(k))return;stop();const c=SX.ctx();
+  try{if(c&&buf[k]){if(c.state!=='running')c.resume().catch(()=>{});const s=c.createBufferSource();s.buffer=buf[k];s.connect(c.destination);s.start(c.currentTime+.28);src=s;return}}catch(e){}
+  try{au=new Audio('suara/kudi_'+k+'_'+LANG+'.mp3');au.onerror=()=>{};setTimeout(()=>{au&&au.play().catch(()=>{})},280)}catch(e){}}
+ ['pointerdown','touchend','keydown'].forEach(ev=>addEventListener(ev,preload,{capture:true,passive:true,once:true}));
+ return{say,ada,preload,get on(){return on},set(v){on=v;if(!v)stop();try{localStorage.setItem('eca_kv',v?'1':'0')}catch(e){}}}})();
 function kvUI(){const b=$('bKv');b.hidden=!KV.ada;b.setAttribute('aria-pressed',String(KV.on));b.setAttribute('aria-label',tx(KV.on?'kvOn':'kvOff'))}
 $('bKv').onclick=()=>{KV.set(!KV.on);kvUI()};
 
