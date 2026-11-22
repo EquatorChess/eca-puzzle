@@ -1,0 +1,100 @@
+/* ECA Puzzle – modul kirim hasil (dipasang otomatis oleh make_site.py di setiap halaman puzzle).
+ * Mengaitkan diri ke fungsi record() dan summary() milik pemain puzzle, tanpa mengubah pemainnya.
+ * Hasil dikirim ke Google Sheet ECA lewat API (Apps Script). Bila sinyal putus, hasil disimpan dulu
+ * di HP (antrean) dan dikirim ulang otomatis. Hanya untuk murid yang sudah masuk. */
+(function () {
+  var API = window.ECA_API, RT = window.ECA_RT || {};
+  if (!API || typeof record !== 'function' || typeof DATA === 'undefined') return;
+  var KODE = String(DATA.meeting || '').toLowerCase();
+  var ls = {
+    get: function (k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+    del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+  var token = ls.get('eca.token', null), profil = ls.get('eca.profil', null), ratingAwal = profil ? profil.rating : 0;
+
+  /* ---------- pita status di atas halaman ---------- */
+  var bar = document.createElement('div');
+  bar.setAttribute('role', 'status');
+  bar.style.cssText = 'font:700 13px/1.3 Atkinson,system-ui,sans-serif;padding:7px 12px;text-align:center;background:#FFF3E6;color:#5A0F1A;border-bottom:2px solid #EFE2D3';
+  function pita() {
+    if (token && profil) bar.innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1FA062;margin-right:6px"></span>' +
+      esc(profil.nama) + ' · Rating ' + profil.rating + ' · hasilmu tercatat otomatis';
+    else bar.innerHTML = 'Kamu belum masuk, jadi hasilmu tidak tercatat. <a href="index.html#masuk" style="color:#5A0F1A">Masuk dulu</a>';
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  pita(); document.body.insertBefore(bar, document.body.firstChild);
+
+  /* ---------- antrean kirim ---------- */
+  var sibuk = false;
+  function kirim(o) { var q = ls.get('eca.antre', []); q.push(o); ls.set('eca.antre', q); kuras(); }
+  function kuras() {
+    if (sibuk) return; var q = ls.get('eca.antre', []); if (!q.length) return;
+    sibuk = true;
+    fetch(API, { method: 'POST', body: JSON.stringify(q[0]) }).then(function (r) { return r.json(); }).then(function (j) {
+      var q2 = ls.get('eca.antre', []); q2.shift(); ls.set('eca.antre', q2); sibuk = false;
+      if (j && j.keluar) { ls.del('eca.token'); ls.del('eca.profil'); token = profil = null; pita(); ls.set('eca.antre', []); return; }
+      if (j && j.ok) terima(q[0], j);
+      kuras();
+    }, function () { sibuk = false; setTimeout(kuras, 8000); });
+  }
+  window.addEventListener('online', kuras);
+
+  function terima(o, j) {
+    if (o.aksi === 'soal' && profil) { profil.rating = j.rating; ls.set('eca.profil', profil); pita(); }
+    if (o.aksi === 'set' && j.profil) { profil = j.profil; ls.set('eca.profil', profil); pita(); kartuHasil(o.ringkas.ratingAwal, profil.rating, j.naikLevel); }
+    if (o.aksi === 'profil' && j.profil) { profil = j.profil; ratingAwal = profil.rating; ls.set('eca.profil', profil); pita(); }
+  }
+
+  /* ---------- kait ke pemain puzzle ---------- */
+  var asli = record;
+  record = function (me) {
+    var pertama = !R[idx];
+    var hasil = asli.apply(this, arguments);
+    try {
+      if (pertama && R[idx] && token) {
+        var p = me.p, rec = R[idx], a = (p.tree && p.tree.a) || [], salah1 = me.misses.filter(function (m) { return m.step === 1; })[0];
+        var san1 = me.log && me.log[0] ? String(me.log[0].s).split(' ').pop() : '';
+        var uci1 = salah1 ? salah1.u : ((a.filter(function (x) { return x.san === san1; })[0] || {}).u || '');
+        kirim({ aksi: 'soal', token: token, kodePuzzle: KODE, soal: {
+          id: p.id, no: idx + 1, rating: RT[p.id] || 0, res: rec.res, hints: rec.hints, miss: me.misses.length,
+          langkah: salah1 ? salah1.san : san1, uci: uci1, benar: a[0] ? a[0].san : '', benarUci: a[0] ? a[0].u : '',
+          detik: rec.tt, fen: p.fen } });
+      }
+    } catch (e) {}
+    return hasil;
+  };
+  var asliSum = summary, terkirim = false;
+  summary = function () {
+    var hasil = asliSum.apply(this, arguments);
+    try {
+      if (token && !terkirim) {
+        terkirim = true;
+        var rs = R.filter(Boolean), c = { M: 0, D: 0, K: 0, L: 0 }, bintang = 0, detik = 0;
+        rs.forEach(function (r) { c[r.res] = (c[r.res] || 0) + 1; bintang += r.stars || 0; detik += r.tt || 0; });
+        kirim({ aksi: 'set', token: token, kodePuzzle: KODE, ringkas: { M: c.M, D: c.D, K: c.K, L: c.L, jumlah: P.length,
+          bintang: bintang, detik: detik, ratingAwal: ratingAwal, judul: DATA.topic } });
+      }
+    } catch (e) {}
+    return hasil;
+  };
+
+  /* ---------- kartu rating di layar hasil ---------- */
+  function kartuHasil(r0, r1, naik) {
+    var sum = document.getElementById('sum'); if (!sum || !r0) return;
+    var d = r1 - r0, k = document.createElement('div');
+    k.style.cssText = 'margin:14px auto;max-width:420px;background:#fff;border:2.5px solid #EFE2D3;border-radius:20px;padding:14px;text-align:center;box-shadow:0 5px 0 #EFE2D3;color:#3F322F;font-family:Atkinson,system-ui,sans-serif';
+    k.innerHTML = '<div style="font-size:14px;color:#7A6B66">Rating puzzle kamu</div>' +
+      '<div style="font:800 32px/1.2 Gabarito,system-ui,sans-serif;color:#5A0F1A">' + r0 + ' → <span id="ecaR">' + r0 + '</span></div>' +
+      '<div style="display:inline-block;margin-top:6px;padding:4px 12px;border-radius:999px;font-weight:700;background:' + (d >= 0 ? '#E3F8EC;color:#0F6E3E' : '#FDECEC;color:#9B1C1C') + '">' + (d >= 0 ? '+' : '') + d + '</div>' +
+      (profil ? '<div style="margin-top:6px;font-size:14px">Gelar: <b>' + esc(profil.gelar) + '</b>' + (profil.gelarBerikut ? ' · ' + profil.kurang + ' poin lagi menuju ' + esc(profil.gelarBerikut) : '') + '</div>' : '') +
+      (naik ? '<div style="margin-top:8px;font-weight:700;color:#1FA062">Hebat! Level ' + naik + ' sekarang terbuka.</div>' : '');
+    sum.insertBefore(k, sum.firstChild);
+    var el = document.getElementById('ecaR'), t0 = null;
+    function anim(t) { if (!t0) t0 = t; var f = Math.min(1, (t - t0) / 900); el.textContent = Math.round(r0 + d * (1 - Math.pow(1 - f, 3))); if (f < 1) requestAnimationFrame(anim); }
+    requestAnimationFrame(anim);
+  }
+
+  if (token) kirim({ aksi: 'profil', token: token });
+  else kuras();
+})();

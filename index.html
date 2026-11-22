@@ -197,6 +197,56 @@ body.dk{padding-bottom:120px}
 .kl{font:800 .7rem/1 var(--bf);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-left:6px}
 .grp{margin-top:34px}
 .grp>h3{font-size:1.15rem;display:flex;align-items:center;gap:8px}
+
+.cm,.akun{white-space:nowrap}
+body.murid #cm{display:none}
+.akun{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:999px;padding:4px 12px 4px 4px;font-weight:700;font-size:.88rem;cursor:pointer}
+.akun .av{width:30px;height:30px}
+.av{display:inline-flex;align-items:flex-end;justify-content:center;border-radius:50%;overflow:hidden;flex:none;width:40px;height:40px}
+.av img{width:86%;margin-bottom:-8%}
+.mdl{position:fixed;inset:0;z-index:60;background:rgba(63,50,47,.45);display:none;align-items:flex-start;justify-content:center;padding:6vh 14px;overflow:auto}
+.mdl.on{display:flex}
+.mbox{position:relative;background:#fff;border-radius:26px;border:3px solid var(--maroon);box-shadow:0 8px 0 rgba(90,15,26,.2);max-width:460px;width:100%;padding:22px 20px 20px;animation:pop .35s var(--spring)}
+.mx{position:absolute;right:12px;top:10px;border:0;background:var(--panel2);border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer}
+.mbox h2{font-size:1.4rem;margin:0 0 4px}
+.mbox p{margin:4px 0;color:var(--muted);font-size:.95rem}
+.mkudi{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mkudi img{width:60px}
+.fld{width:100%;font:800 1.3rem var(--hf);letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:12px;border:3px solid var(--line);border-radius:16px;margin-top:12px;color:var(--maroon)}
+.fld:focus{outline:0;border-color:#3DB8F5}
+.pin{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.pin input{width:56px;height:64px;text-align:center;font:800 1.8rem var(--hf);border:3px solid var(--line);border-radius:16px;color:var(--maroon)}
+.pin input:focus{outline:0;border-color:#3DB8F5}
+.err{color:#B42318;font-weight:700;font-size:.92rem;min-height:1.4em;margin-top:8px;text-align:center}
+.mbox .btn{width:100%;justify-content:center;margin-top:12px;font-size:1rem;padding:12px}
+.btn.pri{background:var(--maroon);border-color:#3A0A12;color:#fff;box-shadow:0 4px 0 #3A0A12}
+.avs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.avs button{border:3px solid var(--line);background:#fff;border-radius:18px;padding:8px 4px 4px;cursor:pointer}
+.avs button[aria-pressed=true]{border-color:var(--maroon);box-shadow:0 4px 0 var(--maroon)}
+.avs img{width:64px;height:76px;object-fit:contain}
+.warna{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.warna button{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);cursor:pointer}
+.warna button[aria-pressed=true]{box-shadow:0 0 0 3px var(--maroon)}
+.kartu{max-width:560px;margin:12px auto 0;background:#fff;border:2.5px solid var(--line);border-radius:22px;padding:12px 16px;box-shadow:0 5px 0 var(--line);display:flex;gap:14px;align-items:center}
+.kartu .av{width:54px;height:54px}
+.kartu .ki{flex:1;min-width:0}
+.kartu .kr{font:800 1.8rem/1 var(--hf);color:var(--maroon)}
+.kartu .kg{font-size:.82rem;color:var(--muted)}
+.kartu .bar{margin-top:6px}
+.kartu svg{width:90px;height:34px;flex:none}
+.lc.lock{opacity:.55!important;cursor:not-allowed;background:var(--panel2)}
+.lc.lock b::before{content:"🔒 ";font-size:.85em}
+.tb2{display:flex;gap:6px;margin:12px 0 6px}
+.tb2 button{flex:1;border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:8px;font-weight:800;cursor:pointer;color:var(--muted)}
+.tb2 button[aria-pressed=true]{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.lb{list-style:none;margin:0;padding:0}
+.lb li{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:2px solid var(--line)}
+.lb li.me{background:#FFF3D6;border-radius:12px}
+.lb .ps{width:28px;font:800 1rem var(--hf);color:var(--maroon);text-align:center}
+.lb .nm2{flex:1;font-weight:700}
+.lb .nl{font:800 1rem var(--hf)}
+.lb .md{font-size:1.2rem}
+.lnk{background:none;border:0;color:var(--maroon);text-decoration:underline;font-weight:700;cursor:pointer;padding:0;font-size:.9rem}
 </style>
 </head>
 <body>
@@ -204,7 +254,7 @@ body.dk{padding-bottom:120px}
 <a class="skip" href="#konten">Lewati ke konten</a>
 <header class="top"><div class="wrap">
   <a href="#" aria-label="Equator Chess Academy, ke atas"><img src="logo.svg" alt="Equator Chess Academy" width="111" height="32"></a>
-  <nav aria-label="Navigasi utama"><a href="#pr">PR Kelas</a><a href="#semua">Semua puzzle</a><a href="#cara">Cara main</a><button class="cm" id="cm" aria-pressed="false">Mode pelatih</button></nav>
+  <nav aria-label="Navigasi utama"><a href="#pr">PR Kelas</a><a href="#semua">Semua puzzle</a><a href="#cara">Cara main</a><button class="cm" id="cm" aria-pressed="false">Mode pelatih</button><button class="cm" id="bMasuk" hidden style="background:#FFC23D;border-color:#FFC23D;color:#2B1A05">Masuk</button><button class="akun" id="bAkun" hidden></button></nav>
 </div></header>
 
 <section class="hero" id="hero" aria-labelledby="hi">
@@ -214,6 +264,7 @@ body.dk{padding-bottom:120px}
       <div class="kudi" id="kudi"><svg class="kd kd-senang" viewBox="-10 -10 220 260" aria-hidden="true"><g transform="rotate(0 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="16.28" stroke-linejoin="round"/></g></g><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#F1ECE5"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#F1ECE5"/><g transform="rotate(0 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#F1ECE5"/></g></g><g transform="rotate(0 100 186)"><g transform="translate(5.4 6) scale(0.86)"><circle cx="100" cy="92" r="10.78" class="eye" fill="#5A0F1A"/><circle cx="38" cy="120" r="4.69" fill="#5A0F1A"/><path d="M34 136 q9 7 20 2" fill="none" stroke="#5A0F1A" stroke-width="5.5" stroke-linecap="round"/></g></g><path d="M132 172 L162 192 L150 200 L126 180 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/><path d="M56 160 Q100 172 144 160 L146 176 Q100 188 54 176 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/></svg><svg class="kd kd-mikir" viewBox="-10 -10 220 260" aria-hidden="true"><g transform="rotate(-9 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="16.28" stroke-linejoin="round"/></g></g><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#5A0F1A" stroke="#5A0F1A" stroke-width="14" stroke-linejoin="round"/><path d="M58 170 H142 A110 110 0 0 0 156 204 H44 A110 110 0 0 0 58 170 Z" fill="#F1ECE5"/><path d="M34 212 A12 12 0 0 1 46 200 H154 A12 12 0 0 1 166 212 V224 A12 12 0 0 1 154 236 H46 A12 12 0 0 1 34 224 Z" fill="#F1ECE5"/><g transform="rotate(-9 100 186)"><g transform="translate(5.4 6) scale(0.86)"><path d="M60 200 A68.75 68.75 0 0 1 80 150 A87.5 87.5 0 0 1 32 142 A31.25 31.25 0 0 1 40 98 A175.0 175.0 0 0 0 95 48 L106 24 A6.25 6.25 0 0 1 118 24 L126 48 A75.0 75.0 0 0 1 153.43 70.08 A12.500 12.500 0 0 1 163.88 88.59 A12.500 12.500 0 0 1 168.71 109.28 A12.500 12.500 0 0 1 167.55 130.50 A12.500 12.500 0 0 1 162.81 151.26 A12.500 12.500 0 0 1 160.30 172.24 A225.0 225.0 0 0 0 160 200 Z" fill="#F1ECE5"/></g></g><g transform="rotate(-9 100 186)"><g transform="translate(5.4 6) scale(0.86)"><circle cx="105" cy="86" r="10.78" class="eye" fill="#5A0F1A"/><circle cx="38" cy="120" r="4.69" fill="#5A0F1A"/><path d="M38 139 h15" fill="none" stroke="#5A0F1A" stroke-width="5.5" stroke-linecap="round"/></g></g><path d="M132 172 L162 192 L150 200 L126 180 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/><path d="M56 160 Q100 172 144 160 L146 176 Q100 188 54 176 Z" fill="#AA3F3F" stroke="#5A0F1A" stroke-width="5" stroke-linejoin="round"/></svg><div class="kshadow"></div></div>
       <div class="bubble" id="bubble"><h1 class="hi" id="hi">Hai, aku Kudi!</h1><p id="say">Pilih kelasmu, lalu ikuti jalurku atau pilih bidak.</p></div>
     </div>
+    <div id="kartuRating"></div>
     <div class="tabs" role="group" aria-label="Kelas" id="tabs"></div>
     <div id="jal"></div>
     <div class="stagebox">
@@ -274,6 +325,7 @@ body.dk{padding-bottom:120px}
     <button class="btn" id="dpv" aria-expanded="false">Lihat pesan</button><button class="btn" id="dcp">Salin</button><a class="btn wa" id="dwa" href="#" target="_blank" rel="noopener">WhatsApp</a><button class="btn" id="dx" aria-label="Kosongkan pilihan">✕</button></div>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
+<div class="mdl" id="mdl"><div class="mbox" role="dialog" aria-modal="true" aria-labelledby="mjudul"><button class="mx" id="mx" aria-label="Tutup">✕</button><div id="mbody"></div></div></div>
 <noscript><p class="wrap">Aktifkan JavaScript untuk melihat daftar puzzle.</p></noscript>
 
 <script>
@@ -324,9 +376,11 @@ function pickTema(t){
   sub2.querySelectorAll('button').forEach(function(b,k){b.setAttribute('aria-pressed',k===t)});
   var ns=x.sets.reduce(function(a,b){return a+b.n},0);
   info.innerHTML='<div class="swap"><h2>'+esc(x.nama)+'</h2><p>'+esc(x.desc)+' '+x.sets.length+' puzzle · '+ns+' soal.</p></div>';
-  var nx=-1;x.sets.some(function(it,k){if(!seen[it.c]){nx=k;return true}});
   lv.classList.remove('sh');
-  lv.innerHTML=x.sets.map(function(it,k){var cls='lc'+(seen[it.c]?' vs':'')+(k===nx?' nx':'');
+  var kunci=window.ECA_kunci||function(){return false};
+  var nx=-1;x.sets.some(function(it,k){if(!seen[it.c]&&!kunci(it.lv)){nx=k;return true}});
+  lv.innerHTML=x.sets.map(function(it,k){var lk=kunci(it.lv),cls='lc'+(seen[it.c]?' vs':'')+(k===nx?' nx':'')+(lk?' lock':'');
+    if(lk)return '<span class="'+cls+'" style="--d:'+(k*38)+'ms" title="Terkunci"><b>'+lvName(it)+'</b><span>Lulus Campuran Level '+(it.lv-1)+' dulu</span></span>';
     return '<a class="'+cls+'" href="'+it.c+'.html" data-c="'+it.c+'" style="--d:'+(k*38)+'ms">'+(k===nx?'<i class="tag">Berikutnya</i>':'')+'<b>'+lvName(it)+'</b><span>'+it.c.toUpperCase()+' · rating ±'+it.r+' · '+it.n+' soal</span></a>'}).join('');
   requestAnimationFrame(function(){requestAnimationFrame(function(){lv.classList.add('sh')})});
   try{history.replaceState(null,'','#'+x.id)}catch(e){}
@@ -381,6 +435,104 @@ if(h)KL.some(function(k){return k.fam.some(function(f,i){return f.tema.some(func
 tabs();jalur();drawRow(pf,pt);prs();
 $('#hi').textContent=greet+' Aku Kudi.';
 if(store.get('eca.coach',false))coach(true);
+window.__ulang=function(){if(fam>=0)pickTema(tema)};window.__sapa=function(h,t){talk(h,t)};
+})();
+</script>
+<script>
+/* ---------- Akun murid: masuk, PIN, avatar, rating, peringkat, kunci level ---------- */
+(function(){
+var API='https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSytESMJeKdrebcxwR4JmX-RZfgiTJk1IM8jxFMLQ/exec';if(!API)return;
+var $=function(s){return document.querySelector(s)};
+var ls={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del:function(k){try{localStorage.removeItem(k)}catch(e){}}};
+var MASKOT=[['kudi','Kudi'],['pino','Pino'],['benteng','Benteng']],WARNA={merah:'#FF6B5B',biru:'#3DB8F5',ungu:'#A08BFF',hijau:'#3FD18A',kuning:'#FFC23D',pink:'#FF7EB6'};
+var token=ls.get('eca.token',null),profil=ls.get('eca.profil',null);
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function av(a){var p=String(a||'kudi-merah').split('-');return '<span class="av" style="background:'+(WARNA[p[1]]||'#F2DBD5')+'"><img alt="" src="maskot/'+(p[0]||'kudi')+'.svg"></span>'}
+function api(o){return fetch(API,{method:'POST',body:JSON.stringify(o)}).then(function(r){return r.json()})}
+/* kunci level: level terbuka + level yang belum punya set Campuran terbuka otomatis */
+window.ECA_kunci=function(lv){if(!profil||!lv)return false;var buka=profil.level||1,cmp=profil.campuran||[];
+  while(buka<8&&cmp.indexOf(buka)<0)buka++;return lv>buka};
+/* modal */
+var mdl=$('#mdl'),mb=$('#mbody');
+function buka(h){mb.innerHTML=h;mdl.classList.add('on');var f=mb.querySelector('input');if(f)setTimeout(function(){f.focus()},60)}
+function tutup(){mdl.classList.remove('on')}
+$('#mx').onclick=tutup;mdl.addEventListener('click',function(e){if(e.target===mdl)tutup()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')tutup()});
+function kudiKecil(){return '<div class="mkudi"><img alt="" src="maskot/kudi.svg"><div>'}
+function sibuk(b,on){if(b){b.disabled=on;b.style.opacity=on?.6:1}}
+/* langkah 1: kode masuk */
+function langkahKode(kode){
+  buka(kudiKecil()+'<h2 id="mjudul">Masuk</h2><p>Tulis kode masuk dari pelatihmu.</p></div></div><input class="fld" id="fKode" placeholder="KUDA-27" value="'+esc(kode||'')+'" autocomplete="off" autocapitalize="characters"><div class="err" id="err"></div><button class="btn pri" id="bLanjut">Lanjut</button>');
+  var go=function(){var b=$('#bLanjut'),k=$('#fKode').value.trim().toUpperCase();if(!k){$('#err').textContent='Isi kode masuk dulu, ya.';return}
+    sibuk(b,true);api({aksi:'masuk',kode:k}).then(function(j){sibuk(b,false);if(!j.ok){$('#err').textContent=j.pesan;return}
+      if(j.perluPin)langkahBuatPin(k,j.nama);else langkahPin(k,j.nama)},function(){sibuk(b,false);$('#err').textContent='Tidak tersambung. Cek internet, lalu coba lagi.'})};
+  $('#bLanjut').onclick=go;$('#fKode').onkeydown=function(e){if(e.key==='Enter')go()};
+  if(kode)go();
+}
+function kotakPin(id){return '<div class="pin" id="'+id+'">'+[0,1,2,3].map(function(){return '<input inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Angka PIN">'}).join('')+'</div>'}
+function pasangPin(id,selesai){var box=$('#'+id),ins=box.querySelectorAll('input');
+  ins.forEach(function(x,i){x.oninput=function(){x.value=x.value.replace(/\D/g,'').slice(-1);if(x.value&&i<3)ins[i+1].focus();var v=nilai();if(v.length===4&&selesai)selesai(v)};
+    x.onkeydown=function(e){if(e.key==='Backspace'&&!x.value&&i>0)ins[i-1].focus()}});
+  function nilai(){return Array.prototype.map.call(ins,function(x){return x.value}).join('')}
+  return {nilai:nilai,kosong:function(){ins.forEach(function(x){x.value=''});ins[0].focus()}}}
+/* langkah 2a: PIN untuk murid lama */
+function langkahPin(kode,nama){
+  buka(kudiKecil()+'<h2 id="mjudul">Halo, '+esc(nama)+'!</h2><p>Masukkan PIN 4 angka milikmu.</p></div></div>'+kotakPin('p1')+'<div class="err" id="err"></div><button class="btn pri" id="bOk">Masuk</button><p style="text-align:center;margin-top:10px">Lupa PIN? Minta pelatih menekan Reset PIN.</p>');
+  var p=pasangPin('p1',function(){kirim()});
+  function kirim(){var b=$('#bOk'),v=p.nilai();if(v.length<4){$('#err').textContent='PIN harus 4 angka.';return}
+    sibuk(b,true);api({aksi:'masuk',kode:kode,pin:v}).then(function(j){sibuk(b,false);if(!j.ok){$('#err').textContent=j.pesan;p.kosong();return}berhasil(j)},function(){sibuk(b,false);$('#err').textContent='Tidak tersambung. Coba lagi.'})}
+  $('#bOk').onclick=kirim;
+}
+/* langkah 2b: murid baru buat PIN + pilih avatar */
+function langkahBuatPin(kode,nama){
+  var pilih={m:'kudi',w:'merah'};
+  buka(kudiKecil()+'<h2 id="mjudul">Selamat datang, '+esc(nama)+'!</h2><p>Pilih teman avatarmu, lalu buat PIN 4 angka.</p></div></div>'+
+    '<div class="avs" id="avs">'+MASKOT.map(function(m){return '<button data-m="'+m[0]+'" aria-pressed="'+(m[0]==='kudi')+'"><img alt="" src="maskot/'+m[0]+'.svg"><div style="font-weight:800;font-size:.85rem">'+m[1]+'</div></button>'}).join('')+'</div>'+
+    '<div class="warna" id="wrn">'+Object.keys(WARNA).map(function(w){return '<button data-w="'+w+'" aria-label="Warna '+w+'" aria-pressed="'+(w==='merah')+'" style="background:'+WARNA[w]+'"></button>'}).join('')+'</div>'+
+    '<p style="margin-top:14px;text-align:center"><b>Buat PIN</b> (jangan beri tahu teman)</p>'+kotakPin('p1')+'<p style="text-align:center;margin-top:10px"><b>Ulangi PIN</b></p>'+kotakPin('p2')+'<div class="err" id="err"></div><button class="btn pri" id="bOk">Simpan dan mulai</button>');
+  $('#avs').onclick=function(e){var b=e.target.closest('button');if(!b)return;pilih.m=b.dataset.m;$('#avs').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)})};
+  $('#wrn').onclick=function(e){var b=e.target.closest('button');if(!b)return;pilih.w=b.dataset.w;$('#wrn').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)})};
+  var a=pasangPin('p1',function(){$('#p2 input').focus()}),c=pasangPin('p2');
+  $('#bOk').onclick=function(){var b=$('#bOk'),v=a.nilai();
+    if(v.length<4){$('#err').textContent='PIN harus 4 angka.';return}
+    if(v!==c.nilai()){$('#err').textContent='Kedua PIN belum sama. Coba lagi.';c.kosong();return}
+    sibuk(b,true);api({aksi:'buatPin',kode:kode,pin:v,avatar:pilih.m+'-'+pilih.w}).then(function(j){sibuk(b,false);if(!j.ok){$('#err').textContent=j.pesan;return}berhasil(j)},function(){sibuk(b,false);$('#err').textContent='Tidak tersambung. Coba lagi.'})};
+}
+function berhasil(j){token=j.token;profil=j.profil;ls.set('eca.token',token);ls.set('eca.profil',profil);tutup();tampil();
+  if(window.__sapa)window.__sapa('Hai, '+profil.nama+'!','Rating-mu '+profil.rating+'. Ayo kita latihan!');
+  try{history.replaceState(null,'',location.pathname)}catch(e){}}
+/* tampilan header + kartu rating */
+function garis(g){if(!g||g.length<2)return '';var mn=Math.min.apply(0,g)-5,mx=Math.max.apply(0,g)+5;
+  return '<svg viewBox="0 0 90 34" aria-hidden="true"><polyline fill="none" stroke="#3DB8F5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="'+g.map(function(v,i){return (i/(g.length-1)*84+3).toFixed(1)+','+(31-(v-mn)/(mx-mn)*28).toFixed(1)}).join(' ')+'"/></svg>'}
+function tampil(){
+  var bm=$('#bMasuk'),ba=$('#bAkun'),kr=$('#kartuRating');
+  if(!token||!profil){document.body.classList.remove('murid');bm.hidden=false;ba.hidden=true;kr.innerHTML='';if(window.__ulang)window.__ulang();return}
+  document.body.classList.add('murid');bm.hidden=true;ba.hidden=false;ba.innerHTML=av(profil.avatar)+esc(profil.nama)+' · '+profil.rating;
+  var pr=profil.gelarBerikut?Math.max(4,Math.min(100,100-Math.round(profil.kurang/3))):100;
+  kr.innerHTML='<div class="kartu">'+av(profil.avatar)+'<div class="ki"><div class="kg">Rating puzzle '+esc(profil.nama)+' · Gelar <b>'+esc(profil.gelar)+'</b></div><div class="kr">'+profil.rating+'</div>'+
+    '<div class="kg">'+(profil.gelarBerikut?profil.kurang+' poin lagi menuju '+esc(profil.gelarBerikut):'Gelar tertinggi!')+' · <button class="lnk" id="bPeringkat">Papan peringkat</button></div>'+
+    '<div class="bar"><i style="width:'+pr+'%"></i></div></div>'+garis(profil.grafik)+'</div>';
+  $('#bPeringkat').onclick=peringkat;
+  if(window.__ulang)window.__ulang();
+}
+$('#bMasuk').onclick=function(){langkahKode('')};
+$('#bAkun').onclick=function(){buka('<div class="mkudi">'+av(profil.avatar).replace('class="av"','class="av" style="width:64px;height:64px"')+'<div><h2 id="mjudul">'+esc(profil.nama)+'</h2><p>Kelas '+esc(profil.kelas)+' · Rating '+profil.rating+' · Gelar '+esc(profil.gelar)+'</p></div></div>'+
+  '<p>Level terbuka: <b>'+profil.level+'</b> · Soal dikerjakan: <b>'+profil.soal+'</b></p><button class="btn pri" id="bPr2">Papan peringkat kelas</button><button class="btn" id="bKeluar">Keluar dari HP ini</button>');
+  $('#bPr2').onclick=peringkat;$('#bKeluar').onclick=function(){token=profil=null;ls.del('eca.token');ls.del('eca.profil');tutup();tampil()}};
+/* papan peringkat */
+function peringkat(){buka('<h2 id="mjudul">Papan peringkat '+esc(profil.kelas)+'</h2><div class="tb2" id="tb2"><button data-p="rating" aria-pressed="true">Rating tertinggi</button><button data-p="minggu" aria-pressed="false">Naik minggu ini</button></div><div id="lbx"><p>Memuat…</p></div>');
+  api({aksi:'peringkat',token:token}).then(function(j){if(!j.ok){$('#lbx').innerHTML='<p>'+esc(j.pesan||'Belum bisa dimuat.')+'</p>';return}
+    if(j.mati){$('#lbx').innerHTML='<p>Papan peringkat kelas ini sedang dimatikan pelatih.</p>';return}
+    function isi(k){var d=j[k],md=['🥇','🥈','🥉'];
+      var row=function(x){return '<li class="'+(x.saya?'me':'')+'"><span class="ps">'+(x.pos<=3?'<span class="md">'+md[x.pos-1]+'</span>':x.pos)+'</span>'+av(x.avatar)+'<span class="nm2">'+esc(x.nama)+(x.saya?' (kamu)':'')+'</span><span class="nl">'+(k==='minggu'&&x.nilai>0?'+':'')+x.nilai+'</span></li>'};
+      $('#lbx').innerHTML=d.atas.length?'<ul class="lb">'+d.atas.map(row).join('')+(d.saya?'<li style="justify-content:center;border:0">…</li>'+row(d.saya):'')+'</ul>':'<p>Belum ada data. Ayo jadi yang pertama!</p>'}
+    isi('rating');$('#tb2').onclick=function(e){var b=e.target.closest('button');if(!b)return;$('#tb2').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});isi(b.dataset.p)}},
+    function(){$('#lbx').innerHTML='<p>Tidak tersambung. Coba lagi nanti.</p>'})}
+/* mulai */
+var m=location.hash.match(/masuk=([A-Za-z0-9-]+)/);
+tampil();
+if(m&&!token)langkahKode(decodeURIComponent(m[1]).toUpperCase());
+if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=profil=null;ls.del('eca.token');ls.del('eca.profil')}else if(j.ok){profil=j.profil;ls.set('eca.profil',profil)}tampil()},function(){});
 })();
 </script>
 </body>
