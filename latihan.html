@@ -61,7 +61,7 @@ main{max-width:1100px;margin:0 auto;padding:8px 16px calc(var(--dock) + 30px)}
 .chip svg{width:19px;height:19px}.chip.hot{color:#A34400}
 @media (prefers-color-scheme:dark){.chip.hot{color:#FF9B45}}
 .chip.pop{animation:pop .4s}
-.boardwrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1;background:var(--maroon);padding:7px;border-radius:22px;box-shadow:0 6px 0 var(--maroon-d);touch-action:none;user-select:none;-webkit-user-select:none}
+.boardwrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1;background:var(--maroon);padding:7px;border-radius:22px;box-shadow:0 6px 0 var(--maroon-d);touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none}
 @media (min-width:900px){.boardwrap{max-width:min(620px,max(380px,calc(100vh - 170px)))}}
 svg#bd{width:100%;height:100%;border-radius:14px}
 .boardwrap.shake{animation:shake .38s}.boardwrap.flash{animation:flashok .6s}.boardwrap.flashno{animation:flashno .6s}
@@ -153,7 +153,8 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
 @keyframes ckp{0%,100%{opacity:.35}50%{opacity:.8}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+
+/*fix-scroll-22nov*/@media (max-width:899px){.boardwrap{max-width:min(620px,max(260px,calc(100vh - 110px)))}}</style>
 </head>
 <body>
 <div id="intro"><div class="intro-in">
@@ -586,6 +587,7 @@ const own=s=>{const x=cur.pos.b[s];return x&&(isW(x)===(cur.pos.turn==='w'))};
 function pt(e){const r=svg.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*800]}
 let drag=null;
 const aktif=()=>cur&&!cur.lock&&!cur.done&&!cur.lihat;
+/*fix-scroll-22nov*/svg.addEventListener('touchstart',e=>{if(e.touches.length!==1||!aktif())return;const[x,y]=pt(e.touches[0]);const s=sqAt(x,y);if(s>=0&&own(s))e.preventDefault()},{passive:false});
 svg.addEventListener('pointerdown',e=>{if(!aktif())return;const[x,y]=pt(e);const s=sqAt(x,y);if(s<0)return;
  if(cur.sel>=0&&cur.sel!==s&&!own(s)){tryMove(cur.sel,s);return}
  if(own(s)){select(s);const pc=view.pieces.find(p=>p.sq===s);if(pc){drag={pc,s,sx:x,sy:y,moved:false};pc.el.classList.add('drag');pc.el.parentNode.appendChild(pc.el);try{svg.setPointerCapture(e.pointerId)}catch(_){}}}else select(-1)});
