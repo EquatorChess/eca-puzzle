@@ -151,6 +151,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .dk-msg b{display:block;font:800 19px/1.15 var(--head)}.dk-msg small{display:block;font-size:14px;line-height:1.3}
 .dk-b{flex:1;display:flex;gap:10px;justify-content:center}.dk-b .btn{flex:1}
 .dk-b.solo .btn{flex:0 1 280px}
+/* bilah alat gaya Lichess saat main: ikon kecil + satu baris status */
+#dock.tl .dk-in{flex-wrap:nowrap;gap:12px}#dock.tl .dk-msg{flex:1 1 auto}#dock.tl .dk-b{flex:0 0 auto;gap:10px;justify-content:flex-end}
+#dock.tl:not(.no) .dk-b{flex:1;justify-content:center}
+#dock.tl .dk-msg small{font-size:13px}
+.dk-b .btn.tool{position:relative;flex:0 0 auto;width:54px;height:48px;padding:0;border-radius:14px;box-shadow:none;border:2px solid var(--line);display:grid;place-items:center}
+.dk-b .btn.tool svg{width:26px;height:26px}.dk-b .btn.tool>span:not(.cnt){display:none}
+.dk-b .btn.tool.hint{border-color:var(--kunyit-d)}
+.dk-b .btn.tool .cnt{position:absolute;top:-9px;right:-7px;font-size:11px;line-height:1;padding:3px 6px;border-radius:9px;display:block}
+.dk-b .btn.tool:disabled{opacity:.45}
 .btn.tool{background:var(--card);color:var(--ink);border:2px solid var(--kunyit-d);box-shadow:0 4px 0 var(--kunyit-d);padding:9px 14px;text-transform:none;letter-spacing:0;font-size:16px}
 .btn.tool svg{color:var(--kunyit-d)}
 .btn.tool .cnt{background:var(--kunyit);color:#3a0a12;font-weight:800}
@@ -487,7 +496,8 @@ const Q=new URLSearchParams(location.search);
 const SESI_N=Math.max(3,Math.min(30,parseInt(Q.get('n'),10)||10));
 const TAHAP=Math.max(1,Math.min(3,parseInt(Q.get('tahap'),10)||1)); /* rak tahap 2-3 sudah ada datanya, tampil nanti (?tahap=3 untuk melihat) */
 const MIN_RAK=30;           /* rak tampil bila soal di sekitar rating murid >= ini */
-const SALAH_SOLUSI=3;       /* tombol Lihat solusi muncul setelah salah sebanyak ini dalam satu soal */
+const SALAH_SOLUSI=1;       /* tombol Lihat solusi muncul setelah salah sebanyak ini dalam satu soal (keputusan coach 22 Nov 23.15: sejak salah pertama) */
+const NOX3=3;               /* pesan 'masih belum tepat' + suara tak_apa baru setelah salah sebanyak ini */
 /* Suara Kudi: isi daftar kunci yang berkasnya SUDAH ada di folder suara/ (kudi_<kunci>_<bahasa>.mp3). Kosong = Kudi diam, tombol disembunyikan. */
 const SUARA_KUDI=["badge_best","badge_blunder","badge_brilliant","badge_excellent","badge_good","badge_great","badge_inaccuracy","badge_miss","badge_mistake","benar_1","benar_2","benar_3","beruntun","beruntun_10","beruntun_5","bidak_benteng","bidak_gajah","bidak_kuda","bidak_menteri","bidak_pion","bidak_raja","cari_langkah","castling","check","checkmate","coba_lagi","dadah","draw","giliran_hitam","giliran_putih","halo","hampir","istirahat","lanjut","lanjutkan","lawan_jalan","lihat_kotak","mulai","naik_level","petunjuk","pr_lanjut","pr_mulai","pr_selesai","promotion","rating_naik","rekor","selamat_datang","selesai","setengah","situs_ada_tugas","situs_masuk","situs_pilih","situs_pilih_latihan","situs_pilih_level","situs_puzzle_harian","situs_sambutan","situs_tanpa_tugas","situs_ujian_siap","soal_10","soal_15","soal_20","soal_25","soal_30","soal_5","soal_terakhir","solusi","stalemate","tak_apa","tantangan","tema_hari_ini","tema_ini","tema_lain","tema_tugas","tetap_semangat","tip_cek_lagi","tip_cek_tiga","tip_lawan","tip_pelan","tip_raja","tugas_baru","tugas_selesai","ujian_belum","ujian_lulus","ujian_mulai","warna_hitam","warna_putih"];
 
@@ -504,10 +514,10 @@ const instruksi=()=>M.rating<700&&rakNow&&INSTRUKSI[rakNow.id]?INSTRUKSI[rakNow.
 
 /* ===== teks ===== */
 const I18N={
-id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan Hari Ini',heroP:'10 soal yang pas untuk kemampuanmu.',temaH:'Latih satu tema',temaP:'Pilih tema yang ingin diasah. Kesulitan tetap mengikuti ratingmu.',stR:'Rating',stH:'Hari ini',stS:'Hari beruntun',stHr:'hari',go:'Mulai',chal:'Tantangan +200',
+id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan Hari Ini',heroP:'Soal yang pas untuk kemampuanmu.',temaH:'Latih satu tema',temaP:'Pilih tema yang ingin diasah. Kesulitan tetap mengikuti ratingmu.',stR:'Rating',stH:'Hari ini',stS:'Hari beruntun',stHr:'hari',go:'Mulai',chal:'Tantangan +200',
  ulangT:'Ulangi soal gagal',ulangX:(a,b)=>a?a+' soal siap diulang':b+' soal menunggu',foot:'Soal dari database puzzle Lichess. Setelah masuk, hasilmu tercatat dan ikut menghitung ratingmu.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Latihan Puzzle',
- w:'Putih jalan',b:'Hitam jalan',lawan:'Lawan jalan…',hint:'Petunjuk',hintC:'−0,5',sol:'Lihat solusi',next:'Lanjut',hasil:'Lihat hasil',again:'Coba lagi',
+ w:'Putih jalan',b:'Hitam jalan',lawan:'Lawan jalan…',hint:'Petunjuk',hintC:'−0,5',skip:'Lewati',sol:'Lihat solusi',next:'Lanjut',hasil:'Lihat hasil',again:'Coba lagi',
  lichess:'Lihat di Lichess ↗',lapor:'Laporkan soal',batal:'Batal',kirim:'Kirim',rating:'Rating soal',
  lapPh:'Catatan tambahan (opsional)',lapOk:'Terima kasih! Laporan disimpan di HP ini (prototipe: belum terkirim ke Sheet).',lapPilih:'Pilih salah satu alasan dulu.',
  lapA:['Jawabanku benar, tetapi ditolak','Posisi atau langkahnya aneh','Terlalu mudah','Terlalu sulit','Lainnya'],
@@ -518,12 +528,12 @@ id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+
  mulai:'Siap? Kita mulai!',giliran:{w:'Giliran putih!',b:'Giliran hitam!'},tema:'Tema',
  outT:'Keluar dari sesi?',outX:'Soal yang sudah selesai tetap tercatat.',outNo:'Tetap main',outYes:'Keluar',
  sumA:'Luar biasa!',sumB:'Selesai! Kerja bagus hari ini!',sumC:'Terus berlatih, ya!',tB:'Benar sendiri',tP:'Dengan petunjuk',tS:'Belum tepat',tSk:'Skor',tRun:'Beruntun terbaik',
- lagi:'Main lagi',menu:'Menu latihan',rL:{1:'Benar',5:'Dengan petunjuk',0:'Belum tepat'},muatGagal:'Soal tidak bisa dimuat. Periksa sinyal, lalu coba lagi.',kosong:'Belum ada soal yang cocok di sini.',
+ lagi:'Lanjut puzzle berikutnya',menu:'Menu latihan',rL:{1:'Benar',5:'Dengan petunjuk',0:'Belum tepat'},muatGagal:'Soal tidak bisa dimuat. Periksa sinyal, lalu coba lagi.',kosong:'Belum ada soal yang cocok di sini.',
  mat:'Checkmate!',skak:'Check!',ulangNama:'Ulangi soal gagal'},
-en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s Practice',heroP:'10 puzzles that fit your level.',temaH:'Practice one theme',temaP:'Pick a theme to sharpen. Difficulty still follows your rating.',stR:'Rating',stH:'Today',stS:'Day streak',stHr:'days',go:'Start',chal:'Challenge +200',
+en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s Practice',heroP:'Puzzles that fit your level.',temaH:'Practice one theme',temaP:'Pick a theme to sharpen. Difficulty still follows your rating.',stR:'Rating',stH:'Today',stS:'Day streak',stHr:'days',go:'Start',chal:'Challenge +200',
  ulangT:'Retry missed puzzles',ulangX:(a,b)=>a?a+' ready to retry':b+' waiting',foot:'Puzzles from the Lichess puzzle database. When you are signed in, results are saved and count toward your rating.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Puzzle Practice',
- w:'White to move',b:'Black to move',lawan:'Opponent moves…',hint:'Hint',hintC:'−0.5',sol:'Show solution',next:'Next',hasil:'See results',again:'Try again',
+ w:'White to move',b:'Black to move',lawan:'Opponent moves…',hint:'Hint',hintC:'−0.5',skip:'Skip',sol:'Show solution',next:'Next',hasil:'See results',again:'Try again',
  lichess:'View on Lichess ↗',lapor:'Report puzzle',batal:'Cancel',kirim:'Send',rating:'Puzzle rating',
  lapPh:'Extra note (optional)',lapOk:'Thank you! The report is saved on this phone (prototype: not sent to the Sheet yet).',lapPilih:'Choose a reason first.',
  lapA:['My answer was right but rejected','The position or moves look wrong','Too easy','Too hard','Other'],
@@ -534,7 +544,7 @@ en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,hel
  mulai:'Ready? Let\'s start!',giliran:{w:'White\'s turn!',b:'Black\'s turn!'},tema:'Theme',
  outT:'Leave this session?',outX:'Finished puzzles are still saved.',outNo:'Keep playing',outYes:'Leave',
  sumA:'Amazing!',sumB:'All done! Great work today!',sumC:'Keep practicing!',tB:'Solved alone',tP:'With a hint',tS:'Missed',tSk:'Score',tRun:'Best streak',
- lagi:'Play again',menu:'Practice menu',rL:{1:'Correct',5:'With a hint',0:'Missed'},muatGagal:'Puzzles could not be loaded. Check your connection and try again.',kosong:'No puzzles fit here yet.',
+ lagi:'Next puzzles',menu:'Practice menu',rL:{1:'Correct',5:'With a hint',0:'Missed'},muatGagal:'Puzzles could not be loaded. Check your connection and try again.',kosong:'No puzzles fit here yet.',
  mat:'Checkmate!',skak:'Check!',ulangNama:'Retry missed puzzles'}};
 const tx=(k,...a)=>{let s=I18N[LANG][k];if(s===undefined)s=I18N.id[k];return typeof s==='function'?s(...a):s};
 const fmt=v=>String(v).replace('.',LANG==='id'?',':'.');
@@ -680,9 +690,7 @@ function renderTema(){const R=$('raks'),C=$('fams');R.innerHTML='';C.innerHTML='
 function tampil(id){for(const x of['home','play','sum'])$(x).hidden=x!==id;$('dock').hidden=id!=='play';
  const inHome=id==='home';$('bBackT').textContent=tx(inHome?'back':'backPlay');$('bBack').setAttribute('href',inHome?'index.html':'#');
  $('hdT').textContent=inHome?tx('judul'):nmRak(rakNow);window.scrollTo(0,0)}
-$('bBack').onclick=e=>{if(!$('home').hidden)return;e.preventDefault();
- if(!$('play').hidden&&sesi.some(s=>s.r===null)&&sesi.some(s=>s.r!==null||cur&&(cur.salah||cur.hint))){$('mOut').hidden=false;$('outNo').focus()}else keHome()};
-$('outNo').onclick=()=>{$('mOut').hidden=true};$('outYes').onclick=()=>{$('mOut').hidden=true;keHome()};
+$('bBack').onclick=e=>{if(!$('home').hidden)return;e.preventDefault();keHome()}; /* keluar bebas: soal yang belum selesai tidak dicatat dan boleh muncul lagi */
 function keHome(){cur=null;hideMsg();tampil('home');renderHome()}
 const campur=()=>IDX&&IDX.rak.find(r=>r.id==='campur');
 $('bGo').onclick=()=>mulaiRak(campur(),false);
@@ -735,17 +743,22 @@ function oppMove(){const m=findM(cur.pos,cur.p.moves[cur.ply]);if(!m)return;doMo
 const IC={ok:'✓',no:'✗',info:'!'};
 const ikHint='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z"/></svg>';
 const ikNext='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-function dock(kind,t,x,btns){const D=$('dock'),sig=kind+'|'+(t||'');const baru=D.dataset.sig!==sig;D.dataset.sig=sig;D.className=kind||'';$('dkMsg').hidden=!t;
+function dock(kind,t,x,btns){const D=$('dock'),sig=kind+'|'+(t||'');const baru=D.dataset.sig!==sig;D.dataset.sig=sig;D.className=kind||'';D.classList.toggle('tl',!!btns.length&&/tool/.test(btns[0][1]));$('dkMsg').hidden=!t;
  if(t){$('dkIc').textContent=IC[kind]||'';$('dkT').textContent=t;$('dkX').textContent=x||'';$('dkX').hidden=!x}
  const B=$('dkB');B.innerHTML='';B.className='dk-b'+(btns.length<2?' solo':'');for(const[l,c,f,id]of btns){const b=document.createElement('button');b.className='btn '+c;if(id)b.id=id;b.innerHTML=l;b.onclick=f;B.appendChild(b)}
  if(kind&&baru){void D.offsetWidth;D.classList.add('go');if(kind==='ok'){const b=B.querySelector('button');if(b)b.focus({preventScroll:true})}}}
-const ikSol='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const ikSol='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"/></svg>';
+const ikSkip='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l9 7-9 7zM19 5v14"/></svg>';
+/* Lewati: soal dibuang dari sesi tanpa skor, tanpa rating, tanpa dicatat; boleh muncul lagi di sesi lain */
+function lewati(){const me=cur;if(!me||me.done||me.lihat)return;me.lock=true;sesi.splice(idx,1);hideMsg();
+ if(!sesi.length)return keHome();if(idx>=sesi.length)return ringkasan();KV.say('lanjut');mulaiSoal()}
 function dockUI(){if(!cur)return;
  if(cur.done)return dock(cur.dk.kind,cur.dk.t,cur.dk.x,[[escH(tx(idx>=sesi.length-1?'hasil':'next'))+ikNext,'ok',lanjut,'bNext']]);
  if(cur.lihat)return;
- const b=[[ikHint+'<span>'+escH(tx('hint'))+'</span><span class="cnt">'+escH(tx('hintC'))+'</span>','tool',pakaiHint,'bHint']];
+ const b=[[ikHint+'<span>'+escH(tx('hint'))+'</span><span class="cnt">'+escH(tx('hintC'))+'</span>','tool hint',pakaiHint,'bHint']];
  if(cur.salah>=SALAH_SOLUSI)b.push([ikSol+'<span>'+escH(tx('sol'))+'</span>','tool sol',lihatSolusi,'bSol']);
- const m=cur.msg;dock(m?'no':'',m?m.t:null,m?m.x:null,b);$('bHint').disabled=cur.hint||cur.lock}
+ b.push([ikSkip+'<span>'+escH(tx('skip'))+'</span>','tool sol ico',lewati,'bSkip']);
+ const m=cur.msg;dock(m?'no':'',m?m.t:null,m?m.x:null,b);$('bHint').disabled=cur.hint||cur.lock;for(const[i,k]of[['bHint','hint'],['bSol','sol'],['bSkip','skip']]){const e=$(i);if(e){e.setAttribute('aria-label',tx(k));e.title=tx(k)}}}
 function hideMsg(){const D=$('dock');D.className='';D.dataset.sig='';$('dkMsg').hidden=true}
 
 /* ===== input papan (ketuk atau seret), sama dengan puzzle v3 ===== */
@@ -778,7 +791,7 @@ async function tryMove(f,t){const me=cur,exp=me.p.moves[me.ply];const C=legal(me
 async function salah(me){me.salah++;if(streak){streak=0;pillUI()}SX.play('salah');buzz(60);boardFx('flashno');mood('nyasar','wob');
  await wait(650);if(cur!==me)return;
  const h=me.hist.pop();me.pos=h.pos;me.last=h.last;loadPos(me.pos);clearOv();showLast(me.last);updateCheck(me.pos);if(me.hintPly===me.ply)hintSq();
- const n=me.salah,x=n>=SALAH_SOLUSI?tx('noX3'):n===2?tx('noX2'):tx('noX');say('',n>=SALAH_SOLUSI?'tak_apa':n===2?'hampir':'coba_lagi');
+ const n=me.salah,x=n>=NOX3?tx('noX3'):n===2?tx('noX2'):tx('noX');say('',n>=NOX3?'tak_apa':n===2?'hampir':'coba_lagi');
  me.msg={t:tx('noT'),x};me.lock=false;mood('mikir');turnUI();dockUI()}
 
 function hasil(me){return me.lihat||me.salah?0:me.hint?.5:1}
