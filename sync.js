@@ -13,6 +13,28 @@
   };
   var token = ls.get('eca.token', null), profil = ls.get('eca.profil', null), ratingAwal = profil ? profil.rating : 0;
 
+  /* ---------- gerbang: puzzle hanya untuk murid yang sudah masuk (atau pelatih) ---------- */
+  var pelatih = ls.get('eca.pelatih', null), gb = null;
+  function gerbang() {
+    if (gb || (token && profil) || pelatih) return;
+    gb = document.createElement('div');
+    gb.setAttribute('role', 'dialog'); gb.setAttribute('aria-modal', 'true');
+    gb.style.cssText = 'position:fixed;inset:0;z-index:2147483000;background:rgba(90,15,26,.92);display:flex;align-items:center;justify-content:center;padding:18px;font-family:Atkinson,system-ui,sans-serif';
+    gb.innerHTML = '<div style="background:#fff;border-radius:26px;border:3px solid #5A0F1A;max-width:420px;width:100%;padding:26px 22px;text-align:center;color:#3F322F">' +
+      '<div style="font:800 1.6rem/1.2 Gabarito,system-ui,sans-serif;color:#5A0F1A">Masuk dulu, ya!</div>' +
+      '<p style="margin:10px 0 18px;font-size:1.05rem;line-height:1.5">Supaya hasil dan ratingmu tercatat, puzzle hanya bisa dikerjakan setelah masuk. Siapkan kode masuk dan PIN-mu.</p>' +
+      '<a id="ecaMasuk" href="index.html#masuk" style="display:block;background:#5A0F1A;color:#fff;text-decoration:none;font:800 1.05rem Atkinson,system-ui,sans-serif;padding:14px;border-radius:16px;box-shadow:0 4px 0 #3A0A12">Masuk</a>' +
+      '<p style="margin:14px 0 0;font-size:.88rem;color:#7A6B66">Belum punya kode masuk? Tanyakan ke pelatihmu.</p></div>';
+    document.body.appendChild(gb);
+    document.getElementById('ecaMasuk').addEventListener('click', function () { ls.set('eca.balik', location.pathname.split('/').pop() || 'index.html'); });
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function bukaGerbang() { if (gb) { gb.remove(); gb = null; document.documentElement.style.overflow = ''; } }
+  if (!(token && profil) && !pelatih) gerbang();
+  if (pelatih) fetch(API, { method: 'POST', body: JSON.stringify({ aksi: 'cekPelatih', token: pelatih.token }) }).then(function (r) { return r.json(); }).then(function (j) {
+    if (j && !j.ok) { ls.del('eca.pelatih'); pelatih = null; if (!(token && profil)) { pita(); gerbang(); } }
+  }, function () {});
+
   /* ---------- pita status di atas halaman ---------- */
   var bar = document.createElement('div');
   bar.setAttribute('role', 'status');
@@ -20,6 +42,7 @@
   function pita() {
     if (token && profil) bar.innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1FA062;margin-right:6px"></span>' +
       esc(profil.nama) + ' · Rating ' + profil.rating + ' · hasilmu tercatat otomatis';
+    else if (pelatih) bar.innerHTML = 'Mode pelatih: hasil tidak dicatat ke akun murid.';
     else bar.innerHTML = 'Kamu belum masuk, jadi hasilmu tidak tercatat. <a href="index.html#masuk" style="color:#5A0F1A">Masuk dulu</a>';
   }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -33,7 +56,7 @@
     sibuk = true;
     fetch(API, { method: 'POST', body: JSON.stringify(q[0]) }).then(function (r) { return r.json(); }).then(function (j) {
       var q2 = ls.get('eca.antre', []); q2.shift(); ls.set('eca.antre', q2); sibuk = false;
-      if (j && j.keluar) { ls.del('eca.token'); ls.del('eca.profil'); token = profil = null; pita(); ls.set('eca.antre', []); return; }
+      if (j && j.keluar) { ls.del('eca.token'); ls.del('eca.profil'); token = profil = null; pita(); ls.set('eca.antre', []); gerbang(); return; }
       if (j && j.ok) terima(q[0], j);
       kuras();
     }, function () { sibuk = false; setTimeout(kuras, 8000); });

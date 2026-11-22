@@ -199,7 +199,10 @@ body.dk{padding-bottom:120px}
 .grp>h3{font-size:1.15rem;display:flex;align-items:center;gap:8px}
 
 .cm,.akun{white-space:nowrap}
-body.murid #cm{display:none}
+body.murid #cm,body.murid #bRuang{display:none}
+.cm{text-decoration:none;display:inline-block}
+.cm[hidden]{display:none}
+@media(max-width:560px){.top nav a.cm{display:inline-block}.cm,.akun{font-size:.8rem;padding:6px 10px}.top .wrap{gap:6px}.cm .lg{display:none}}
 .akun{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:999px;padding:4px 12px 4px 4px;font-weight:700;font-size:.88rem;cursor:pointer}
 .akun .av{width:30px;height:30px}
 .av{display:inline-flex;align-items:flex-end;justify-content:center;border-radius:50%;overflow:hidden;flex:none;width:40px;height:40px}
@@ -254,7 +257,7 @@ body.murid #cm{display:none}
 <a class="skip" href="#konten">Lewati ke konten</a>
 <header class="top"><div class="wrap">
   <a href="#" aria-label="Equator Chess Academy, ke atas"><img src="logo.svg" alt="Equator Chess Academy" width="111" height="32"></a>
-  <nav aria-label="Navigasi utama"><a href="#pr">PR Kelas</a><a href="#semua">Semua puzzle</a><a href="#cara">Cara main</a><button class="cm" id="cm" aria-pressed="false">Mode pelatih</button><button class="cm" id="bMasuk" hidden style="background:#FFC23D;border-color:#FFC23D;color:#2B1A05">Masuk</button><button class="akun" id="bAkun" hidden></button></nav>
+  <nav aria-label="Navigasi utama"><a href="#pr">PR Kelas</a><a href="#semua">Semua puzzle</a><a href="#cara">Cara main</a><a class="cm" id="bRuang" href="https://script.google.com/macros/s/AKfycbyzEejXKvwDQqybbybzaSJHQOsYdBRrbKnkI34lZNwDXXmDG4fLQCj79YtcWXiae98k1g/exec" target="_blank" rel="noopener"><span class="lg">Ruang </span>Pelatih</a><button class="cm" id="cm" aria-pressed="false" hidden>Mode pelatih</button><button class="cm" id="bMasuk" hidden style="background:#FFC23D;border-color:#FFC23D;color:#2B1A05">Masuk</button><button class="akun" id="bAkun" hidden></button></nav>
 </div></header>
 
 <section class="hero" id="hero" aria-labelledby="hi">
@@ -434,7 +437,8 @@ var h=location.hash.slice(1),pf=null,pt=null;
 if(h)KL.some(function(k){return k.fam.some(function(f,i){return f.tema.some(function(t,j){if(t.id===h){K=k;pf=i;pt=j;return true}})})});
 tabs();jalur();drawRow(pf,pt);prs();
 $('#hi').textContent=greet+' Aku Kudi.';
-if(store.get('eca.coach',false))coach(true);
+var PL=store.get('eca.pelatih',null);cm.hidden=!PL;if(PL&&store.get('eca.coach',false))coach(true);
+window.__pelatih=function(on){cm.hidden=!on;if(!on&&document.body.classList.contains('coach'))coach(false)};
 window.__ulang=function(){if(fam>=0)pickTema(tema)};window.__sapa=function(h,t){talk(h,t)};
 })();
 </script>
@@ -498,7 +502,9 @@ function langkahBuatPin(kode,nama){
     if(v!==c.nilai()){$('#err').textContent='Kedua PIN belum sama. Coba lagi.';c.kosong();return}
     sibuk(b,true);api({aksi:'buatPin',kode:kode,pin:v,avatar:pilih.m+'-'+pilih.w}).then(function(j){sibuk(b,false);if(!j.ok){$('#err').textContent=j.pesan;return}berhasil(j)},function(){sibuk(b,false);$('#err').textContent='Tidak tersambung. Coba lagi.'})};
 }
-function berhasil(j){token=j.token;profil=j.profil;ls.set('eca.token',token);ls.set('eca.profil',profil);tutup();tampil();
+function berhasil(j){token=j.token;profil=j.profil;ls.set('eca.token',token);ls.set('eca.profil',profil);tutup();
+  var balik=ls.get('eca.balik',null);if(balik){ls.del('eca.balik');location.href=balik;return}
+  tampil();
   if(window.__sapa)window.__sapa('Hai, '+profil.nama+'!','Rating-mu '+profil.rating+'. Ayo kita latihan!');
   try{history.replaceState(null,'',location.pathname)}catch(e){}}
 /* tampilan header + kartu rating */
@@ -532,6 +538,11 @@ function peringkat(){buka('<h2 id="mjudul">Papan peringkat '+esc(profil.kelas)+'
 var m=location.hash.match(/masuk=([A-Za-z0-9-]+)/);
 tampil();
 if(m&&!token)langkahKode(decodeURIComponent(m[1]).toUpperCase());
+else if(/^#masuk$/.test(location.hash)&&!token)langkahKode('');
+/* Mode Pelatih: hanya untuk pelatih yang membuka situs dari Ruang Pelatih (token diperiksa server) */
+var mp=location.hash.match(/pelatih=([A-Za-z0-9]+)/);
+if(mp){api({aksi:'cekPelatih',token:mp[1]}).then(function(j){if(j.ok){ls.set('eca.pelatih',{token:mp[1],nama:j.nama});if(window.__pelatih)window.__pelatih(true);if(window.__sapa)window.__sapa('Halo, '+j.nama+'!','Mode pelatih sudah aktif. Tekan tombol Mode pelatih di atas untuk memilih PR.')}else if(window.__sapa)window.__sapa('Tautan pelatih tidak berlaku','Buka lagi dari Ruang Pelatih ya.');try{history.replaceState(null,'',location.pathname)}catch(e){}},function(){})}
+else{var pl=ls.get('eca.pelatih',null);if(pl)api({aksi:'cekPelatih',token:pl.token}).then(function(j){if(!j.ok&&!j.galat){ls.del('eca.pelatih');if(window.__pelatih)window.__pelatih(false)}},function(){})}
 if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=profil=null;ls.del('eca.token');ls.del('eca.profil')}else if(j.ok){profil=j.profil;ls.set('eca.profil',profil)}tampil()},function(){});
 })();
 </script>
