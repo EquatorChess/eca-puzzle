@@ -109,7 +109,7 @@ main{max-width:1100px;margin:0 auto;padding:8px 10px calc(var(--dock) + 26px)}
 .pawns .now svg{opacity:1}.pawns .now::after{content:"";position:absolute;bottom:-3px;left:20%;right:20%;height:3px;border-radius:3px;background:var(--kunyit)}
 .pawns .ko svg{opacity:.4;filter:grayscale(1)}.pawns .ko::after{content:"";position:absolute;bottom:-3px;left:30%;right:30%;height:3px;border-radius:3px;background:#AA3F3F}
 .pawns .up{animation:promo .55s}
-.boardwrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1;background:var(--frame);padding:4px;border-radius:16px;box-shadow:0 5px 0 var(--frame-d);touch-action:none;user-select:none;-webkit-user-select:none;transition:box-shadow .4s}
+.boardwrap{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1;background:var(--frame);padding:4px;border-radius:16px;box-shadow:0 5px 0 var(--frame-d);touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none;transition:box-shadow .4s}
 @media (min-width:900px){.boardwrap{max-width:min(620px,max(380px,calc(100vh - 170px)));padding:6px;border-radius:20px}}
 svg#bd{width:100%;height:100%;border-radius:12px}
 .boardwrap.hot{animation:glow 1.6s ease-in-out infinite}
@@ -191,7 +191,8 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
 @keyframes slide{from{transform:translateY(14px);opacity:.3}to{transform:none;opacity:1}}
 @keyframes ckp{0%,100%{opacity:.35}50%{opacity:.8}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+
+/*fix-scroll-22nov*/@media (max-width:899px){.boardwrap{max-width:min(620px,max(260px,calc(100vh - 110px)))}}</style>
 </head>
 <body>
 <header class="hd"><div class="bar">
@@ -726,6 +727,7 @@ const own=s=>{const x=cur.pos.b[s];return x&&(isW(x)===(cur.pos.turn==='w'))};
 function pt(e){const r=svg.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*800]}
 let drag=null;
 const aktif=()=>cur&&!cur.lock&&!cur.done&&!cur.lihat;
+/*fix-scroll-22nov*/svg.addEventListener('touchstart',e=>{if(e.touches.length!==1||!aktif())return;const[x,y]=pt(e.touches[0]);const s=sqAt(x,y);if(s>=0&&own(s))e.preventDefault()},{passive:false});
 svg.addEventListener('pointerdown',e=>{if(!aktif())return;const[x,y]=pt(e);const s=sqAt(x,y);if(s<0)return;
  if(cur.sel>=0&&cur.sel!==s&&!own(s)){tryMove(cur.sel,s);return}
  if(own(s)){select(s);const pc=view.pieces.find(p=>p.sq===s);if(pc){drag={pc,s,sx:x,sy:y,moved:false};pc.el.classList.add('drag');pc.el.parentNode.appendChild(pc.el);try{svg.setPointerCapture(e.pointerId)}catch(_){}}}else select(-1)});
