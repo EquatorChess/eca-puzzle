@@ -76,7 +76,7 @@ h2{font-size:20px}h3{font-size:16px}
 </style>
 </head>
 <body>
-<header class="top"><div class="w"><b>Ruang Pelatih ECA</b><span class="sp"></span><span id="siapa" class="small"></span><a id="kesitus" href="#" target="_blank">Buka situs puzzle</a><button class="btn" id="bSitus" title="Membuka situs puzzle dengan tombol Mode pelatih aktif">Buka situs (Mode Pelatih)</button><button class="btn k" id="bKeluar" style="display:none">Keluar</button></div></header>
+<header class="top"><div class="w"><b>Ruang Pelatih ECA</b><span class="sp"></span><span id="siapa" class="small"></span><a id="kesitus" href="#" target="_blank" style="display:none">Buka situs puzzle</a><button class="btn" id="bSitus" title="Membuka situs dalam mode pelatih: beranda seperti yang dilihat murid, puzzle bisa dicoba tanpa mencatat hasil">Lihat sebagai murid</button><button class="btn k" id="bKeluar" style="display:none">Keluar</button></div></header>
 <div class="w">
   <nav class="tabs" id="tabs"></nav>
   <div id="memuat" class="load">Memuat data…</div>
@@ -187,7 +187,7 @@ function garis(seri){
 }
 
 /* ---------- muat ---------- */
-$('#bSitus').onclick=function(){var b=this;b.disabled=true;run('tokenPelatih',[],function(r){b.disabled=false;var w=window.open(r.url,'_blank');if(!w){var k=$('#kesitus');k.href=r.url;k.textContent='Klik di sini untuk membuka Mode Pelatih';toast('Tautan siap, klik di pojok atas')}else toast('Situs dibuka dengan Mode Pelatih')});setTimeout(function(){b.disabled=false},6000)};
+$('#bSitus').onclick=function(){var b=this;b.disabled=true;run('tokenPelatih',[],function(r){b.disabled=false;var w=window.open(r.url,'_blank');if(!w){var k=$('#kesitus');k.href=r.url;k.style.display='';k.textContent='Klik di sini untuk melihat sebagai murid';toast('Tautan siap, klik di pojok atas')}else toast('Situs dibuka dalam mode pelatih')});setTimeout(function(){b.disabled=false},6000)};
 
 function beranda(){var r=D.ringkas;
   $('#stat').innerHTML='<div class="card stat"><b>'+r.murid+'</b><span>murid terdaftar</span></div><div class="card stat"><b>'+r.aktif+'</b><span>murid aktif 7 hari terakhir</span></div><div class="card stat"><b>'+r.soal+'</b><span>soal dikerjakan 7 hari terakhir</span></div><div class="card stat"><b>'+D.buntu.length+'</b><span>murid perlu dibantu</span></div>';
