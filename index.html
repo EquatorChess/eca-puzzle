@@ -238,6 +238,30 @@ body{background-image:repeating-conic-gradient(rgba(90,15,26,.03) 0 25%,transpar
 .btn.kun:active{transform:translateY(4px);box-shadow:0 1px 0 var(--maroon)}
 .btn.big{font-size:1.2rem;padding:15px 22px;width:100%;justify-content:center;white-space:normal;text-align:center}
 .btn.big svg{width:22px;height:22px;flex:none}
+/* Tema Puzzle (murid, tab Latihan): bidak 2.5D -> laci tema */
+#temaPz{display:none;padding:26px 0 8px}
+html.s-murid #temaPz{display:block}
+html.s-murid:is([data-v=tugas],[data-v=peringkat],[data-v=saya]) #temaPz{display:none}
+#temaPz h2{font-size:clamp(1.4rem,4.4vw,1.9rem)}
+#temaPz .td{margin:4px 0 0;color:var(--muted);font-size:.98rem}
+#temaPz .trow{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:clamp(0px,1vw,14px);margin-top:14px;padding-top:6px}
+#temaPz .pz .nm small{font-weight:700}
+@media(max-width:559px){#temaPz{--pw:min(104px,27vw)}#temaPz .trow{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;row-gap:14px;gap:14px 0}}
+#temaPz .pz.sg .lift{filter:grayscale(1) contrast(.9);opacity:.5}
+#temaPz .pz.sg.on .lift{opacity:.7}
+#temaPz .pz.sg .nm{color:#9a8c88}
+#temaPz .pz:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:14px}
+#temaPz .laci{margin-top:12px;background:var(--panel);border:2.5px solid var(--line);border-bottom-width:5px;border-radius:20px;padding:16px;display:none}
+#temaPz .laci.on{display:block}
+#temaPz .laci h3{font-size:1.15rem;color:var(--maroon)}
+#temaPz .laci p{margin:2px 0 10px;color:var(--muted);font-size:.92rem}
+#temaPz .tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+#temaPz .tl{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:2.5px solid var(--line);background:#fff;text-decoration:none;font:800 .95rem/1.25 var(--hf);color:var(--maroon)}
+#temaPz a.tl{border-bottom-width:4px}
+#temaPz a.tl:hover,#temaPz a.tl:focus-visible{border-color:var(--maroon);outline:none}
+#temaPz .tl small{font:400 .8rem var(--bf);color:var(--muted)}
+#temaPz .tl.sg{background:var(--panel2);color:#9a8c88;border-style:dashed}
+
 /* kunci tamu: hanya layar Masuk */
 #tamuLayar,#posisi,#hero{display:none}
 html.s-tamu .top,html.s-tamu #tugasBox,html.s-tamu #konten,html.s-tamu footer,html.s-tamu .dock{display:none!important}
@@ -477,6 +501,13 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
       <div class="aksi2"><a class="btn hard" id="tChal" href="latihan.html?rak=campur&amp;tantangan=1" title="Soal 200 poin lebih sulit dari ratingmu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 2c.6 3.2-1 4.8-2.6 6.6C8.2 10.4 7 12 7 14.4 7 17.5 9.2 20 12 20s5-2.5 5-5.6c0-1.6-.7-3-1.6-4.2-.3 1-.9 1.7-1.7 2 .5-3.4-.3-6.7-1.2-10.2z" fill="currentColor"/></svg>Hard mode</a><a class="btn ulg" id="tUlang" href="latihan.html?ulang=1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Ulangi soal<i class="cnt">0</i></a></div></div>
   </div>
 </section>
+<section id="temaPz" aria-labelledby="hTema"><div class="wrap">
+  <h2 id="hTema">Tema Puzzle</h2>
+  <p class="td">Kuasai satu jurus sampai jadi refleks. Pilih tema yang ingin kamu asah.</p>
+  <div class="trow" id="trow" role="group" aria-label="Keluarga tema"></div>
+  <div class="laci" id="laci" aria-live="polite"></div>
+</div></section>
+
 
 <section class="vw wrap" id="vTugas" aria-labelledby="hTug"><h1 class="vh" id="hTug" tabindex="-1">Tugas dari Coach</h1><p class="sub" id="tugSub"></p><div id="tugList"></div></section>
 <section class="vw wrap" id="vPer" aria-labelledby="hPer"><h1 class="vh" id="hPer" tabindex="-1">Peringkat</h1><div id="perBody"></div></section>
@@ -730,6 +761,38 @@ window.__hero=function(){
   pilih(pf).then(function(p){var d=gambar(p);kunci=k;$('#pbox').innerHTML=d.svg;var gl=$('#giliran');gl.hidden=false;gl.innerHTML='<i class="'+d.turn+'"></i>'+(d.turn==='w'?'Putih jalan':'Hitam jalan')},
     function(){$('#pph').textContent='Posisi belum bisa dimuat. Tombol di bawah tetap bisa dipakai.'}).then(function(){memuat=false})};
 window.__hero();
+})();
+</script>
+<script>
+/* ---------- Tema Puzzle: bidak 2.5D -> laci tema -> latihan.html?rak=<id> ---------- */
+(function(){
+var T=document.getElementById('trow'),L=document.getElementById('laci');if(!T)return;
+var FAM=[['mat','Raja','Checkmates'],['dasar','Kuda','Basic Tactics'],['garis','Gajah','Line Tactics'],['lanjut','Menteri','Advanced Tactics'],['buka','Benteng','Openings'],['akhir','Pion','Endgames']];
+var DESK={mat:'Kunci Raja lawan dan akhiri partai.',dasar:'Tangkap bidak dengan garpu dan jebakan sederhana.',garis:'Manfaatkan garis lurus dan diagonal.',lanjut:'Taktik tingkat lanjut untuk posisi rumit.',buka:'Awal partai yang rapi dan penuh jebakan.',akhir:'Menangkan partai di akhir permainan.'};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function piece(id){return '<svg viewBox="0 0 232 270" aria-hidden="true"><use href="#'+id+'S" x="9" y="7" width="220" height="260"/><use href="#'+id+'S" x="4.5" y="3.5" width="220" height="260"/><use href="#'+id+'F" width="220" height="260"/></svg>'}
+var PED='<svg class="ped" viewBox="0 0 100 34" aria-hidden="true"><ellipse class="s1" cx="50" cy="22" rx="46" ry="11"/><rect class="s2" x="4" y="11" width="92" height="11"/><ellipse class="rim" cx="50" cy="11" rx="46" ry="10"/></svg>';
+var D=null,cur=-1;
+function tutup(){cur=-1;L.classList.remove('on');L.innerHTML='';T.querySelectorAll('.pz').forEach(function(b){b.classList.remove('on','dim');b.setAttribute('aria-pressed','false')})}
+function buka(i){
+  if(cur===i){tutup();return}
+  cur=i;var f=FAM[i],ts=D.rak.filter(function(r){return r.keluarga===f[0]}),ada=ts.some(function(r){return r.tahap===1});
+  T.querySelectorAll('.pz').forEach(function(b,j){b.classList.toggle('on',j===i);b.classList.toggle('dim',j!==i);b.setAttribute('aria-pressed',j===i)});
+  var kt=ts.map(function(r){var n=0;for(var k in r.jumlah)n+=r.jumlah[k];
+    if(r.tahap===1)return '<a class="tl" href="latihan.html?rak='+encodeURIComponent(r.id)+'"><span>'+esc(r.nama_en)+'</span><small>'+n+' soal</small></a>';
+    return '<span class="tl sg" aria-disabled="true"><span>'+esc(r.nama_en)+'</span><small>Segera</small></span>'}).join('');
+  L.innerHTML='<h3>'+esc(f[2])+(ada?'':' · Segera')+'</h3><p>'+esc(ada?DESK[f[0]]:'Tema ini sedang Kudi siapkan. Latih tema lain dulu, ya!')+'</p><div class="tg">'+kt+'</div>';
+  L.classList.add('on');
+}
+function gambar(){
+  var fm={};D.keluarga.forEach(function(k){fm[k.id]=k});
+  T.innerHTML=FAM.map(function(f,i){
+    var ada=D.rak.some(function(r){return r.keluarga===f[0]&&r.tahap===1}),c=fm[f[0]]||{};
+    return '<button class="pz'+(ada?'':' sg')+'" data-i="'+i+'" aria-pressed="false" style="--d:'+(i*85)+'ms;--f:'+(c.muka||'#fff')+'" aria-label="'+esc(f[2])+(ada?'':', segera')+'"><span class="lift"><span class="bob">'+piece(f[0])+'</span>'+PED+'</span><span class="nm">'+esc(f[2])+'<small>'+(ada?f[1]:'Segera')+'</small></span></button>'}).join('');
+}
+T.addEventListener('click',function(e){var b=e.target.closest('.pz');if(b&&D)buka(+b.dataset.i)});
+T.addEventListener('keydown',function(e){if((e.key!=='ArrowRight'&&e.key!=='ArrowLeft')||!D)return;var f=document.activeElement.closest&&document.activeElement.closest('.pz');if(!f)return;var n=(+f.dataset.i+(e.key==='ArrowRight'?1:-1)+FAM.length)%FAM.length;T.children[n].focus();e.preventDefault()});
+fetch('latihan/rak/indeks.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){D=j;gambar()},function(){var s=document.getElementById('temaPz');if(s)s.hidden=true});
 })();
 </script>
 <script>
