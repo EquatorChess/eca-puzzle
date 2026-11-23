@@ -284,7 +284,6 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 [data-waktu=pagi]{--l1:#BFE3F7;--l2:#F2F1E6}
 [data-waktu=sore]{--l1:#B4CBEA;--l2:#F8DCC8;--ist:rgba(110,70,110,.2);--bkt:rgba(110,70,110,.1)}
 [data-waktu=malam]{--l1:#9EAAD8;--l2:#E6D6E6;--ist:rgba(60,50,110,.24);--bkt:rgba(60,50,110,.12)}
-html.s-murid body{background-image:linear-gradient(var(--l1),var(--l2) 430px,rgba(241,236,229,0) 860px),repeating-conic-gradient(rgba(90,15,26,.03) 0 25%,transparent 0 50%);background-size:100% 860px,64px 64px;background-repeat:no-repeat,repeat}
 html.s-murid .top{background:var(--panel)}
 #posisi{position:relative}
 .awan{position:absolute;left:0;right:0;top:-20px;height:240px;overflow:hidden;z-index:-1;pointer-events:none}
@@ -301,6 +300,23 @@ html.s-murid .top{background:var(--panel)}
  .ist-hp{display:none}
  .ist-dt{display:block;position:relative;grid-column:2;grid-row:1/3;align-self:end;justify-self:end;width:min(100%,470px);height:auto;margin-bottom:-4px}
 }
+
+/* ===== padang rumput (23 Nov siang, revisi coach): langit -> cakrawala -> rumput hijau halus ===== */
+:root{--r1:#D9ECCB;--r2:#C8E0BA;--tuft:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='360'%3E%3Cg fill='none' stroke='%2346823c' stroke-opacity='.3' stroke-width='2' stroke-linecap='round'%3E%3Cpath id='t' d='M60 70q-3-10-6-14M60 70q0-12 1-17M60 70q3-9 7-12'/%3E%3Cpath d='M250 170q-3-10-6-14M250 170q0-12 1-17M250 170q3-9 7-12'/%3E%3Cpath d='M140 300q-3-10-6-14M140 300q0-12 1-17M140 300q3-9 7-12'/%3E%3Cpath d='M360 40q-3-10-6-14M360 40q0-12 1-17M360 40q3-9 7-12'/%3E%3Cpath d='M20 230q-3-10-6-14M20 230q0-12 1-17M20 230q3-9 7-12'/%3E%3C/g%3E%3Cg fill='%23fff' fill-opacity='.85'%3E%3Ccircle cx='170' cy='100' r='3.2'/%3E%3Ccircle cx='330' cy='250' r='3.2'/%3E%3Ccircle cx='70' cy='180' r='3.2'/%3E%3C/g%3E%3Cg fill='%23FFC800' fill-opacity='.9'%3E%3Ccircle cx='170' cy='100' r='1.3'/%3E%3Ccircle cx='330' cy='250' r='1.3'/%3E%3Ccircle cx='70' cy='180' r='1.3'/%3E%3C/g%3E%3C/svg%3E")}
+[data-waktu=pagi]{--r1:#DCEBCB;--r2:#CBE0BC}
+[data-waktu=sore]{--r1:#DDE6C6;--r2:#CDDBB6}
+[data-waktu=malam]{--r1:#CADBC8;--r2:#B9CEB8}
+html.s-murid body{background-color:var(--r1);background-image:var(--tuft),repeating-conic-gradient(rgba(60,120,50,.05) 0 25%,transparent 0 50%),linear-gradient(var(--l1),var(--l2) 160px,var(--r1) 420px,var(--r2));background-size:420px 360px,64px 64px,100% 100%;background-repeat:repeat,repeat,no-repeat}
+html.s-murid #posisi{background:linear-gradient(var(--l1),var(--l2));padding-bottom:24px}
+#posisi::after,.tm-rumput::before{content:"";position:absolute;left:0;right:0;bottom:-1px;height:26px;background:var(--r1);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='26' viewBox='0 0 64 26'%3E%3Cpath d='M0 26V15q4-9 6-12q1 7 3 12q4-6 8-13q0 8 2 13q5-4 9-9q-1 6 0 9q5-7 9-11q0 7 1 11q5-3 8-8q0 5 1 8q4-6 7-10q0 6 1 10L64 15V26z'/%3E%3C/svg%3E") repeat-x bottom/64px 26px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='26' viewBox='0 0 64 26'%3E%3Cpath d='M0 26V15q4-9 6-12q1 7 3 12q4-6 8-13q0 8 2 13q5-4 9-9q-1 6 0 9q5-7 9-11q0 7 1 11q5-3 8-8q0 5 1 8q4-6 7-10q0 6 1 10L64 15V26z'/%3E%3C/svg%3E") repeat-x bottom/64px 26px;z-index:-1;pointer-events:none}
+html.s-murid #temaPz{padding-top:34px}
+.tm-sky{display:none}
+html.s-tamu{background:var(--r1)}html.s-tamu body{background:none}
+html.s-tamu .tm-sky{display:block;position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(var(--l1),var(--l2) 74%)}
+.tm-sky .awan{top:0}
+.tm-sky .ist{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(26% - 1px);width:min(460px,100%);height:auto}
+.tm-rumput{position:absolute;left:0;right:0;bottom:0;height:26%;background:var(--tuft),repeating-conic-gradient(rgba(60,120,50,.05) 0 25%,transparent 0 50%),linear-gradient(var(--r1),var(--r2));background-size:420px 360px,64px 64px,100% 100%}
+.tm-rumput::before{top:-25px;bottom:auto}
 /* hero Posisi Hari Ini */
 .posisi{padding:14px 0 6px;isolation:isolate}
 .pos-g{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);grid-template-areas:"teks" "papan" "aksi"}
@@ -500,6 +516,8 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
   <nav aria-label="Navigasi utama"><a href="#pr">PR Kelas</a><a href="#semua">Semua puzzle</a><a href="#cara">Cara main</a><a class="cm" id="bRuang" href="https://script.google.com/macros/s/AKfycbyzEejXKvwDQqybbybzaSJHQOsYdBRrbKnkI34lZNwDXXmDG4fLQCj79YtcWXiae98k1g/exec" target="_blank" rel="noopener">Ruang Pelatih</a><button class="cm" id="cm" aria-pressed="false" hidden>Mode pelatih</button><button class="cm" id="bMasuk" hidden>Masuk</button><button class="akun" id="bAkun" hidden></button></nav>
 </div></header>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="istanaS" viewBox="0 0 320 170"><path style="fill:var(--bkt)" d="M0 132Q60 104 120 120T240 112T320 118V170H0Z"/><g><rect x="44" y="72" width="34" height="80"/><rect x="40" y="60" width="10" height="14"/><rect x="56" y="60" width="10" height="14"/><rect x="72" y="60" width="10" height="14"/><rect x="40" y="70" width="42" height="6"/><rect x="242" y="82" width="30" height="70"/><rect x="238" y="72" width="9" height="12"/><rect x="252" y="72" width="9" height="12"/><rect x="266" y="72" width="9" height="12"/><rect x="238" y="80" width="38" height="5"/><rect x="78" y="104" width="164" height="48"/><rect x="82" y="96" width="9" height="10"/><rect x="98" y="96" width="9" height="10"/><rect x="114" y="96" width="9" height="10"/><rect x="198" y="96" width="9" height="10"/><rect x="214" y="96" width="9" height="10"/><rect x="230" y="96" width="9" height="10"/><rect x="136" y="44" width="48" height="108"/><path d="M131 46 136 26 147 37 160 16 173 37 184 26 189 46Z"/><rect x="158" y="2" width="4" height="15"/><rect x="154" y="6" width="12" height="4"/></g><path style="fill:rgba(255,255,255,.55)" d="M152 152v-16a8 8 0 0 1 16 0v16zM155 66h10v14h-10zM56 90h10v12h-10zM252 98h10v12h-10z"/><rect x="60" y="34" width="2" height="27"/><path style="fill:#AA3F3F" d="M62 34 78 39 62 44Z"/><path style="fill:var(--bkd)" d="M0 150Q80 134 170 146T320 140V170H0Z"/></symbol></svg>
+<div class="tm-sky" aria-hidden="true"><div class="awan" aria-hidden="true"><svg class="a1" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a2" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a3" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg></div><svg class="ist" viewBox="0 0 320 170"><use href="#istanaS"/></svg><div class="tm-rumput"></div></div>
 <main id="tamuLayar" aria-labelledby="tmH">
   <img class="tm-logo" src="logo-k.svg" alt="Equator Chess Academy" width="119" height="34">
   <div class="tm-kudi"><svg viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg></div>
@@ -514,8 +532,7 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
 <div id="tugasBox" aria-live="polite"></div>
 
 <section class="posisi" id="posisi" aria-labelledby="hi">
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="istanaS" viewBox="0 0 320 170"><path style="fill:var(--bkt)" d="M0 132Q60 104 120 120T240 112T320 118V170H0Z"/><g><rect x="44" y="72" width="34" height="80"/><rect x="40" y="60" width="10" height="14"/><rect x="56" y="60" width="10" height="14"/><rect x="72" y="60" width="10" height="14"/><rect x="40" y="70" width="42" height="6"/><rect x="242" y="82" width="30" height="70"/><rect x="238" y="72" width="9" height="12"/><rect x="252" y="72" width="9" height="12"/><rect x="266" y="72" width="9" height="12"/><rect x="238" y="80" width="38" height="5"/><rect x="78" y="104" width="164" height="48"/><rect x="82" y="96" width="9" height="10"/><rect x="98" y="96" width="9" height="10"/><rect x="114" y="96" width="9" height="10"/><rect x="198" y="96" width="9" height="10"/><rect x="214" y="96" width="9" height="10"/><rect x="230" y="96" width="9" height="10"/><rect x="136" y="44" width="48" height="108"/><path d="M131 46 136 26 147 37 160 16 173 37 184 26 189 46Z"/><rect x="158" y="2" width="4" height="15"/><rect x="154" y="6" width="12" height="4"/></g><path style="fill:rgba(255,255,255,.55)" d="M152 152v-16a8 8 0 0 1 16 0v16zM155 66h10v14h-10zM56 90h10v12h-10zM252 98h10v12h-10z"/><rect x="60" y="34" width="2" height="27"/><path style="fill:#AA3F3F" d="M62 34 78 39 62 44Z"/><path style="fill:var(--bkd)" d="M0 150Q80 134 170 146T320 140V170H0Z"/></symbol></svg>
-  <div class="awan" aria-hidden="true"><svg class="a1" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a2" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a3" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg></div>
+    <div class="awan" aria-hidden="true"><svg class="a1" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a2" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a3" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg></div>
   <div class="wrap pos-g">
     <svg class="ist ist-dt" viewBox="0 0 320 170" aria-hidden="true"><use href="#istanaS"/></svg>
     <div class="p-teks"><span class="pos-lbl" id="posLbl">Puzzle</span><h1 id="hi">Latih mata taktikmu setiap hari. Pemain kuat lahir dari kebiasaan.</h1></div>
