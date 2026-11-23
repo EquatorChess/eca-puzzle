@@ -229,6 +229,12 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
 .dk-b .btn.tool>span:not(.cnt){display:block;font:800 13px/1.05 var(--head);text-align:center}
 .dk-b .btn.tool .cnt{top:-9px;right:6px}
 /*fix-scroll-22nov*/@media (max-width:899px){.boardwrap{max-width:min(620px,max(260px,calc(100vh - 110px)))}}</style>
+<script>(function(){var RD=null;function sc(){if(RD)return RD;RD=[];for(var i=0;i<document.styleSheets.length;i++){var r;try{r=document.styleSheets[i].cssRules}catch(e){continue}for(var j=0;j<r.length;j++)if(r[j].type===4&&/prefers-color-scheme:\s*dark/.test(r[j].media.mediaText))RD.push(r[j])}return RD}
+window.ECA_tema={get:function(){try{return localStorage.getItem('eca.tema')||''}catch(e){return ''}},
+efektif:function(){var m=this.get();return m||(matchMedia('(prefers-color-scheme: dark)').matches?'gelap':'terang')},
+set:function(m){try{if(m)localStorage.setItem('eca.tema',m);else localStorage.removeItem('eca.tema')}catch(e){}this.pasang()},
+pasang:function(){var m=this.get();sc().forEach(function(x){x.media.mediaText=m==='gelap'?'all':m==='terang'?'not all':'(prefers-color-scheme: dark)'});var e=this.efektif();document.documentElement.setAttribute('data-tema',e);var t=document.querySelector('meta[name=theme-color]');if(t)t.setAttribute('content',e==='gelap'?'#161C47':'#F1ECE5')}};
+ECA_tema.pasang()})();</script>
 </head>
 <body>
 <header class="hd"><div class="bar">

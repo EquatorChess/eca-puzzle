@@ -219,6 +219,7 @@ function panelMurid(id){var m=cariM(id);if(!m)return;
    '<div class="grid g3 mt"><div class="card stat"><b>'+esc(m.rating)+'</b><span>rating · '+esc(m.gelar||'')+'</span></div><div class="card stat"><b>'+(m.grup||[]).length+'</b><span>grup</span></div><div class="card stat"><b>'+esc(m.soal)+'</b><span>soal dikerjakan</span></div><div class="card stat"><b style="font-size:18px">'+tgl(m.terakhir)+'</b><span>terakhir aktif</span></div></div>'+
    '<div class="grid g2 mt"><div class="card"><h3>Perkembangan rating</h3><div id="pGaris" class="mt load">Memuat…</div></div><div class="card"><h3>Akurasi per tema</h3><p class="small muted" style="margin:4px 0">Hijau = benar sendiri, kuning = dengan petunjuk.</p><div id="pTema" class="load">Memuat…</div></div></div>'+
    '<div class="grid g2 mt"><div class="card"><h3>Aktivitas per minggu</h3><div id="pMinggu" class="mt"></div></div><div class="card"><h3>Tugas untuk murid ini</h3><div id="pTugas" class="mt"></div></div></div>'+
+   '<div class="card mt"><h3>Latihan (Puzzle)</h3><p class="small muted" style="margin:4px 0">Ringkasan soal Latihan: akurasi percobaan pertama, rapor per tema, dan soal terakhir.</p><div id="pLat" class="load">Memuat…</div></div>'+
    '<div class="card mt"><h3>Set yang dikerjakan</h3><p class="small muted" style="margin:4px 0">Klik untuk melihat jawaban per soal di papan.</p><div id="pSet"></div></div>'+
    (ADM?kelolaMurid(m):'');
   $('#modal').classList.add('on');window.scrollTo(0,0);
@@ -227,10 +228,19 @@ function panelMurid(id){var m=cariM(id);if(!m)return;
   run('perkembangan',[id],function(p){
     $('#pGaris').classList.remove('load');$('#pGaris').innerHTML=garis(p.seri);
     $('#pTema').classList.remove('load');$('#pTema').innerHTML=p.tema.length?'<table>'+p.tema.map(function(t){var a=Math.round(t.m/t.n*100),b=Math.round(t.d/t.n*100);return '<tr><td style="width:40%"><b>'+esc(t.tema)+'</b><div class="small muted">'+esc(t.keluarga)+' · '+t.n+' soal</div></td><td><div class="bar" style="display:flex"><i style="width:'+a+'%"></i><i class="d" style="width:'+b+'%"></i></div></td><td style="width:60px"><b>'+a+'%</b></td></tr>'}).join('')+'</table>':'<div class="empty small">Belum ada data.</div>';
+    $('#pLat').classList.remove('load');$('#pLat').innerHTML=kartuLat(p.lat,id);
     var mx=Math.max.apply(0,p.minggu.map(function(x){return x[1]}).concat([1]));
     $('#pMinggu').innerHTML=p.minggu.length?'<table>'+p.minggu.map(function(x){return '<tr><td style="width:90px" class="small">Mg '+esc(x[0])+'</td><td><div class="bar"><i style="width:'+Math.round(x[1]/mx*100)+'%;background:#3DB8F5"></i></div></td><td style="width:50px">'+x[1]+'</td></tr>'}).join('')+'</table>':'<div class="empty small">Belum ada aktivitas.</div>';
     $('#pSet').innerHTML=p.sets.length?'<table><tr><th>Waktu</th><th>Puzzle</th><th>Benar sendiri</th><th>Bintang</th><th>Menit</th><th>Rating</th></tr>'+p.sets.map(function(s){return '<tr class="klik" data-d="'+esc(id)+'|'+esc(s.kode)+'|'+esc(m.nama)+'"><td class="small">'+tgl(s.waktu)+'</td><td><b>'+esc(s.kode)+'</b> <span class="small muted">'+esc(s.judul)+'</span></td><td>'+s.M+'/'+s.n+' ('+s.skor+'%)</td><td>'+s.bintang+'</td><td>'+s.menit+'</td><td>'+delta(s.dr)+'</td></tr>'}).join('')+'</table>':'<div class="empty small">Belum ada set yang selesai.</div>'});
 }
+function kartuLat(l,id){if(!l||!l.total)return '<div class="empty small">Belum ada soal Latihan yang dikerjakan.</div>';
+  var ak=l.n?Math.round(l.m/l.n*100):0,rata=Math.round(l.detik/l.total),dp=l.n?Math.round(l.d/l.n*100):0;
+  var st='<div class="grid g3"><div class="card stat"><b>'+l.total+'</b><span>soal Latihan</span></div><div class="card stat"><b>'+ak+'%</b><span>benar sendiri (percobaan pertama)</span></div><div class="card stat"><b>'+rata+' dtk</b><span>rata-rata per soal</span></div><div class="card stat"><b>'+l.petunjuk+'</b><span>soal pakai petunjuk</span></div></div>';
+  var rk=l.rak.slice().sort(function(a,b){return a.m/a.n-b.m/b.n});
+  var rapor=rk.length?'<h3 class="mt">Rapor per tema</h3><p class="small muted" style="margin:4px 0">Merah = perlu diasah, hijau = sudah kuat. Tema dengan minimal 3 soal diberi warna.</p><table><tr><th>Tema</th><th>Soal</th><th style="min-width:120px">Benar sendiri</th><th></th></tr>'+rk.map(function(r){var a=Math.round(r.m/r.n*100),b=Math.round(r.d/r.n*100),c=r.n<3?'':a>=80?' ok':a<50?' bad':' mid';
+    return '<tr><td><b>'+esc(namaRak(r.rak))+'</b></td><td>'+r.n+'</td><td><div class="bar" style="display:flex"><i style="width:'+a+'%"></i><i class="d" style="width:'+b+'%"></i></div></td><td><span class="pill'+c+'">'+a+'%</span> <button class="btn" data-lt="'+esc(r.rak)+'" data-lm="'+esc(id)+'">Beri tugas</button></td></tr>'}).join('')+'</table>':'';
+  var rw='<h3 class="mt">Soal terakhir</h3><table><tr><th>Waktu</th><th>Tema</th><th>Soal</th><th>Hasil</th><th>Detik</th><th>Rating</th></tr>'+l.terakhir.map(function(x){return '<tr><td class="small">'+tgl(x.waktu)+'</td><td>'+esc(namaRak(x.rak))+'</td><td class="small muted">'+esc(x.id)+(x.rating?' · '+esc(x.rating):'')+'</td><td>'+esc(x.hasil)+(x.pertama?'':' <span class="small muted">(ulang)</span>')+'</td><td>'+esc(x.detik)+'</td><td>'+(x.pertama?delta(x.dr):'–')+'</td></tr>'}).join('')+'</table>';
+  return st+rapor+rw}
 function gantiM(x){D.murid=D.murid.map(function(m){return m.id===x.id?x:m});daftarMurid()}
 $('#mTutup').onclick=function(){$('#modal').classList.remove('on')};
 
@@ -292,7 +302,7 @@ $('#bKeluar').onclick=function(){if(confirm('Keluar dari Ruang Mitra di perangka
 /* ---------- tab, muat, segarkan ---------- */
 function tabs(){var L=[['beranda','Beranda'],['murid','Murid'],['grup','Grup'],['tugas','Tugas']].concat(ADM?[['akses','Akses puzzle']]:[]).concat([['kelas','Kelas']]).concat(ADM?[['pelatih','Pelatih']]:[]);
   $('#tabs').innerHTML=L.map(function(x){return '<button data-s="'+x[0]+'" aria-pressed="'+(x[0]===TAB_AKTIF)+'">'+x[1]+'</button>'}).join('')}
-function muat(){run('muatAwal',[],function(d){D=d;ADM=d.pelatih.peran==='Admin';$('#memuat').style.display='none';
+function muat(){run('muatAwal',[],function(d){D=d;muatRak().then(function(){if(TAB_AKTIF==='tugas')gambarTugas()});ADM=d.pelatih.peran==='Admin';$('#memuat').style.display='none';
   $('#siapa').textContent=d.pelatih.nama+' · '+d.pelatih.peran;$('#kesitus').href=d.situs;
   $('#bSitus').style.display=MODE==='admin'?'':'none';$('#bKeluar').style.display=MODE==='mitra'?'':'none';$('#bTambah').style.display=ADM?'':'none';
   var ko=d.kelas.map(function(k){return '<option>'+esc(k.nama)+'</option>'}).join('');$('#fKelas').innerHTML='<option value="">Semua kelas</option>'+ko;$('#tKelas').innerHTML=ko;$('#kPilih').innerHTML=ko;
@@ -304,8 +314,12 @@ $('#tabs').onclick=function(e){var b=e.target.closest('button');if(b&&D)buka(b.d
 
 /* ---------- pembantu ---------- */
 function petaMurid(){var o={};D.murid.forEach(function(m){o[m.id]=m});return o}
-function petaPuzzle(){var o={};D.puzzle.forEach(function(p){o[p.kode]=p});return o}
-function labelPuzzle(p){return '<b>'+esc(p.kode.toUpperCase())+'</b> · '+esc(p.judul)+(p.rating?' · rating ±'+esc(p.rating):'')+' · '+esc(p.soal)+' soal'}
+var RAK={},RAKL=[],RAKP=null;
+function muatRak(){if(RAKP||!D)return RAKP;RAKP=fetch(D.situs+'latihan/rak/indeks.json').then(function(r){return r.json()}).then(function(j){var fam={};j.keluarga.forEach(function(f){fam[f.id]=f.nama_en||f.nama});RAKL=j.rak.map(function(r){return{id:r.id,nama:r.nama_en||r.nama,fam:fam[r.keluarga]||''}});RAKL.forEach(function(r){RAK[r.id]=r});return RAKL},function(){RAKP=null;return []});return RAKP}
+function namaRak(id){return RAK[id]?RAK[id].nama:id}
+function petaPuzzle(){var o={};D.puzzle.forEach(function(p){o[p.kode]=p});
+  D.tugas.forEach(function(t){var q=String(t.kode).split(':');if(q[0]==='lat'&&!o[t.kode])o[t.kode]={kode:t.kode,lat:true,judul:'Latihan: '+namaRak(q[1]),soal:q[2]}});return o}
+function labelPuzzle(p){if(p.lat)return '<b>Latihan</b> · '+esc(p.judul.replace('Latihan: ',''))+' · '+esc(p.soal)+' soal';return '<b>'+esc(p.kode.toUpperCase())+'</b> · '+esc(p.judul)+(p.rating?' · rating ±'+esc(p.rating):'')+' · '+esc(p.soal)+' soal'}
 function tagPuzzle(p){return p.level!==''&&p.level!=null?'<span class="pill">Level '+esc(p.level)+'</span>':'<span class="pill mid">PR '+esc(p.kelas)+'</span>'}
 function grupNama(m){var P={};D.grup.forEach(function(g){P[g.id]=g.nama});return (m.grup||[]).map(function(id){return esc(P[id]||id)}).join(', ')||'–'}
 function modal(html){$('#mIsi').innerHTML=html;$('#modal').classList.add('on');window.scrollTo(0,0)}
@@ -326,7 +340,7 @@ function gambarGrup(){var M=petaMurid(),tg={};D.tugas.forEach(function(t){if(t.j
      '<div class="small muted mt">'+(g.kelas?esc(g.kelas)+' · ':'')+'Pelatih: '+(g.pelatih.map(function(p){return esc(p.nama)}).join(', ')||'–')+' · '+(tg[g.id]||0)+' tugas aktif</div>'+
      (g.catatan?'<div class="small mt">'+esc(g.catatan)+'</div>':'')+
      '<div class="mt">'+(g.anggota.map(function(id){var m=M[id];return m?'<span class="pill" data-m="'+esc(id)+'" style="cursor:pointer;margin:2px">'+esc(m.nama)+'</span>':''}).join('')||'<span class="small muted">Belum ada anggota.</span>')+'</div>'+
-     '<div class="row mt"><button class="btn pri" data-gt="'+esc(g.id)+'">Beri tugas</button>'+(ADM?'<button class="btn" data-ge="'+esc(g.id)+'">Ubah grup</button>':'')+'</div></div>'}).join(''):
+     '<div class="row mt"><button class="btn pri" data-gt="'+esc(g.id)+'">Beri tugas</button>'+(ADM?'<button class="btn" data-ge="'+esc(g.id)+'">Ubah grup</button><button class="btn warn" data-gh="'+esc(g.id)+'">Hapus grup</button>':'')+'</div></div>'}).join(''):
     '<div class="empty" style="grid-column:1/-1">'+(ADM?'Belum ada grup. Klik "Tambah grup".':'Kamu belum memegang grup. Minta admin menambahkanmu sebagai pelatih sebuah grup.')+'</div>'}
 $('#gTambah').onclick=function(){dialogGrup(null)};
 function dialogGrup(id){var g=id?D.grup.filter(function(x){return x.id===id})[0]:{id:'',nama:'',kelas:'',catatan:'',pelatih:[],anggota:[]},sel={};g.anggota.forEach(function(m){sel[m]=true});
@@ -353,8 +367,10 @@ $('#tBeri').onclick=function(){dialogTugas(null)};
 function dialogTugas(pre){var sel={},jenisAwal=(pre&&pre.jenis)||'Grup';
   var J=[['Grup','Satu grup']].concat([['Murid','Satu murid']]).concat(ADM?[['Kelas','Seluruh kelas']]:[]);
   modal('<h2>Beri tugas</h2><div class="row mt"><label>Kepada <select id="dJenis">'+J.map(function(x){return '<option value="'+x[0]+'">'+x[1]+'</option>'}).join('')+'</select></label><select id="dTarget" style="min-width:220px"></select></div>'+
-    '<h3 class="mt">Pilih puzzle</h3><div class="row mt"><input id="dCari" placeholder="Cari kode, judul, atau tema" style="flex:1;min-width:200px"><span class="small muted" id="dJum">0 dipilih</span></div>'+
-    '<div id="dPuzzle" class="card mt" style="max-height:340px;overflow:auto"></div>'+
+    '<div class="row mt"><label class="chk"><input type="radio" name="dTipe" value="puzzle" checked> Puzzle (set)</label><label class="chk"><input type="radio" name="dTipe" value="lat"> Latihan (tema + jumlah soal)</label></div>'+
+    '<div id="dPz"><h3 class="mt">Pilih puzzle</h3><div class="row mt"><input id="dCari" placeholder="Cari kode, judul, atau tema" style="flex:1;min-width:200px"><span class="small muted" id="dJum">0 dipilih</span></div>'+
+    '<div id="dPuzzle" class="card mt" style="max-height:340px;overflow:auto"></div></div>'+
+    '<div id="dLat" style="display:none"><h3 class="mt">Pilih tema Latihan</h3><div class="row mt"><select id="dRak" style="min-width:240px"></select><label>Jumlah soal <input id="dN" type="number" min="3" max="50" value="10" style="width:80px"></label></div><p class="small muted">Murid membuka tema itu di Latihan. Tugas selesai setelah mengerjakan jumlah soal berbeda yang kamu tentukan.</p></div>'+
     '<textarea id="dCatatan" class="mt" maxlength="200" placeholder="Catatan untuk murid (opsional)"></textarea>'+
     '<div class="row mt"><button class="btn pri" id="dKirim">Beri tugas</button><button class="btn" id="dBatal">Batal</button></div>');
   $('#dJenis').value=jenisAwal;
@@ -367,8 +383,12 @@ function dialogTugas(pre){var sel={},jenisAwal=(pre&&pre.jenis)||'Grup';
   function jum(){$('#dJum').textContent=Object.keys(sel).length+' dipilih'}
   isiTarget();$('#dJenis').onchange=function(){pre=null;isiTarget()};
   function gambar(){pilihPuzzle($('#dPuzzle'),$('#dCari').value,sel,null,jum)}gambar();$('#dCari').oninput=gambar;
+  function isiRak(){var g={},u=[];RAKL.forEach(function(r){if(!g[r.fam]){g[r.fam]=[];u.push(r.fam)}g[r.fam].push(r)});$('#dRak').innerHTML=u.map(function(f){return '<optgroup label="'+esc(f)+'">'+g[f].map(function(r){return '<option value="'+esc(r.id)+'">'+esc(r.nama)+'</option>'}).join('')+'</optgroup>'}).join('')||'<option value="">(memuat…)</option>';if(pre&&pre.rak)$('#dRak').value=pre.rak}
+  function tipe(){var l=document.querySelector('input[name=dTipe]:checked').value==='lat';$('#dPz').style.display=l?'none':'';$('#dLat').style.display=l?'':'none'}
+  document.querySelectorAll('input[name=dTipe]').forEach(function(x){x.onchange=tipe});
+  muatRak().then(function(){isiRak()});isiRak();if(pre&&pre.rak){document.querySelector('input[name=dTipe][value=lat]').checked=true;tipe()}
   $('#dBatal').onclick=function(){$('#modal').classList.remove('on')};
-  $('#dKirim').onclick=function(){var b=this,kode=Object.keys(sel);if(!$('#dTarget').value){toast('Pilih penerimanya dulu.',true);return}if(!kode.length){toast('Pilih minimal satu puzzle.',true);return}
+  $('#dKirim').onclick=function(){var b=this,lat=document.querySelector('input[name=dTipe]:checked').value==='lat',kode=lat?($('#dRak').value?['lat:'+$('#dRak').value+':'+Math.max(3,Math.min(50,+$('#dN').value||10))]:[]):Object.keys(sel);if(!$('#dTarget').value){toast('Pilih penerimanya dulu.',true);return}if(!kode.length){toast(lat?'Pilih tema Latihan dulu.':'Pilih minimal satu puzzle.',true);return}
     b.disabled=true;run('beriTugas',[{jenis:$('#dJenis').value,id:$('#dTarget').value,kode:kode,catatan:$('#dCatatan').value}],function(r){b.disabled=false;toast(r.baru+' tugas diberikan'+(r.dilewati?' ('+r.dilewati+' sudah ada)':''));$('#modal').classList.remove('on');buka('tugas');segarkan()});setTimeout(function(){b.disabled=false},6000)}}
 
 /* ---------- Akses puzzle (Admin) ---------- */
@@ -405,7 +425,7 @@ function gambarPelatih(){
   $('#pDaftar').innerHTML='<table><tr><th>Nama</th><th>Peran</th><th>Masuk lewat</th><th>Status</th><th></th></tr>'+D.daftarPelatih.map(function(p){
     var lewat=p.peran==='Admin'?'Akun Google '+esc(p.email):(p.kode?'Kode <span class="kode">'+esc(p.kode)+'</span> '+(p.pin?'<span class="pill ok">PIN dibuat</span>':'<span class="pill mid">Belum masuk</span>'):'–');
     return '<tr><td><b>'+esc(p.nama)+'</b><div class="small muted">'+esc(p.id)+'</div></td><td><span class="pill">'+esc(p.peran)+'</span></td><td class="small">'+lewat+'</td><td>'+(p.status==='Nonaktif'?'<span class="pill bad">Nonaktif</span>':'<span class="pill ok">Aktif</span>')+'</td>'+
-     '<td><div class="row">'+(p.peran==='Mitra'?'<button class="btn" data-pk="'+esc(p.id)+'">Kode &amp; tautan</button><button class="btn warn" data-pr="'+esc(p.id)+'">Reset PIN</button>':'')+'<button class="btn" data-ps="'+esc(p.id)+'">'+(p.status==='Nonaktif'?'Aktifkan':'Nonaktifkan')+'</button></div></td></tr>'}).join('')+'</table>'}
+     '<td><div class="row">'+(p.peran==='Mitra'?'<button class="btn" data-pk="'+esc(p.id)+'">Kode &amp; tautan</button><button class="btn warn" data-pr="'+esc(p.id)+'">Reset PIN</button>':'')+'<button class="btn" data-ps="'+esc(p.id)+'">'+(p.status==='Nonaktif'?'Aktifkan':'Nonaktifkan')+'</button><button class="btn warn" data-ph="'+esc(p.id)+'">Hapus</button></div></td></tr>'}).join('')+'</table>'}
 function pesanMitra(nama,kode,link){return 'Halo '+nama+'! Ini akun Ruang Mitra ECA kamu untuk melihat hasil murid.\n\n1. Buka tautan ini: '+link+'\n2. Buat PIN 4 angka sendiri (jangan sampai lupa ya).\n\nKode masuk kamu: '+kode}
 function kartuMitra(nama,kode,link){var msg=pesanMitra(nama,kode,link);return '<div class="card" style="background:var(--soft)"><div class="row"><img alt="Kode QR masuk" width="120" height="120" src="https://quickchart.io/qr?size=240&margin=1&text='+encodeURIComponent(link)+'"><div><div>Kode masuk: <span class="kode">'+esc(kode)+'</span></div><div class="small mt">Tautan: <a href="'+esc(link)+'" target="_blank">'+esc(link)+'</a></div><div class="row mt"><button class="btn" data-salin="'+esc(msg)+'">Salin pesan WA</button><a class="btn" target="_blank" href="https://wa.me/?text='+encodeURIComponent(msg)+'">Buka WhatsApp</a></div></div></div></div>'}
 $('#pTambah').onclick=function(){$('#pForm').style.display='block';$('#pHasil').innerHTML='';$('#pNama').focus()};
@@ -416,6 +436,9 @@ function cariP(id){return D.daftarPelatih.filter(function(p){return p.id===id})[
 /* ---------- aksi klik (tugas, grup, pelatih) ---------- */
 document.addEventListener('click',function(e){var t;
   if(t=e.target.closest('[data-bt]')){if(confirm('Batalkan tugas ini? Murid tidak akan melihatnya lagi.'))run('batalTugas',[t.dataset.bt],function(){toast('Tugas dibatalkan');segarkan()});return}
+  if(t=e.target.closest('[data-lt]')){$('#modal').classList.remove('on');dialogTugas({jenis:'Murid',id:t.dataset.lm,rak:t.dataset.lt});return}
+  if(t=e.target.closest('[data-gh]')){var gg=D.grup.filter(function(x){return x.id===t.dataset.gh})[0];if(gg&&confirm('Hapus grup "'+gg.nama+'" secara permanen?\n\nKeanggotaan grup dihapus dan tugas yang diberikan ke grup ini dibatalkan. Muridnya tidak ikut terhapus.\nTindakan ini tidak bisa dibatalkan.'))run('hapusGrup',[gg.id],function(){toast('Grup dihapus');segarkan()});return}
+  if(t=e.target.closest('[data-ph]')){var pp=cariP(t.dataset.ph);if(pp&&confirm('Hapus '+pp.peran.toLowerCase()+' "'+pp.nama+'" secara permanen?\n\nAkses masuknya dicabut dan ia dikeluarkan dari semua grup. Tindakan ini tidak bisa dibatalkan.'))run('hapusPelatih',[pp.id],function(){toast('Pelatih dihapus');segarkan()});return}
   if(t=e.target.closest('[data-gt]')){dialogTugas({jenis:'Grup',id:t.dataset.gt});return}
   if(t=e.target.closest('[data-ge]')){dialogGrup(t.dataset.ge);return}
   if(t=e.target.closest('[data-pk]')){var p=cariP(t.dataset.pk);if(p){modal('<h2>'+esc(p.nama)+'</h2><p class="small muted">Kirim kode dan tautan ini ke mitra.</p><div class="mt">'+kartuMitra(p.nama,p.kode,p.link)+'</div>')}return}
@@ -429,12 +452,14 @@ function kelolaMurid(m){
    '<div class="row mt"><label>Kelas <select id="uKelas">'+D.kelas.map(function(k){return '<option'+(k.nama===m.kelas?' selected':'')+'>'+esc(k.nama)+'</option>'}).join('')+'</select></label><label>Status <select id="uStatus"><option'+(m.status!=='Nonaktif'?' selected':'')+'>Aktif</option><option'+(m.status==='Nonaktif'?' selected':'')+'>Nonaktif</option></select></label><input id="uNama" value="'+esc(m.nama)+'" placeholder="Nama panggilan"></div>'+
    '<textarea id="uCatatan" class="mt" placeholder="Catatan pelatih">'+esc(m.catatan||'')+'</textarea><div class="row mt"><button class="btn pri" id="uSimpan">Simpan perubahan</button></div>'+
    '<h3 class="mt">Grup</h3><div class="card mt">'+(D.grup.map(function(g){return '<label class="chk"><input type="checkbox" data-ug="'+esc(g.id)+'"'+((m.grup||[]).indexOf(g.id)>=0?' checked':'')+'> '+esc(g.nama)+'</label>'}).join('')||'<span class="small muted">Belum ada grup.</span>')+'</div><div class="row mt"><button class="btn" id="uGrup">Simpan grup</button><button class="btn" id="uAkses">Atur akses puzzle murid ini</button></div>'+
+   '<div class="row mt"><button class="btn warn" id="uHapus">Hapus murid</button><span class="small muted">Menghapus akun, kode masuk, grup, dan tugas murid ini. Riwayat jawaban tetap ada di Sheet.</span></div>'+
    '<div class="row mt"><button class="btn warn" id="uReset">Reset PIN</button><span class="small muted">Murid akan membuat PIN baru saat masuk berikutnya. Semua sesi lama otomatis keluar.</span></div>'+
    '<div class="mt">'+kartuMasuk(m.nama,m.kode,m.link)+'</div></div>'}
 function pasangKelola(m,id){
   $('#uSimpan').onclick=function(){run('ubahMurid',[id,{'Kelas':$('#uKelas').value,'Status':$('#uStatus').value,'Nama Panggilan':$('#uNama').value,'Catatan Pelatih':$('#uCatatan').value}],function(x){gantiM(x);toast('Tersimpan')})};
   $('#uGrup').onclick=function(){var g=[].slice.call(document.querySelectorAll('[data-ug]:checked')).map(function(x){return x.dataset.ug});run('grupMurid',[id,g],function(x){gantiM(x);toast('Grup tersimpan');segarkan()})};
   $('#uAkses').onclick=function(){keAkses(id)};
+  $('#uHapus').onclick=function(){if(confirm('Hapus murid '+m.nama+' ('+id+') secara permanen?\n\nAkun, kode masuk, keanggotaan grup, dan tugasnya dihilangkan. Riwayat jawaban tetap tersimpan di Sheet.\nTindakan ini tidak bisa dibatalkan.'))run('hapusMurid',[id],function(){toast('Murid dihapus');$('#modal').classList.remove('on');segarkan()})};
   $('#uReset').onclick=function(){if(confirm('Reset PIN '+m.nama+'?'))run('resetPin',[id],function(x){gantiM(x);toast('PIN direset')})}}
 function tugasMurid(m){var P=petaPuzzle(),L=D.tugas.filter(function(t){return(t.jenis==='Murid'&&t.target===m.id)||(t.jenis==='Grup'&&(m.grup||[]).indexOf(t.target)>=0)||(t.jenis==='Kelas'&&t.target===m.kelas)});
   return '<div class="row"><button class="btn pri" id="uTugas">Beri tugas ke murid ini</button></div><div class="mt">'+(L.length?'<table>'+L.map(function(t){var p=P[t.kode]||{kode:t.kode,judul:'',soal:''};return '<tr><td>'+labelPuzzle(p)+'</td><td class="small muted">'+esc(t.jenis==='Murid'?'Pribadi':t.namaTarget)+'</td></tr>'}).join('')+'</table>':'<div class="empty small">Belum ada tugas aktif.</div>')+'</div>'}
