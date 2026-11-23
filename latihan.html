@@ -690,6 +690,12 @@ const tglKey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+S
 function catatHari(ok){const t=tglKey(new Date());let h=LS.get('eca.lat.hari',null);if(!h||h.t!==t)h={t,n:0};h.n++;LS.set('eca.lat.hari',h);
  {const w=LS.get('eca.lat.riwayat',{});const d=w[t]||{n:0,b:0};d.n++;if(ok===1)d.b++;w[t]=d;const ks=Object.keys(w).sort();while(ks.length>14)delete w[ks.shift()];LS.set('eca.lat.riwayat',w)}
  let r=LS.get('eca.lat.runtun',{last:'',n:0});if(r.last!==t){r.n=r.last===tglKey(new Date(Date.now()-864e5))?r.n+1:1;r.last=t;LS.set('eca.lat.runtun',r)}}
+/* rapor lokal untuk halaman Saya: rating akhir hari (30 hari) dan akurasi per tema (percobaan pertama) */
+const TEMA_ABAIKAN=/^(short|long|veryLong|crushing|advantage|equality|master|masterVsMaster|superGM|oneMove|opening|middlegame|endgame|mate)$/;
+function catatRapor(p,r){try{const t=tglKey(new Date());
+ const rt=LS.get('eca.lat.rating',{});rt[t]=M.rating;const ks=Object.keys(rt).sort();while(ks.length>45)delete rt[ks.shift()];LS.set('eca.lat.rating',rt);
+ const tm=LS.get('eca.lat.tema',{});[].concat(p.tema||[]).forEach(x=>{if(TEMA_ABAIKAN.test(x))return;const d=tm[x]||{n:0,b:0};d.n++;if(r>=1)d.b++;tm[x]=d});
+ const tk=Object.keys(tm);if(tk.length>80){tk.sort((x,y)=>tm[x].n-tm[y].n).slice(0,tk.length-80).forEach(x=>delete tm[x])}LS.set('eca.lat.tema',tm)}catch(e){}}
 function statHari(){const t=tglKey(new Date()),h=LS.get('eca.lat.hari',null),r=LS.get('eca.lat.runtun',{last:'',n:0});
  return{n:h&&h.t===t?h.n:0,st:r.last===t||r.last===tglKey(new Date(Date.now()-864e5))?r.n:0}}
 let famNow=null;
@@ -822,7 +828,7 @@ async function salah(me){me.salah++;if(streak){streak=0;pillUI()}SX.play('salah'
 
 function hasil(me){return me.lihat||me.salah?0:me.hint?.5:1}
 async function selesaiSoal(me,info){me.done=true;const r=hasil(me);sesi[idx].r=r;sesi[idx].l=!!me.lihat;skor+=r;tandai(me.p.id);catatHari(r);
- if(rakNow.id==='ulang')ulangSelesai(me.p.id,r>0);else{if(r===0)catatGagal(me.p,rakNow.id);elo(me.p.rating,r)}antreSoal(me,rakNow.id);
+ if(rakNow.id==='ulang')ulangSelesai(me.p.id,r>0);else{if(r===0)catatGagal(me.p,rakNow.id);elo(me.p.rating,r)}catatRapor(me.p,r);antreSoal(me,rakNow.id);
  if(r>0){streak++;best=Math.max(best,streak)}
  if(info&&info.mate)floatTxt(me.last.t,tx('mat'),'#2c7a3c');
  if(!me.lihat){setTimeout(()=>{if(r>0&&streak>1)SX.play('beruntun',streak-1);else SX.play('benar')},info&&(info.cap||info.chk)?170:120);
