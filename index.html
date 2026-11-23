@@ -299,9 +299,20 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 .sek a{font:700 .95rem var(--bf);color:var(--maroon);text-underline-offset:3px;padding:6px 2px}
 .sek a[hidden]{display:none}
 @media(min-width:900px){
- .pos-g{grid-template-columns:minmax(0,460px) minmax(0,1fr);grid-template-areas:"papan teks" "papan aksi";column-gap:44px;align-items:start}
- .p-teks{align-self:end;padding-top:46px}.p-aksi{align-self:start;max-width:420px}
- .posisi h1{font-size:2.5rem}
+ body{font-size:16px}
+ .wrap{padding:0 32px}
+ .top .wrap{min-height:54px}.brand img{height:28px}
+ .pos-g{grid-template-columns:minmax(0,400px) minmax(0,1fr);grid-template-areas:"papan teks" "papan aksi";column-gap:56px;align-items:start}
+ .posisi{padding-top:10px}
+ .p-teks{align-self:end;padding-top:46px}.p-aksi{align-self:start;max-width:380px}
+ .posisi h1{font-size:2.1rem;max-width:20ch}
+ .btn.big{font-size:1.05rem;padding:13px 20px}
+ .band{min-height:52px}.kp svg{width:50px;height:58px}
+ .pita{padding:10px 0 16px}
+ .pt-k{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
+ .pt-st{margin-left:0}.pt-jd{margin:0;font-size:1.05rem}.pt-m{margin:0}
+ .pt-lagi{margin-top:6px}
+ .steps{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 <script>
