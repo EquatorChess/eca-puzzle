@@ -68,7 +68,7 @@
   /* ---------- pita status di atas halaman ---------- */
   var bar = document.createElement('div');
   bar.setAttribute('role', 'status');
-  bar.style.cssText = 'font:700 13px/1.3 Atkinson,system-ui,sans-serif;padding:7px 12px;text-align:center;background:#FFF3E6;color:#5A0F1A;border-bottom:2px solid #EFE2D3;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap';
+  bar.style.cssText = 'font:700 13px/1.3 Atkinson,system-ui,sans-serif;padding:7px 12px;text-align:center;background:#F1ECE5;color:#5A0F1A;border-bottom:2px solid #E2D6CB;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap';
   function bahasaEn() { try { return typeof LANG !== 'undefined' && LANG === 'en'; } catch (e) { return false; } }
   var LINK_BERANDA = '<a href="index.html" id="ecaBeranda" style="flex:none;display:inline-block;background:#5A0F1A;color:#fff;text-decoration:none;font:800 13px Atkinson,system-ui,sans-serif;padding:5px 12px;border-radius:999px">\u2190 Beranda</a>';
   function pita() {
