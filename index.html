@@ -278,6 +278,29 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 #tamuLayar .btn{width:100%}
 .tm-minta{margin-top:10px!important;font-size:.95rem}
 /* pita tugas dari Coach */
+
+/* ===== langit pastel + awan + istana catur (23 Nov siang, revisi coach) ===== */
+:root{--l1:#A9D6F5;--l2:#DDEFF8;--ist:rgba(58,88,140,.2);--bkt:rgba(58,88,140,.1);--bkd:rgba(90,128,96,.16)}
+[data-waktu=pagi]{--l1:#BFE3F7;--l2:#F2F1E6}
+[data-waktu=sore]{--l1:#B4CBEA;--l2:#F8DCC8;--ist:rgba(110,70,110,.2);--bkt:rgba(110,70,110,.1)}
+[data-waktu=malam]{--l1:#9EAAD8;--l2:#E6D6E6;--ist:rgba(60,50,110,.24);--bkt:rgba(60,50,110,.12)}
+html.s-murid body{background-image:linear-gradient(var(--l1),var(--l2) 430px,rgba(241,236,229,0) 860px),repeating-conic-gradient(rgba(90,15,26,.03) 0 25%,transparent 0 50%);background-size:100% 860px,64px 64px;background-repeat:no-repeat,repeat}
+html.s-murid .top{background:var(--panel)}
+#posisi{position:relative}
+.awan{position:absolute;left:0;right:0;top:-20px;height:240px;overflow:hidden;z-index:-1;pointer-events:none}
+.awan svg{position:absolute;fill:#fff;opacity:.9;will-change:transform;animation:awan 70s linear infinite alternate}
+.awan .a1{width:150px;top:18px;left:52%}.awan .a2{width:96px;top:96px;left:4%;animation-duration:90s;opacity:.75}.awan .a3{width:120px;top:150px;left:78%;animation-duration:110s;opacity:.7}
+@keyframes awan{to{transform:translateX(-60px)}}
+#posisi.paused .awan svg{animation-play-state:paused}
+.p-papan{position:relative}
+.ist{position:absolute;pointer-events:none;z-index:-1;fill:var(--ist);-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.ist-hp{left:8%;right:8%;top:-44px;width:84%;height:auto}
+.ist-dt{display:none}
+@media(min-width:900px){
+ .awan{height:300px}.awan .a1{width:190px;left:58%}.awan .a3{left:86%}
+ .ist-hp{display:none}
+ .ist-dt{display:block;position:relative;grid-column:2;grid-row:1/3;align-self:end;justify-self:end;width:min(100%,470px);height:auto;margin-bottom:-4px}
+}
 /* hero Posisi Hari Ini */
 .posisi{padding:14px 0 6px;isolation:isolate}
 .pos-g{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);grid-template-areas:"teks" "papan" "aksi"}
@@ -465,7 +488,7 @@ html.s-murid:is([data-v=tugas],[data-v=peringkat],[data-v=saya]) :is(#posisi,#tu
 <script>
 (function(){var d=document.documentElement;function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
 window.ECA_ses=function(){var on='https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSytESMJeKdrebcxwR4JmX-RZfgiTJk1IM8jxFMLQ/exec'!=='',t=g('eca.token')&&g('eca.profil'),p=g('eca.pelatih'),c=!on?'s-terbuka':t?'s-murid':p?'s-pelatih':'s-tamu';d.className=d.className.replace(/\bs-\w+/g,'').trim()+' '+c;return c};window.ECA_ses();
-var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v',tb?tb[1]:'latihan')})();
+var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v',tb?tb[1]:'latihan');var j=new Date().getHours();d.setAttribute('data-waktu',j>=5&&j<10?'pagi':j<15&&j>=10?'siang':j<18&&j>=15?'sore':'malam')})();
 </script>
 </head>
 <body>
@@ -491,9 +514,13 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
 <div id="tugasBox" aria-live="polite"></div>
 
 <section class="posisi" id="posisi" aria-labelledby="hi">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="istanaS" viewBox="0 0 320 170"><path style="fill:var(--bkt)" d="M0 132Q60 104 120 120T240 112T320 118V170H0Z"/><g><rect x="44" y="72" width="34" height="80"/><rect x="40" y="60" width="10" height="14"/><rect x="56" y="60" width="10" height="14"/><rect x="72" y="60" width="10" height="14"/><rect x="40" y="70" width="42" height="6"/><rect x="242" y="82" width="30" height="70"/><rect x="238" y="72" width="9" height="12"/><rect x="252" y="72" width="9" height="12"/><rect x="266" y="72" width="9" height="12"/><rect x="238" y="80" width="38" height="5"/><rect x="78" y="104" width="164" height="48"/><rect x="82" y="96" width="9" height="10"/><rect x="98" y="96" width="9" height="10"/><rect x="114" y="96" width="9" height="10"/><rect x="198" y="96" width="9" height="10"/><rect x="214" y="96" width="9" height="10"/><rect x="230" y="96" width="9" height="10"/><rect x="136" y="44" width="48" height="108"/><path d="M131 46 136 26 147 37 160 16 173 37 184 26 189 46Z"/><rect x="158" y="2" width="4" height="15"/><rect x="154" y="6" width="12" height="4"/></g><path style="fill:rgba(255,255,255,.55)" d="M152 152v-16a8 8 0 0 1 16 0v16zM155 66h10v14h-10zM56 90h10v12h-10zM252 98h10v12h-10z"/><rect x="60" y="34" width="2" height="27"/><path style="fill:#AA3F3F" d="M62 34 78 39 62 44Z"/><path style="fill:var(--bkd)" d="M0 150Q80 134 170 146T320 140V170H0Z"/></symbol></svg>
+  <div class="awan" aria-hidden="true"><svg class="a1" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a2" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a3" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg></div>
   <div class="wrap pos-g">
+    <svg class="ist ist-dt" viewBox="0 0 320 170" aria-hidden="true"><use href="#istanaS"/></svg>
     <div class="p-teks"><span class="pos-lbl" id="posLbl">Puzzle</span><h1 id="hi">Latih mata taktikmu setiap hari. Pemain kuat lahir dari kebiasaan.</h1></div>
     <div class="p-papan">
+      <svg class="ist ist-hp" viewBox="0 0 320 170" aria-hidden="true"><use href="#istanaS"/></svg>
       <div class="band"><div class="giliran" id="giliran" hidden></div><div class="kp"><div class="kbal" id="kbal">Hai!</div><svg viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg></div></div>
       <a class="papan" id="papanA" href="latihan.html?rak=campur" aria-label="Main posisi ini: mulai latihan puzzle"><div id="pbox"><div class="ph" id="pph">Memuat posisi hari ini…</div></div><span class="p-ketuk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Main posisi ini</span><div class="gbar" id="gbar"></div></a>
     </div>
