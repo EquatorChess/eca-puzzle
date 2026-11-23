@@ -319,7 +319,12 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 .nf-c .st.lama{background:#AA3F3F;color:#fff}
 .nf-c b{display:block;margin-top:6px;font:800 1.15rem/1.2 var(--hf);color:#fff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .nf-c small{display:block;margin-top:3px;font-size:.86rem;color:#E9DDD3}
-.nf-c .btn.kun{flex:none;font-size:1.05rem;padding:12px 18px}
+.nf-c{text-decoration:none;color:inherit;cursor:pointer;border:2px solid rgba(255,200,0,.45);transition:transform .12s,background .15s}
+.nf-c:active{transform:scale(.97);background:rgba(255,255,255,.2)}
+@media(hover:hover){.nf-c:hover{background:rgba(255,255,255,.2)}}
+.nf-c .go{flex:none;width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--maroon-d);border:2.5px solid var(--maroon-d);display:grid;place-items:center;box-shadow:0 4px 0 var(--maroon-d)}
+.nf-c .go svg{width:24px;height:24px;margin-left:3px}
+#tugasBox.kecil .nf-c .go{width:40px;height:40px}
 .nf-geser{margin:6px 16px 0;font:700 .8rem var(--bf);color:#F2DBD5;display:flex;align-items:center;gap:6px}
 .nf-geser i{display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35)}.nf-geser i.on{background:var(--gold)}
 #tugasBox.kecil .nf-h,#tugasBox.kecil .nf-geser{display:none}
@@ -663,8 +668,8 @@ function tugasBox(){var el=$('#tugasBox');if(!el)return;
   var ALL=window.ECA_all||{},n=belum.length;
   function kartu(t){var a=ALL[t.kode]||{},hari=Math.max(0,Math.floor((Date.now()-new Date(t.waktu))/864e5)),lama=!seen[t.kode]&&hari>=2;
     var st=seen[t.kode]?'Sedang dikerjakan':lama?'Sudah '+hari+' hari belum disentuh':'Baru';
-    return '<div class="nf-c"><div class="tx"><span class="st'+(lama?' lama':'')+'">'+esc(st)+'</span><b>'+esc(t.kode.toUpperCase()+(a.t?' · '+a.t:''))+'</b><small>'+(a.n?a.n+' soal':'')+(t.catatan?(a.n?' · ':'')+'“'+esc(t.catatan)+'”':'')+'</small></div>'+
-      '<a class="btn kun" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'">'+(seen[t.kode]?'Lanjut':'Mulai')+'</a></div>'}
+    return '<a class="nf-c" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'" aria-label="'+esc((seen[t.kode]?'Lanjutkan ':'Kerjakan ')+t.kode.toUpperCase()+(a.t?' '+a.t:''))+'"><div class="tx"><span class="st'+(lama?' lama':'')+'">'+esc(st)+'</span><b>'+esc(t.kode.toUpperCase()+(a.t?' · '+a.t:''))+'</b><small>'+(a.n?a.n+' soal':'')+(t.catatan?(a.n?' · ':'')+'“'+esc(t.catatan)+'”':'')+'</small></div>'+
+      '<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></a>'}
   el.innerHTML='<div class="notif"><div class="nf'+(n>1?' multi':'')+(n===2?' dua':'')+(getarSekali?'':' getar')+'" role="region" aria-label="Tugas dari Coach">'+
     '<div class="nf-h"><span class="nf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1Z"/></svg></span>'+
     '<div class="nf-t"><h2>Tugas dari Coach!</h2><p>Kerjakan dulu sebelum latihan lain.</p></div>'+(n>1?'<span class="nf-n">'+n+' tugas</span>':'')+'</div>'+
