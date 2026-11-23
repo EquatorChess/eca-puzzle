@@ -216,6 +216,18 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
 @keyframes ckp{0%,100%{opacity:.35}50%{opacity:.8}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+
+/* tombol berlabel (revisi 23 Nov): ikon + nama selalu terlihat */
+.ibtn.lb{width:auto;min-width:46px;height:auto;padding:4px 8px;flex-direction:column;gap:1px}.ibtn.lb svg{width:20px;height:20px}
+.ll{font:800 10.5px/1.1 var(--head);letter-spacing:.2px;white-space:nowrap}
+.kv.lb{width:auto;min-width:46px;height:auto;gap:1px;padding:4px 8px}.kv.lb .ll{font-size:10.5px}
+.sq{width:auto;min-width:44px;height:auto;min-height:44px;padding:5px 10px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.sq .ll{font-size:11.5px;color:inherit}
+#dock.tl .dk-in{flex-wrap:wrap}#dock.tl .dk-msg{flex:1 1 100%}#dock.tl .dk-b,#dock.tl:not(.no) .dk-b{flex:1 1 100%;justify-content:center}
+.dk-b .btn.tool{flex:1 1 0;width:auto;min-width:0;height:auto;min-height:56px;padding:6px 6px 5px;flex-direction:column;gap:3px;display:flex;align-items:center;justify-content:center}
+.dk-b .btn.tool svg{width:24px;height:24px}
+.dk-b .btn.tool>span:not(.cnt){display:block;font:800 13px/1.05 var(--head);text-align:center}
+.dk-b .btn.tool .cnt{top:-9px;right:6px}
 /*fix-scroll-22nov*/@media (max-width:899px){.boardwrap{max-width:min(620px,max(260px,calc(100vh - 110px)))}}</style>
 </head>
 <body>
@@ -223,10 +235,11 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
  <a class="back" id="bBack" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><span id="bBackT"></span></a>
  <span class="hdt" id="hdT"></span>
  <button class="ibtn" id="bLang" aria-label="Bahasa / Language">EN</button>
- <button class="ibtn" id="snd" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path class="sw" d="M16.5 8.5a5 5 0 0 1 0 7"/><path class="sw" d="M19 6a8.5 8.5 0 0 1 0 12"/><path class="sx" d="M16 9l5 6M21 9l-5 6" hidden/></svg></button>
+ <button class="ibtn lb" id="snd" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path class="sw" d="M16.5 8.5a5 5 0 0 1 0 7"/><path class="sw" d="M19 6a8.5 8.5 0 0 1 0 12"/><path class="sx" d="M16 9l5 6M21 9l-5 6" hidden/></svg><span class="ll" id="sndL"></span></button>
 </div></header>
 <main>
- <section id="home">
+ <section id="muat" style="max-width:520px;margin:30px auto;text-align:center"><div class="hk" id="muatK" style="width:130px;margin:0 auto"></div><h2 id="muatT" style="font:800 24px var(--head);margin:10px 0"></h2><div class="err" id="muatE" hidden></div><a class="btn kun" id="muatB" href="index.html" hidden style="margin-top:14px;display:inline-flex"><span data-i="keBeranda"></span></a></section>
+ <section id="home" hidden>
   <div class="hello" id="hello"></div>
   <div class="kls" id="kls" role="group" hidden></div>
   <div class="hero">
@@ -247,7 +260,7 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
   <section class="a-top">
    <div class="kudi-row"><div class="kudi idle" id="kudiW"><svg id="kudi" viewBox="-12 -12 224 264" aria-hidden="true"></svg></div>
     <div class="bubble"><div class="turn" id="turn"></div><p class="say" id="say" aria-live="polite"></p></div>
-    <button class="kv" id="bKv" hidden aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></div>
+    <button class="kv lb" id="bKv" hidden aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="ll" id="kvL"></span></button></div>
    <div class="meta"><div class="pawns" id="pawns" role="progressbar" aria-valuemin="0"></div><div class="pill" id="pill"><span class="fl"><svg viewBox="0 0 24 24"><path d="M12.5 2c.6 3.2-1 4.8-2.6 6.6C8.2 10.4 7 12 7 14.4 7 17.5 9.2 20 12 20s5-2.5 5-5.6c0-1.6-.7-3-1.6-4.2-.3 1-.9 1.7-1.7 2 .5-3.4-.3-6.7-1.2-10.2z" fill="currentColor"/></svg><b id="vS">0</b></span><span><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z" fill="#FFC800" stroke="#B9760C" stroke-width="1.4" stroke-linejoin="round"/></svg><b id="vP">0</b></span></div></div>
   </section>
   <section class="a-board">
@@ -255,9 +268,9 @@ textarea{width:100%;margin-top:8px;font:16px var(--body);padding:10px 12px;borde
   <section class="a-rest">
    <div class="tema" id="rev" hidden style="position:relative">
     <div class="tx"><b id="tN"></b> <span id="tD"></span><small id="tC"></small></div>
-    <button class="sq" id="bRev" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
-    <button class="sq" id="bAn" hidden aria-pressed="false" data-ia="anT"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></button>
-    <button class="sq" id="bMore" aria-expanded="false" aria-haspopup="menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg></button>
+    <button class="sq" id="bRev" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span class="ll" data-i="rev"></span></button>
+    <button class="sq" id="bAn" hidden aria-pressed="false" data-ia="anT"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span class="ll" data-i="anT"></span></button>
+    <button class="sq" id="bMore" aria-expanded="false" aria-haspopup="menu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg><span class="ll" data-i="more"></span></button>
     <div class="menu" id="menu" role="menu" hidden><a id="bLi" target="_blank" rel="noopener" role="menuitem" data-i="lichess"></a><button id="bLap" role="menuitem" data-i="lapor"></button></div>
    </div>
    <div class="stp" id="stp" hidden><button id="s0" data-ia="stp0">⏮</button><button id="s1" data-ia="stp1">◀</button><button id="s2" data-ia="stp2">▶</button><button id="s3" data-ia="stp3">⏭</button><span class="mvt" id="mvt"></span></div>
@@ -537,7 +550,7 @@ const instruksi=()=>M.rating<700&&rakNow&&INSTRUKSI[rakNow.id]?INSTRUKSI[rakNow.
 
 /* ===== teks ===== */
 const I18N={
-id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan Hari Ini',heroP:'Soal yang pas untuk kemampuanmu.',temaH:'Latih satu tema',temaP:'Pilih tema yang ingin diasah. Kesulitan tetap mengikuti ratingmu.',stR:'Rating',stH:'Hari ini',stS:'Hari beruntun',stHr:'hari',go:'Mulai',chal:'Hard mode',
+id:{back:'Beranda',backPlay:'Beranda',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+r,helloTamu:'Pilih kelasmu:',heroS:'Latihan Hari Ini',heroP:'Soal yang pas untuk kemampuanmu.',temaH:'Latih satu tema',temaP:'Pilih tema yang ingin diasah. Kesulitan tetap mengikuti ratingmu.',stR:'Rating',stH:'Hari ini',stS:'Hari beruntun',stHr:'hari',go:'Mulai',chal:'Hard mode',
  ulangT:'Ulangi soal gagal',ulangX:(a,b)=>a?a+' soal siap diulang':b+' soal menunggu',foot:'Soal dari database puzzle Lichess. Setelah masuk, hasilmu tercatat dan ikut menghitung ratingmu.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Latihan Puzzle',
  w:'Putih jalan',b:'Hitam jalan',lawan:'Lawan jalan…',hint:'Petunjuk',hintC:'−0,5',skip:'Lewati',sol:'Lihat solusi',next:'Lanjut',hasil:'Lihat hasil',again:'Coba lagi',
@@ -551,9 +564,9 @@ id:{back:'Beranda',backPlay:'Menu',hello:(n,r)=>'Halo, <b>'+n+'</b> · rating '+
  mulai:'Siap? Kita mulai!',giliran:{w:'Giliran putih!',b:'Giliran hitam!'},tema:'Tema',
  outT:'Keluar dari sesi?',outX:'Soal yang sudah selesai tetap tercatat.',outNo:'Tetap main',outYes:'Keluar',
  sumA:'Luar biasa!',sumB:'Selesai! Kerja bagus hari ini!',sumC:'Terus berlatih, ya!',tB:'Benar sendiri',tP:'Dengan petunjuk',tS:'Belum tepat',tSk:'Skor',tRun:'Beruntun terbaik',
- lagi:'Lanjut puzzle berikutnya',menu:'Menu latihan',rL:{1:'Benar',5:'Dengan petunjuk',0:'Belum tepat'},muatGagal:'Soal tidak bisa dimuat. Periksa sinyal, lalu coba lagi.',kosong:'Belum ada soal yang cocok di sini.',
+ lagi:'Lanjut puzzle berikutnya',menu:'Ke beranda',rL:{1:'Benar',5:'Dengan petunjuk',0:'Belum tepat'},muatGagal:'Soal tidak bisa dimuat. Periksa sinyal, lalu coba lagi.',muatT:'Menyiapkan puzzle…',keBeranda:'Kembali ke beranda',sndL:'Suara',kvL:'Suara Kudi',kosong:'Belum ada soal yang cocok di sini.',
  mat:'Checkmate!',skak:'Check!',ulangNama:'Ulangi soal gagal'},
-en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s Practice',heroP:'Puzzles that fit your level.',temaH:'Practice one theme',temaP:'Pick a theme to sharpen. Difficulty still follows your rating.',stR:'Rating',stH:'Today',stS:'Day streak',stHr:'days',go:'Start',chal:'Hard mode',
+en:{back:'Home',backPlay:'Beranda',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,helloTamu:'Choose your class:',heroS:'Today\'s Practice',heroP:'Puzzles that fit your level.',temaH:'Practice one theme',temaP:'Pick a theme to sharpen. Difficulty still follows your rating.',stR:'Rating',stH:'Today',stS:'Day streak',stHr:'days',go:'Start',chal:'Hard mode',
  ulangT:'Retry missed puzzles',ulangX:(a,b)=>a?a+' ready to retry':b+' waiting',foot:'Puzzles from the Lichess puzzle database. When you are signed in, results are saved and count toward your rating.',
  kel:{mat:'Checkmate',dasar:'Basic Tactics',garis:'Line Tactics',lanjut:'Advanced Tactics',akhir:'Endgames',buka:'Openings',pro:'Master Challenge'},judul:'Puzzle Practice',
  w:'White to move',b:'Black to move',lawan:'Opponent moves…',hint:'Hint',hintC:'−0.5',skip:'Skip',sol:'Show solution',next:'Next',hasil:'See results',again:'Try again',
@@ -567,14 +580,14 @@ en:{back:'Home',backPlay:'Menu',hello:(n,r)=>'Hi, <b>'+n+'</b> · rating '+r,hel
  mulai:'Ready? Let\'s start!',giliran:{w:'White\'s turn!',b:'Black\'s turn!'},tema:'Theme',
  outT:'Leave this session?',outX:'Finished puzzles are still saved.',outNo:'Keep playing',outYes:'Leave',
  sumA:'Amazing!',sumB:'All done! Great work today!',sumC:'Keep practicing!',tB:'Solved alone',tP:'With a hint',tS:'Missed',tSk:'Score',tRun:'Best streak',
- lagi:'Next puzzles',menu:'Practice menu',rL:{1:'Correct',5:'With a hint',0:'Missed'},muatGagal:'Puzzles could not be loaded. Check your connection and try again.',kosong:'No puzzles fit here yet.',
+ lagi:'Next puzzles',menu:'Back to home',rL:{1:'Correct',5:'With a hint',0:'Missed'},muatGagal:'Puzzles could not be loaded. Check your connection and try again.',muatT:'Getting puzzles ready…',keBeranda:'Back to home',sndL:'Sound',kvL:'Kudi voice',kosong:'No puzzles fit here yet.',
  mat:'Checkmate!',skak:'Check!',ulangNama:'Retry missed puzzles'}};
 const tx=(k,...a)=>{let s=I18N[LANG][k];if(s===undefined)s=I18N.id[k];return typeof s==='function'?s(...a):s};
 const fmt=v=>String(v).replace('.',LANG==='id'?',':'.');
 
 /* ===== SFX (keputusan coach 22 Nov 17.35): master 60% -> lowpass 6000 Hz -> compressor ===== */
 const SX=(()=>{let ctx=null,master=null,on=true;try{on=localStorage.getItem('eca_snd')!=='0'}catch(e){}
- function init(){if(ctx)return ctx;const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;ctx=new C();
+ function init(){if(ctx)return ctx;const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}ctx=new C();
   master=ctx.createGain();master.gain.value=0.6;const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=6000;
   const comp=ctx.createDynamicsCompressor();master.connect(lp);lp.connect(comp);comp.connect(ctx.destination);return ctx}
  const R=()=>1+(Math.random()-0.5)*0.03;
@@ -594,27 +607,43 @@ const SX=(()=>{let ctx=null,master=null,on=true;try{on=localStorage.getItem('eca
   salah:t=>{mar(392,t,0.2,0.16);mar(330,t+0.12,0.3,0.16)},
   petunjuk:t=>bell(1318,t,0.6,0.08),
   beruntun:(t,s)=>{const f=pent[Math.min(s,6)];mar(f,t,0.25,0.2);mar(f*1.5,t+0.1,0.4,0.18)},
+  klik:t=>{osc(1500,t,0.05,{v:0.1,a:0.004,f2:950})},
   selesai:t=>[523,659,784,1046,784,1046].forEach((f,i)=>mar(f,t+i*0.09,i===5?0.6:0.25,0.2))};
- function play(n,a){if(!on)return;const c=init();if(!c)return;if(c.state!=='running')c.resume().catch(()=>{});try{SFX[n](c.currentTime+.02,a)}catch(e){}}
- function wake(){if(!on)return;const c=init();if(c&&c.state!=='running')c.resume().catch(()=>{})}
- return{play,wake,ctx(){return init()},set(v){on=v;try{localStorage.setItem('eca_snd',v?'1':'0')}catch(e){}},get on(){return on}}})();
-['pointerdown','touchend','keydown'].forEach(ev=>addEventListener(ev,()=>SX.wake(),{capture:true,passive:true}));
+ /* Dibuka lewat ketukan: resume + 1 bunyi hening + elemen audio hening (iPhone: tanpa ini WebAudio ikut MUTE saat tombol senyap aktif). */
+ let silent=null,bukaCb=[];
+ function unlock(){const c=init();if(!c)return;
+  if(c.state!=='running')c.resume().then(()=>{const cbs=bukaCb;bukaCb=[];cbs.forEach(f=>{try{f()}catch(e){}})}).catch(()=>{});
+  try{const b=c.createBuffer(1,1,22050),s=c.createBufferSource();s.buffer=b;s.connect(c.destination);s.start(0)}catch(e){}
+  if(!silent){try{silent=new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');silent.loop=true;silent.volume=0.01;const pr=silent.play();if(pr&&pr.catch)pr.catch(()=>{silent=null})}catch(e){silent=null}}}
+ /* siap(): janji yang selesai begitu konteks berjalan (menunggu ketukan murid bila peramban masih memblokir). */
+ function siap(){const c=init();if(!c)return Promise.reject();if(c.state==='running')return Promise.resolve(c);
+  return new Promise((ok,no)=>{bukaCb.push(()=>c.state==='running'?ok(c):no());c.resume().then(()=>{if(c.state==='running')ok(c)}).catch(()=>{})})}
+ function play(n,a){if(!on)return;const c=init();if(!c)return;
+  const go=()=>{try{SFX[n](c.currentTime+.02,a)}catch(e){}};
+  if(c.state==='running')go();else c.resume().then(()=>{if(c.state==='running')go()}).catch(()=>{})}
+ function wake(){if(!on)return;unlock()}
+ return{play,wake,siap,ctx(){return init()},set(v){on=v;try{localStorage.setItem('eca_snd',v?'1':'0')}catch(e){}},get on(){return on}}})();
+['pointerdown','touchend','click','keydown'].forEach(ev=>addEventListener(ev,()=>{SX.wake()},{capture:true,passive:true}));
+/* klik halus untuk setiap tombol/tautan (selain papan) */
+addEventListener('pointerdown',e=>{const el=e.target&&e.target.closest&&e.target.closest('button,a[href],[role=button],summary,.btn');if(el&&!el.disabled&&!el.hasAttribute('data-nosfx'))SX.play('klik')},{capture:true,passive:true});
 function sndUI(){const b=$('snd');b.setAttribute('aria-pressed',String(SX.on));b.setAttribute('aria-label',tx(SX.on?'sndOn':'sndOff'));
  b.querySelectorAll('.sw').forEach(p=>p.toggleAttribute('hidden',!SX.on));b.querySelector('.sx').toggleAttribute('hidden',SX.on)}
 $('snd').onclick=()=>{SX.set(!SX.on);sndUI()};
 
 /* ===== suara Kudi (berkas mp3 opsional; diam bila tidak ada) ===== */
-const KV=(()=>{const ada=SUARA_KUDI.length>0;let on=ada;try{on=ada&&localStorage.getItem('eca_kv')!=='0'}catch(e){}let au=null,src=null,buf={},muat=false;
- /* Suara dipasang lewat WebAudio (buffer sudah didekode di muka) supaya tidak ada jeda unduh/dekode
-    yang menggeser bunyi langkah (SFX); mulai 0,28 dtk sesudah SFX supaya urut dan tidak saling menimpa. */
- function preload(){if(muat||!ada)return;const c=SX.ctx();if(!c)return;muat=true;
-  SUARA_KUDI.forEach(k=>{fetch('suara/kudi_'+k+'_'+LANG+'.mp3').then(r=>r.ok?r.arrayBuffer():null).then(d=>d&&new Promise((ok,no)=>c.decodeAudioData(d,ok,no))).then(b=>{if(b)buf[k]=b}).catch(()=>{})})}
- function stop(){try{if(src){src.stop();src=null}}catch(e){}try{if(au)au.pause()}catch(e){}}
- function say(k){if(!on||!SUARA_KUDI.includes(k))return;stop();const c=SX.ctx();
-  try{if(c&&buf[k]){if(c.state!=='running')c.resume().catch(()=>{});const s=c.createBufferSource();s.buffer=buf[k];s.connect(c.destination);s.start(c.currentTime+.28);src=s;return}}catch(e){}
-  try{au=new Audio('suara/kudi_'+k+'_'+LANG+'.mp3');au.onerror=()=>{};setTimeout(()=>{au&&au.play().catch(()=>{})},280)}catch(e){}}
- ['pointerdown','touchend','keydown'].forEach(ev=>addEventListener(ev,preload,{capture:true,passive:true,once:true}));
- return{say,ada,preload,get on(){return on},set(v){on=v;if(!v)stop();try{localStorage.setItem('eca_kv',v?'1':'0')}catch(e){}}}})();
+const KV=(()=>{const ada=SUARA_KUDI.length>0;let on=ada;try{on=ada&&localStorage.getItem('eca_kv')!=='0'}catch(e){}let src=null,buf={},muat={},seq=0;
+ /* Klip didekode ke buffer WebAudio (tanpa jeda unduh/dekode yang menggeser SFX). Dimuat BERTAHAP: klip penting di muka (4 sekaligus),
+    sisanya saat dibutuhkan; klip yang belum siap menunggu dimuat lalu diputar. Bila peramban masih memblokir suara, klip menunggu ketukan pertama. */
+ const URL_=k=>'suara/kudi_'+k+'_'+LANG+'.mp3';
+ function muatK(k){if(buf[k])return Promise.resolve(buf[k]);if(muat[k])return muat[k];const c=SX.ctx();if(!c)return Promise.reject();
+  return muat[k]=fetch(URL_(k)).then(r=>r.ok?r.arrayBuffer():Promise.reject()).then(d=>new Promise((ok,no)=>c.decodeAudioData(d,ok,no))).then(b=>buf[k]=b).catch(e=>{delete muat[k];throw e})}
+ const PENTING=['mulai','lanjut','giliran_putih','giliran_hitam','benar_1','benar_2','benar_3','tak_apa','coba_lagi','lihat_kotak','solusi','selesai','beruntun','lawan_jalan'];
+ function preload(){if(!ada||!on)return;const q=PENTING.filter(k=>SUARA_KUDI.includes(k));let i=0;const jalan=()=>{if(i>=q.length)return;muatK(q[i++]).catch(()=>{}).then(jalan)};for(let n=0;n<4;n++)jalan()}
+ function stop(){seq++;try{if(src){src.stop();src=null}}catch(e){}}
+ function say(k){if(!on||!SUARA_KUDI.includes(k))return;stop();const tok=seq,t0=Date.now();
+  Promise.all([muatK(k),SX.siap()]).then(([b,c])=>{if(tok!==seq||Date.now()-t0>20000)return;
+   const s=c.createBufferSource();s.buffer=b;const g=c.createGain();g.gain.value=1;s.connect(g);g.connect(c.destination);s.start(c.currentTime+.28);src=s}).catch(()=>{})}
+ return{say,ada,preload,get on(){return on},set(v){on=v;if(!v)stop();else preload();try{localStorage.setItem('eca_kv',v?'1':'0')}catch(e){}}}})();
 function kvUI(){const b=$('bKv');b.hidden=!KV.ada;b.setAttribute('aria-pressed',String(KV.on));b.setAttribute('aria-label',tx(KV.on?'kvOn':'kvOff'))}
 $('bKv').onclick=()=>{KV.set(!KV.on);kvUI()};
 
@@ -718,18 +747,20 @@ function renderTema(){const R=$('raks'),C=$('fams');R.innerHTML='';C.innerHTML='
  const A=ada.find(x=>x.kel.id===famNow);
  for(const r of A.rs){const b=document.createElement('button');b.className='tl';b.style.setProperty('--s',A.kel.sisi);
   b.innerHTML='<span class="ti">'+pcSvg(r.ikon)+'</span><span></span>';b.lastChild.textContent=nmRak(r);b.onclick=()=>mulaiRak(r,false);R.appendChild(b)}}
-function tampil(id){anReset();for(const x of['home','play','sum'])$(x).hidden=x!==id;$('dock').hidden=id!=='play';
- const inHome=id==='home';$('bBackT').textContent=tx(inHome?'back':'backPlay');$('bBack').setAttribute('href',inHome?'index.html':'#');
+function tampil(id){anReset();for(const x of['home','play','sum','muat'])$(x).hidden=x!==id;$('dock').hidden=id!=='play';
+ const inHome=id==='home'||id==='muat';$('bBackT').textContent=tx(inHome?'back':'backPlay');$('bBack').setAttribute('href',inHome?'index.html':'#');
  $('hdT').textContent=inHome?tx('judul'):nmRak(rakNow);window.scrollTo(0,0)}
-$('bBack').onclick=e=>{if(!$('home').hidden)return;e.preventDefault();keHome()}; /* keluar bebas: soal yang belum selesai tidak dicatat dan boleh muncul lagi */
-function keHome(){cur=null;hideMsg();tampil('home');renderHome()}
+$('bBack').onclick=e=>{if($('play').hidden&&$('sum').hidden)return;e.preventDefault();keHome()}; /* keluar bebas: soal yang belum selesai tidak dicatat dan boleh muncul lagi */
+/* Menu latihan lama sudah tidak dipakai: "kembali" selalu ke beranda baru (index.html). */
+function keHome(){cur=null;hideMsg();location.href='index.html'}
+function galat(m){cur=null;hideMsg();tampil('muat');$('muatK').innerHTML=kudiSvg('nyasar');$('muatT').textContent='';$('muatE').textContent=m;$('muatE').hidden=false;$('muatB').hidden=false}
 const campur=()=>IDX&&IDX.rak.find(r=>r.id==='campur');
 $('bGo').onclick=()=>mulaiRak(campur(),false);
 $('bChal').onclick=()=>mulaiRak(campur(),true);
 $('bUlang').onclick=()=>{const g=gagalList().sort((a,b)=>a.due-b.due).slice(0,SESI_N);if(!g.length)return;rakNow={id:'ulang',keluarga:'campur'};tantangan=false;mulaiSesi(g.map(x=>x.p))};
 async function mulaiRak(r,ch){if(!r)return;$('hErr').hidden=true;
  try{let s=await ambilSesi(r,targetR(ch));
-  if(r.id==='campur'&&!ch){const h=LS.get('eca.lat.hero',null);if(h&&h.t===tglKey(new Date())&&h.p&&!new Set(LS.get(LIHAT,[])).has(h.p.id))s=[h.p].concat(s.filter(x=>x.id!==h.p.id)).slice(0,SESI_N)}if(!s.length)throw new Error('kosong');rakNow=r;tantangan=ch;mulaiSesi(s)}catch(e){$('hErr').textContent=tx(e.message==='kosong'?'kosong':'muatGagal');$('hErr').hidden=false}}
+  if(r.id==='campur'&&!ch){const h=LS.get('eca.lat.hero',null);if(h&&h.t===tglKey(new Date())&&h.p&&!new Set(LS.get(LIHAT,[])).has(h.p.id))s=[h.p].concat(s.filter(x=>x.id!==h.p.id)).slice(0,SESI_N)}if(!s.length)throw new Error('kosong');rakNow=r;tantangan=ch;mulaiSesi(s)}catch(e){galat(tx(e.message==='kosong'?'kosong':'muatGagal'))}}
 
 /* ===== bahasa ===== */
 function applyI18n(){document.documentElement.lang=LANG;
@@ -737,7 +768,7 @@ function applyI18n(){document.documentElement.lang=LANG;
  document.querySelectorAll('[data-ia]').forEach(e=>e.setAttribute('aria-label',tx(e.dataset.ia)));
  document.querySelectorAll('[data-ip]').forEach(e=>e.setAttribute('placeholder',tx(e.dataset.ip)));
  $('bLang').textContent=LANG==='id'?'EN':'ID';svg.setAttribute('aria-label',tx('boardAria'));$('bRev').setAttribute('aria-label',tx('rev'));$('bMore').setAttribute('aria-label',tx('more'));
- sndUI();kvUI();const inHome=!$('home').hidden;$('bBackT').textContent=tx(inHome?'back':'backPlay');$('hdT').textContent=inHome?tx('judul'):nmRak(rakNow);
+ sndUI();kvUI();$('sndL').textContent=tx('sndL');$('kvL').textContent=tx('kvL');const inHome=!$('home').hidden;$('bBackT').textContent=tx(inHome?'back':'backPlay');$('hdT').textContent=inHome?tx('judul'):nmRak(rakNow);
  if(inHome)renderHome();if(cur){turnUI();dockUI();if(cur.done)showTema()}}
 $('bLang').onclick=()=>{LANG=LANG==='id'?'en':'id';try{localStorage.setItem('eca_lang',LANG)}catch(e){}applyI18n()};
 
@@ -1004,9 +1035,12 @@ $('aFlip').onclick=()=>{flip=!flip;buildBoard();anShow(AN.i)};
 document.querySelectorAll('#an [data-ia]').forEach(e=>e.setAttribute('aria-label',tx(e.dataset.ia)));
 
 /* ===== mulai ===== */
-mood('senang');tampil('home');applyI18n();
-getJSON(DATA_BASE+'indeks.json').then(d=>{IDX=d;renderHome();const r=Q.get('rak');if(r){const x=IDX.rak.find(x=>x.id===r);if(x)mulaiRak(x,Q.get('tantangan')==='1')}if(Q.get('ulang')==='1'&&!$('bUlang').hidden)$('bUlang').click()})
- .catch(()=>{$('hErr').textContent=tx('muatGagal');$('hErr').hidden=false});
+if(!(Q.get('rak')||Q.get('ulang')==='1'))location.replace('index.html');/* tanpa tujuan: ke beranda baru, bukan menu lama */
+mood('senang');applyI18n();tampil('muat');$('muatK').innerHTML=kudiSvg('mikir');$('muatT').textContent=tx('muatT');KV.preload();
+getJSON(DATA_BASE+'indeks.json').then(d=>{IDX=d;renderHome();const r=Q.get('rak');
+ if(r){const x=IDX.rak.find(x=>x.id===r);if(x)mulaiRak(x,Q.get('tantangan')==='1');else galat(tx('kosong'))}
+ else if(Q.get('ulang')==='1'){if(!$('bUlang').hidden)$('bUlang').click();else galat(tx('kosong'))}})
+ .catch(()=>galat(tx('muatGagal')));
 
 </script>
 </body>

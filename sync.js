@@ -181,3 +181,17 @@
   if (token) kirim({ aksi: 'profil', token: token });
   else kuras();
 })();
+
+/* SFX klik halus untuk semua tombol/tautan (23 Nov 2026). Mandiri: dipakai di index.html (inline), halaman puzzle (lewat sync.js).
+   Menghormati sakelar suara murid (localStorage eca_snd=0). Konteks audio dibuat/dibuka hanya saat ketukan. */
+(function(){if(window.__klik)return;window.__klik=1;var ctx=null,last=0;
+ function on(){try{return localStorage.getItem('eca_snd')!=='0'}catch(e){return true}}
+ function tick(){if(!on())return;var n=Date.now();if(n-last<60)return;last=n;
+  try{if(!ctx){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;ctx=new C()}
+   if(ctx.state!=='running')ctx.resume();
+   var t=ctx.currentTime+.005,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(1500,t);o.frequency.exponentialRampToValueAtTime(950,t+.04);
+   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.07,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+.06);
+   o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.08)}catch(e){}}
+ addEventListener('pointerdown',function(e){var el=e.target&&e.target.closest&&e.target.closest('button,a[href],[role=button],[role=tab],summary,.btn,[data-go]');
+  if(!el||el.disabled||el.getAttribute('aria-disabled')==='true'||el.hasAttribute('data-nosfx'))return;tick()},{capture:true,passive:true});
+})();
