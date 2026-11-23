@@ -312,24 +312,28 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 .nf-n{flex:none;background:var(--gold);color:var(--maroon-d);font:800 1rem/1 var(--hf);padding:7px 12px;border-radius:99px}
 .nf-sc{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .nf-sc::-webkit-scrollbar{display:none}
-.nf-c{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border-radius:18px;padding:12px 12px 12px 14px;min-width:0}
+.nf-c{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:var(--maroon-d);cursor:pointer;background:var(--gold);border:3px solid var(--maroon);border-radius:18px;padding:12px 12px 12px 14px;box-shadow:0 5px 0 var(--maroon-d);transition:transform .1s,box-shadow .1s}
 .nf.multi .nf-c{flex-basis:88%}
+.nf-sc{padding-bottom:10px}
+.nf-c:active{transform:translateY(4px);box-shadow:0 1px 0 var(--maroon-d)}
 .nf-c .tx{flex:1;min-width:0}
-.nf-c .st{display:inline-block;font:800 .7rem/1 var(--bf);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:#fff;color:var(--maroon)}
+.nf-c .st{display:inline-block;font:800 .7rem/1 var(--bf);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:var(--maroon);color:#F1ECE5}
 .nf-c .st.lama{background:#AA3F3F;color:#fff}
-.nf-c b{display:block;margin-top:6px;font:800 1.15rem/1.2 var(--hf);color:#fff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.nf-c small{display:block;margin-top:3px;font-size:.86rem;color:#E9DDD3}
-.nf-c{text-decoration:none;color:inherit;cursor:pointer;border:2px solid rgba(255,200,0,.45);transition:transform .12s,background .15s}
-.nf-c:active{transform:scale(.97);background:rgba(255,255,255,.2)}
-@media(hover:hover){.nf-c:hover{background:rgba(255,255,255,.2)}}
-.nf-c .go{flex:none;width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--maroon-d);border:2.5px solid var(--maroon-d);display:grid;place-items:center;box-shadow:0 4px 0 var(--maroon-d)}
-.nf-c .go svg{width:24px;height:24px;margin-left:3px}
-#tugasBox.kecil .nf-c .go{width:40px;height:40px}
+.nf-c b{margin-top:6px;font:800 1.3rem/1.15 var(--hf);color:var(--maroon-d);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nf-c small{display:block;margin-top:3px;font-size:.88rem;color:var(--maroon)}
+.nf-c .go{flex:none;width:46px;height:46px;border-radius:50%;background:var(--maroon);color:var(--gold);display:grid;place-items:center}
+.nf-c .go svg{width:24px;height:24px}
+.nf-c.done{background:#4B4140;border-color:#6B5F5C;box-shadow:none;cursor:default;color:#C9BEB9}
+.nf-c.done:active{transform:none}
+.nf-c.done .st{background:#6B5F5C;color:#F1ECE5}
+.nf-c.done b{color:#D8CEC9;text-decoration:line-through;text-decoration-thickness:2px}
+.nf-c.done small{color:#A99E99}
+.nf-c.done .go{background:#6B5F5C;color:#F1ECE5}
 .nf-geser{margin:6px 16px 0;font:700 .8rem var(--bf);color:#F2DBD5;display:flex;align-items:center;gap:6px}
 .nf-geser i{display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35)}.nf-geser i.on{background:var(--gold)}
 #tugasBox.kecil .nf-h,#tugasBox.kecil .nf-geser{display:none}
 #tugasBox.kecil .nf{padding:6px 0;border-radius:20px}#tugasBox.kecil .nf-sc{padding:4px 8px}
-#tugasBox.kecil .nf-c{padding:8px 8px 8px 12px}#tugasBox.kecil .nf-c b{margin-top:3px;font-size:1rem;-webkit-line-clamp:1}#tugasBox.kecil .nf-c small{display:none}
+#tugasBox.kecil .nf-c{padding:7px 8px 7px 12px;box-shadow:0 3px 0 var(--maroon-d)}#tugasBox.kecil .nf-c b{margin-top:2px;font-size:1rem;-webkit-line-clamp:1}#tugasBox.kecil .nf-c small,#tugasBox.kecil .nf-c .st{display:none}#tugasBox.kecil .nf-c .go{width:36px;height:36px}#tugasBox.kecil .nf-c.done{display:none}
 .paused-nf .nf,.paused-nf .nf-ic::after,html.lite .nf,html.lite .nf-ic::after{animation:none}
 @media(min-width:900px){#tugasBox{top:64px}.nf.dua .nf-geser{display:none}.nf.multi .nf-c{flex-basis:calc(50% - 5px)}.nf-t h2{font-size:2rem}}
 /* papan hero bisa diketuk */
@@ -665,18 +669,20 @@ function tugasBox(){var el=$('#tugasBox');if(!el)return;
   var seen={};try{seen=JSON.parse(localStorage.getItem('eca.seen')||'{}')}catch(e){}
   var belum=T.filter(function(t){return !t.selesai}).sort(function(a,b){return new Date(a.waktu)-new Date(b.waktu)});
   if(!belum.length){el.innerHTML='';return}
-  var ALL=window.ECA_all||{},n=belum.length;
-  function kartu(t){var a=ALL[t.kode]||{},hari=Math.max(0,Math.floor((Date.now()-new Date(t.waktu))/864e5)),lama=!seen[t.kode]&&hari>=2;
+  var ALL=window.ECA_all||{},n=belum.length,sudah=T.filter(function(t){return t.selesai}),semua=belum.concat(sudah);
+  var PENSIL='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25Zm17.7-10.2a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"/></svg>',CEK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function kartu(t){var a=ALL[t.kode]||{},judul=a.t||'Tugas dari Coach',info=(a.n?a.n+' soal':'')+(t.catatan&&!t.selesai?(a.n?' · ':'')+'“'+esc(t.catatan)+'”':'');
+    if(t.selesai)return '<div class="nf-c done"><div class="tx"><span class="st">Selesai</span><b>'+esc(judul)+'</b><small>'+info+'</small></div><span class="go" aria-hidden="true">'+CEK+'</span></div>';
+    var hari=Math.max(0,Math.floor((Date.now()-new Date(t.waktu))/864e5)),lama=!seen[t.kode]&&hari>=2;
     var st=seen[t.kode]?'Sedang dikerjakan':lama?'Sudah '+hari+' hari belum disentuh':'Baru';
-    return '<a class="nf-c" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'" aria-label="'+esc((seen[t.kode]?'Lanjutkan ':'Kerjakan ')+t.kode.toUpperCase()+(a.t?' '+a.t:''))+'"><div class="tx"><span class="st'+(lama?' lama':'')+'">'+esc(st)+'</span><b>'+esc(t.kode.toUpperCase()+(a.t?' · '+a.t:''))+'</b><small>'+(a.n?a.n+' soal':'')+(t.catatan?(a.n?' · ':'')+'“'+esc(t.catatan)+'”':'')+'</small></div>'+
-      '<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></a>'}
-  el.innerHTML='<div class="notif"><div class="nf'+(n>1?' multi':'')+(n===2?' dua':'')+(getarSekali?'':' getar')+'" role="region" aria-label="Tugas dari Coach">'+
+    return '<a class="nf-c" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'" aria-label="'+esc((seen[t.kode]?'Lanjutkan ':'Kerjakan ')+judul)+'"><div class="tx"><span class="st'+(lama?' lama':'')+'">'+esc(st)+'</span><b>'+esc(judul)+'</b><small>'+info+'</small></div><span class="go" aria-hidden="true">'+PENSIL+'</span></a>'}
+  el.innerHTML='<div class="notif"><div class="nf'+(semua.length>1?' multi':'')+(semua.length===2?' dua':'')+(getarSekali?'':' getar')+'" role="region" aria-label="Tugas dari Coach">'+
     '<div class="nf-h"><span class="nf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1Z"/></svg></span>'+
     '<div class="nf-t"><h2>Tugas dari Coach!</h2><p>Kerjakan dulu sebelum latihan lain.</p></div>'+(n>1?'<span class="nf-n">'+n+' tugas</span>':'')+'</div>'+
-    '<div class="nf-sc" id="nfSc">'+belum.map(kartu).join('')+'</div>'+
-    (n>1?'<div class="nf-geser" aria-hidden="true">'+belum.map(function(_,k){return '<i'+(k?'':' class="on"')+'></i>'}).join('')+'<span>Geser untuk tugas lain</span></div>':'')+'</div></div>';
+    '<div class="nf-sc" id="nfSc">'+semua.map(kartu).join('')+'</div>'+
+    (semua.length>1?'<div class="nf-geser" aria-hidden="true">'+semua.map(function(_,k){return '<i'+(k?'':' class="on"')+'></i>'}).join('')+'<span>Geser untuk tugas lain</span></div>':'')+'</div></div>';
   getarSekali=true;
-  var sc=$('#nfSc');if(sc&&n>1)sc.addEventListener('scroll',function(){var w=sc.firstChild.offsetWidth+10,k=Math.round(sc.scrollLeft/w);el.querySelectorAll('.nf-geser i').forEach(function(d,x){d.classList.toggle('on',x===k)})},{passive:true})}
+  var sc=$('#nfSc');if(sc&&semua.length>1)sc.addEventListener('scroll',function(){var w=sc.firstChild.offsetWidth+10,k=Math.round(sc.scrollLeft/w);el.querySelectorAll('.nf-geser i').forEach(function(d,x){d.classList.toggle('on',x===k)})},{passive:true})}
 /* gelembung tugas mengecil saat murid menggulir ke bawah supaya tidak menutupi isi */
 addEventListener('scroll',function(){var el=$('#tugasBox');if(el)el.classList.toggle('kecil',scrollY>260)},{passive:true});
 /* modal */
