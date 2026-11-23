@@ -282,6 +282,32 @@ html.s-murid:is([data-v=tugas],[data-v=peringkat],[data-v=saya]) :is(#saranK,#pa
 #papan64 .p64 i.kini{outline:3px solid var(--maroon);outline-offset:-3px}
 #papan64 .ket64{margin:10px 0 0;text-align:center;font:800 .95rem var(--hf);color:var(--maroon)}
 .nf-pg{height:7px;margin-top:7px;border-radius:99px;background:rgba(53,9,17,.22);overflow:hidden}.nf-pg i{display:block;height:100%;background:var(--maroon);border-radius:99px}
+/* ---- percantik beranda (23 Nov): ubin tema bergambar, laci berwarna, kartu Kudi dan Papan 64 Hari berpanel ---- */
+#temaPz .laci{border-color:var(--f,var(--line));border-top-width:8px;box-shadow:0 8px 0 rgba(53,9,17,.14),0 18px 30px rgba(14,22,64,.25);position:relative}
+#temaPz .lh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+#temaPz .lh p{margin:2px 0 0}
+#temaPz .lp{flex:none;width:58px;height:64px;filter:drop-shadow(0 4px 0 rgba(53,9,17,.18))}#temaPz .lp svg{width:100%;height:100%;display:block}
+#temaPz .tg{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+#temaPz .tl{flex-direction:row;align-items:center;gap:12px;padding:10px 12px 10px 10px;border-radius:16px;background:#fff;box-shadow:0 4px 0 var(--line);transition:transform .12s,box-shadow .12s,border-color .12s}
+#temaPz a.tl:hover,#temaPz a.tl:focus-visible{transform:translateY(-2px);box-shadow:0 6px 0 var(--maroon);border-color:var(--maroon)}
+#temaPz a.tl:active{transform:translateY(3px);box-shadow:0 1px 0 var(--maroon)}
+#temaPz .tl .ti{flex:none;display:grid;place-items:center;width:50px;height:50px;border-radius:14px;background:var(--jambu);border:2.5px solid var(--maroon);box-shadow:inset 0 -4px 0 rgba(90,15,26,.14)}
+#temaPz .tl .ti img{width:38px;height:38px;display:block}
+#temaPz .tl .tt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+#temaPz .tl .tt b{font:800 1rem/1.2 var(--hf);color:var(--maroon)}
+#temaPz .tl .tt small{font:400 .82rem/1.35 var(--bf);color:var(--muted)}
+#temaPz .tl .pl{flex:none;width:30px;height:30px;padding:6px;border-radius:50%;background:var(--gold);color:var(--maroon-d);border:2px solid var(--maroon)}
+#temaPz .tl.sg .ti{background:#ece5df;border-color:#cdbfb7}#temaPz .tl.sg .ti img{filter:grayscale(1);opacity:.45}
+#temaPz .tl.sg .tt b{color:#9a8c88}
+#saranK .sk{position:relative;overflow:hidden;border:3px solid var(--maroon);border-bottom-width:6px;background:linear-gradient(105deg,#FFF6D1 0,#FFFDF9 55%)}
+#saranK .sk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:repeating-linear-gradient(135deg,var(--gold) 0 8px,var(--maroon) 8px 16px)}
+#saranK .sk svg{margin-left:6px;filter:drop-shadow(0 4px 0 rgba(53,9,17,.16))}
+#papan64 .wrap>.p64{box-shadow:0 6px 0 var(--maroon-d),0 16px 30px rgba(14,22,64,.3)}
+#papan64 .lg64{color:var(--maroon);display:flex;justify-content:center;align-items:center;gap:6px;margin-top:10px;font:700 .78rem var(--bf)}
+#papan64 .lg64 i{display:block;width:16px;height:16px;border-radius:4px;border:1.5px solid var(--maroon)}
+#papan64 .lg64 i.a0{background:#F2DBD5}#papan64 .lg64 i.a1{background:#FFE680}#papan64 .lg64 i.a2{background:#FFD633}#papan64 .lg64 i.a3{background:#FFC800}
+#temaPz h2::after,#papan64 h2::after{content:"";display:block;width:56px;height:6px;margin-top:6px;border-radius:99px;background:repeating-linear-gradient(135deg,var(--gold) 0 8px,var(--maroon) 8px 16px)}
+@media(max-width:559px){#temaPz .tg{grid-template-columns:1fr}}
 
 /* kunci tamu: hanya layar Masuk */
 #tamuLayar,#posisi,#hero{display:none}
@@ -324,7 +350,7 @@ html.s-murid .top{background:var(--panel)}
  html.s-murid .tbtn[aria-current=page] .tdot{border-color:var(--maroon-d)}
  html.s-murid .tdot{border-color:#161C47}
  html.s-murid :is(.pos-lbl,.giliran,.sek a,.lnk,#temaPz h2,#temaPz .td,#temaPz .pz .nm,#temaPz .pz .nm small,.vh,.sub,footer,footer a,#tamuLayar h1,#tamuLayar p,.tm-minta,.posisi h1,#papan64 h2,#papan64 .td,#papan64 .ket64){color:#F4F1FF}
- html.s-murid .pos-lbl{color:#C5CCF5}
+ html.s-murid :is(.pos-lbl,#papan64 .lg64){color:#C5CCF5}
  html.s-murid footer{border-top-color:#2C3774}
  html.s-murid :is(.kosong h2,.kosong p,.sy-id h1,.sy-id p,.sy-r,.sy-r small,.h-sec,#lbx>p){color:#F4F1FF}
  html.s-murid .gh{color:#C5CCF5}
@@ -569,6 +595,7 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
   <p class="td">Satu kotak satu hari. Isi kotakmu sebanyak mungkin.</p>
   <div class="p64" id="p64" role="img" aria-label="Kalender latihan 64 hari"></div>
   <p class="ket64" id="ket64"></p>
+  <div class="lg64" aria-hidden="true">Sedikit<i class="a0"></i><i class="a1"></i><i class="a2"></i><i class="a3"></i>Banyak</div>
 </div></section>
 
 
@@ -835,16 +862,18 @@ var DESK={mat:'Kunci Raja lawan dan akhiri partai.',dasar:'Tangkap bidak dengan 
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function piece(id){return '<svg viewBox="0 0 232 270" aria-hidden="true"><use href="#'+id+'S" x="9" y="7" width="220" height="260"/><use href="#'+id+'S" x="4.5" y="3.5" width="220" height="260"/><use href="#'+id+'F" width="220" height="260"/></svg>'}
 var PED='<svg class="ped" viewBox="0 0 100 34" aria-hidden="true"><ellipse class="s1" cx="50" cy="22" rx="46" ry="11"/><rect class="s2" x="4" y="11" width="92" height="11"/><ellipse class="rim" cx="50" cy="11" rx="46" ry="10"/></svg>';
+var TD={mat1:'Skakmat dalam satu langkah. Mulai dari yang paling dasar.',mat2:'Cari dua langkah yang mengunci Raja lawan.',mat3:'Hitung tiga langkah ke depan sampai skakmat.',mat45:'Kombinasi panjang yang berujung skakmat.',backrank:'Raja terjepit di baris terakhir. Manfaatkan!',polamat:'Kenali pola skakmat klasik sekali lihat.',garpu:'Satu bidak menyerang dua target sekaligus.',gantung:'Temukan bidak lawan yang tak ada penjaganya.',terjebak:'Bidak lawan tak punya jalan keluar. Tangkap!',pembela:'Singkirkan penjaga, lalu ambil bidaknya.',pin:'Bidak lawan terkunci karena ada yang lebih berharga di belakangnya.',tusuk:'Serang bidak besar, bidak di belakangnya ikut jatuh.',terbuka:'Geser satu bidak, buka serangan dari bidak lain.',skakterbuka:'Skak lewat bidak yang baru terbuka jalurnya.',skakganda:'Dua bidak memberi skak sekaligus.',jebakan:'Pembukaan penuh jebakan. Jangan sampai terkena!'};
 var D=null,cur=-1;
 function tutup(){cur=-1;L.classList.remove('on');L.innerHTML='';T.querySelectorAll('.pz').forEach(function(b){b.classList.remove('on','dim');b.setAttribute('aria-pressed','false')})}
 function buka(i){
   if(cur===i){tutup();return}
   cur=i;var f=FAM[i],ts=D.rak.filter(function(r){return r.keluarga===f[0]}),ada=ts.some(function(r){return r.tahap===1});
   T.querySelectorAll('.pz').forEach(function(b,j){b.classList.toggle('on',j===i);b.classList.toggle('dim',j!==i);b.setAttribute('aria-pressed',j===i)});
-  var kt=ts.map(function(r){var n=0;for(var k in r.jumlah)n+=r.jumlah[k];
-    if(r.tahap===1)return '<a class="tl" href="latihan.html?rak='+encodeURIComponent(r.id)+'"><span>'+esc(r.nama_en)+'</span><small>'+n+' soal</small></a>';
-    return '<span class="tl sg" aria-disabled="true"><span>'+esc(r.nama_en)+'</span><small>Segera</small></span>'}).join('');
-  L.innerHTML='<h3>'+esc(f[2])+(ada?'':' · Segera')+'</h3><p>'+esc(ada?DESK[f[0]]:'Tema ini sedang Kudi siapkan. Latih tema lain dulu, ya!')+'</p><div class="tg">'+kt+'</div>';
+  var fk=D.keluarga.filter(function(k){return k.id===f[0]})[0]||{},kt=ts.map(function(r){
+    var ic='<span class="ti"><img alt="" src="bidak/w'+esc(r.ikon||'p')+'.svg"></span>';
+    if(r.tahap===1)return '<a class="tl" style="--f:'+(fk.muka||'#fff')+'" href="latihan.html?rak='+encodeURIComponent(r.id)+'">'+ic+'<span class="tt"><b>'+esc(r.nama_en)+'</b><small>'+esc(TD[r.id]||r.nama)+'</small></span><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></a>';
+    return '<span class="tl sg" aria-disabled="true">'+ic+'<span class="tt"><b>'+esc(r.nama_en)+'</b><small>Segera</small></span></span>'}).join('');
+  L.style.setProperty('--f',fk.muka||'#fff');L.innerHTML='<div class="lh"><span class="lp">'+piece(f[0])+'</span><div><h3>'+esc(f[2])+(ada?'':' · Segera')+'</h3>'+'<p>'+esc(ada?DESK[f[0]]:'Tema ini sedang Kudi siapkan. Latih tema lain dulu, ya!')+'</p></div></div><div class="tg">'+kt+'</div>';
   L.classList.add('on');
 }
 function gambar(){
