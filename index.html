@@ -254,23 +254,6 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 #tamuLayar .btn{width:100%}
 .tm-minta{margin-top:10px!important;font-size:.95rem}
 /* pita tugas dari Coach */
-.pita{background:var(--maroon);color:#F1ECE5;position:relative;padding:14px 0 20px}
-.pita::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:repeating-linear-gradient(-45deg,var(--gold) 0 10px,var(--maroon-d) 10px 20px)}
-.pita.getar .pt-i{animation:getar .6s ease-in-out 1}
-@keyframes getar{15%{transform:translate3d(-5px,0,0)}35%{transform:translate3d(5px,0,0)}55%{transform:translate3d(-3px,0,0)}75%{transform:translate3d(3px,0,0)}}
-.pt-i{display:flex;align-items:center;gap:14px}
-.pt-k{flex:1;min-width:0}
-.pt-lbl{font:800 .72rem/1 var(--bf);letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
-.pt-st{display:inline-block;margin-left:8px;font:800 .7rem/1 var(--bf);letter-spacing:.06em;padding:4px 8px;border-radius:99px;background:var(--gold);color:var(--maroon-d);text-transform:uppercase}
-.pt-jd{display:block;margin-top:6px;font:800 1.15rem/1.2 var(--hf);color:#fff}
-.pt-m{display:block;margin-top:2px;font-size:.88rem;color:#E9DDD3}
-.pita .btn.kun{flex:none;padding:12px 18px}
-.pt-lagi{margin-top:10px;background:none;border:0;padding:4px 0;color:var(--gold);font:800 .9rem var(--bf);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.pt-ls{margin-top:6px;display:grid;gap:8px}
-.pt-ls[hidden]{display:none}
-.pt-r{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.1)}
-.pt-r b{flex:1;min-width:0;font:800 .95rem/1.2 var(--hf);color:#fff}
-.pt-r a{flex:none;color:var(--maroon-d);background:var(--gold);text-decoration:none;font:800 .85rem var(--hf);padding:7px 14px;border-radius:99px}
 /* hero Posisi Hari Ini */
 .posisi{padding:14px 0 6px;isolation:isolate}
 .pos-g{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);grid-template-areas:"teks" "papan" "aksi"}
@@ -278,11 +261,11 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 .pos-lbl{font:800 .78rem/1 var(--bf);letter-spacing:.12em;text-transform:uppercase;color:var(--label)}
 .posisi h1{margin:8px 0 0;font-size:clamp(1.5rem,6.2vw,2.3rem);line-height:1.15}
 .band{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;min-height:60px;padding:0 6px}
-.giliran{display:flex;align-items:center;gap:8px;font:800 1.05rem/1 var(--hf);color:var(--maroon);padding-bottom:10px}
+.giliran{white-space:nowrap;display:flex;align-items:center;gap:8px;font:800 1.05rem/1 var(--hf);color:var(--maroon);padding-bottom:10px}
 .giliran i{width:17px;height:17px;border-radius:50%;border:3px solid var(--kopi,#3F322F);flex:none}
 .giliran i.w{background:#F1ECE5}.giliran i.b{background:#3F322F}
 .kp{display:flex;align-items:flex-end;gap:6px;margin-bottom:-5px;position:relative;z-index:1}
-.kbal{background:var(--panel);border:2.5px solid var(--maroon);border-radius:14px 14px 4px 14px;padding:5px 10px;margin-bottom:22px;font:800 .8rem/1.2 var(--hf);color:var(--maroon);max-width:150px}
+.kbal{white-space:nowrap;background:var(--panel);border:2.5px solid var(--maroon);border-radius:14px 14px 4px 14px;padding:5px 10px;margin-bottom:22px;font:800 .8rem/1.2 var(--hf);color:var(--maroon);max-width:150px}
 .kp svg{width:58px;height:68px;display:block;flex:none}
 .papan{background:var(--maroon);border-radius:18px;padding:6px 6px 0;box-shadow:0 6px 0 var(--maroon-d);overflow:hidden}
 .papan svg.pb{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:11px 11px 0 0}
@@ -308,12 +291,60 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
  .posisi h1{font-size:2.1rem;max-width:20ch}
  .btn.big{font-size:1.05rem;padding:13px 20px}
  .band{min-height:52px}.kp svg{width:50px;height:58px}
- .pita{padding:10px 0 16px}
- .pt-k{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px}
- .pt-st{margin-left:0}.pt-jd{margin:0;font-size:1.05rem}.pt-m{margin:0}
- .pt-lagi{margin-top:6px}
  .steps{grid-template-columns:repeat(3,1fr)}
 }
+
+/* notifikasi tugas dari Coach: gelembung melayang, ikut terlihat saat menggulir */
+#tugasBox{position:sticky;top:calc(66px + env(safe-area-inset-top));z-index:15;pointer-events:none}
+.notif{max-width:1100px;margin:14px auto 2px;padding:0 12px}
+.nf{pointer-events:auto;background:rgba(90,15,26,.92);color:#F1ECE5;border:3px solid var(--gold);border-radius:24px;padding:14px 0 12px;box-shadow:0 16px 34px rgba(53,9,17,.32),0 6px 0 var(--maroon-d);animation:apung 3.2s ease-in-out infinite}
+@keyframes apung{50%{transform:translate3d(0,-5px,0)}}
+.nf-h{display:flex;align-items:center;gap:12px;padding:0 16px}
+.nf-ic{position:relative;width:48px;height:48px;border-radius:50%;background:var(--gold);color:var(--maroon-d);display:grid;place-items:center;flex:none}
+.nf-ic svg{width:26px;height:26px}
+.nf-ic::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:3px solid var(--gold);animation:ping 1.8s ease-out infinite}
+@keyframes ping{from{transform:scale(.9);opacity:.9}to{transform:scale(1.45);opacity:0}}
+.nf.getar .nf-ic{animation:goyang .7s ease-in-out 2}
+@keyframes goyang{20%{transform:rotate(-16deg)}40%{transform:rotate(14deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}
+.nf-t{flex:1;min-width:0}
+.nf-t h2{color:#fff;font-size:clamp(1.45rem,6vw,1.9rem);line-height:1.05}
+.nf-t p{margin:3px 0 0;font-size:.92rem;color:#F2DBD5;line-height:1.3}
+.nf-n{flex:none;background:var(--gold);color:var(--maroon-d);font:800 1rem/1 var(--hf);padding:7px 12px;border-radius:99px}
+.nf-sc{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nf-sc::-webkit-scrollbar{display:none}
+.nf-c{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border-radius:18px;padding:12px 12px 12px 14px;min-width:0}
+.nf.multi .nf-c{flex-basis:88%}
+.nf-c .tx{flex:1;min-width:0}
+.nf-c .st{display:inline-block;font:800 .7rem/1 var(--bf);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:#fff;color:var(--maroon)}
+.nf-c .st.lama{background:#AA3F3F;color:#fff}
+.nf-c b{display:block;margin-top:6px;font:800 1.15rem/1.2 var(--hf);color:#fff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nf-c small{display:block;margin-top:3px;font-size:.86rem;color:#E9DDD3}
+.nf-c .btn.kun{flex:none;font-size:1.05rem;padding:12px 18px}
+.nf-geser{margin:6px 16px 0;font:700 .8rem var(--bf);color:#F2DBD5;display:flex;align-items:center;gap:6px}
+.nf-geser i{display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35)}.nf-geser i.on{background:var(--gold)}
+#tugasBox.kecil .nf-h,#tugasBox.kecil .nf-geser{display:none}
+#tugasBox.kecil .nf{padding:6px 0;border-radius:20px}#tugasBox.kecil .nf-sc{padding:4px 8px}
+#tugasBox.kecil .nf-c{padding:8px 8px 8px 12px}#tugasBox.kecil .nf-c b{margin-top:3px;font-size:1rem;-webkit-line-clamp:1}#tugasBox.kecil .nf-c small{display:none}
+.paused-nf .nf,.paused-nf .nf-ic::after,html.lite .nf,html.lite .nf-ic::after{animation:none}
+@media(min-width:900px){#tugasBox{top:64px}.nf.dua .nf-geser{display:none}.nf.multi .nf-c{flex-basis:calc(50% - 5px)}.nf-t h2{font-size:2rem}}
+/* papan hero bisa diketuk */
+a.papan{display:block;text-decoration:none;color:inherit;position:relative;transition:transform .12s,box-shadow .12s}
+a.papan:active{transform:translateY(4px);box-shadow:0 2px 0 var(--maroon-d)}
+.p-ketuk{position:absolute;left:50%;top:calc(50% - 26px);transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;background:rgba(53,9,17,.82);color:#fff;font:800 1rem var(--hf);padding:10px 16px;border-radius:99px;pointer-events:none;opacity:0;transition:opacity .2s}
+.p-ketuk svg{width:18px;height:18px;color:var(--gold)}
+@media(hover:hover){a.papan:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--maroon-d)}a.papan:hover .p-ketuk{opacity:1}}
+a.papan:focus-visible .p-ketuk{opacity:1}
+.giliran small{font:700 .82rem var(--bf);color:var(--muted);margin-left:4px}
+/* tombol aksi kedua: Hard mode + Ulangi soal */
+.aksi2{display:flex;gap:10px}
+.aksi2 .btn{flex:1;justify-content:center;font:800 1rem var(--hf);padding:12px 12px;border-width:2.5px;white-space:nowrap}
+.aksi2 .btn svg{width:20px;height:20px;flex:none}
+.aksi2 .btn[hidden]{display:none}
+.btn.hard{background:#AA3F3F;border-color:var(--maroon);color:#fff;box-shadow:0 5px 0 var(--maroon)}
+.btn.hard:active{transform:translateY(4px);box-shadow:0 1px 0 var(--maroon)}
+.btn.ulg{background:var(--panel);border-color:var(--maroon);color:var(--maroon);box-shadow:0 5px 0 var(--maroon)}
+.btn.ulg:active{transform:translateY(4px);box-shadow:0 1px 0 var(--maroon)}
+.btn.ulg .cnt{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:99px;background:var(--gold);color:var(--maroon-d);font:800 .8rem/1 var(--bf);font-style:normal;border:2px solid var(--maroon)}
 </style>
 <script>
 (function(){var d=document.documentElement;function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
@@ -346,10 +377,10 @@ window.ECA_ses=function(){var on='https://script.google.com/macros/s/AKfycbzfJrZ
     <div class="p-teks"><span class="pos-lbl" id="posLbl">Puzzle</span><h1 id="hi">Latih mata taktikmu setiap hari. Pemain kuat lahir dari kebiasaan.</h1></div>
     <div class="p-papan">
       <div class="band"><div class="giliran" id="giliran" hidden></div><div class="kp"><div class="kbal" id="kbal">Hai!</div><svg viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg></div></div>
-      <div class="papan"><div id="pbox"><div class="ph" id="pph">Memuat posisi hari ini…</div></div><div class="gbar" id="gbar"></div></div>
+      <a class="papan" id="papanA" href="latihan.html?rak=campur" aria-label="Main posisi ini: mulai latihan puzzle"><div id="pbox"><div class="ph" id="pph">Memuat posisi hari ini…</div></div><span class="p-ketuk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Main posisi ini</span><div class="gbar" id="gbar"></div></a>
     </div>
-    <div class="p-aksi"><a class="btn kun big" id="mulai" href="latihan.html?rak=campur"><span id="mulaiT">Mulai Puzzle</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></a>
-      <div class="sek"><a id="tChal" href="latihan.html?rak=campur&amp;tantangan=1">Tantangan +200</a><a id="tUlang" href="latihan.html?ulang=1" hidden></a></div></div>
+    <div class="p-aksi"><a class="btn kun big" id="mulai" href="latihan.html?rak=campur"><span id="mulaiT">Mulai latihan puzzle</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></a>
+      <div class="aksi2"><a class="btn hard" id="tChal" href="latihan.html?rak=campur&amp;tantangan=1" title="Soal 200 poin lebih sulit dari ratingmu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 2c.6 3.2-1 4.8-2.6 6.6C8.2 10.4 7 12 7 14.4 7 17.5 9.2 20 12 20s5-2.5 5-5.6c0-1.6-.7-3-1.6-4.2-.3 1-.9 1.7-1.7 2 .5-3.4-.3-6.7-1.2-10.2z" fill="currentColor"/></svg>Hard mode</a><a class="btn ulg" id="tUlang" href="latihan.html?ulang=1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Ulangi soal<i class="cnt">0</i></a></div></div>
   </div>
 </section>
 
@@ -404,7 +435,7 @@ window.ECA_ses=function(){var on='https://script.google.com/macros/s/AKfycbzfJrZ
   </section>
 </main>
 
-<footer><div class="wrap"><img src="logo-k.svg" alt="Equator Chess Academy" width="97" height="28"><span>Latihan puzzle untuk murid Equator Chess Academy. Soal tema dari database puzzle Lichess (CC0).</span></div></footer>
+<footer><div class="wrap"><img src="logo-k.svg" alt="Equator Chess Academy" width="97" height="28"><span>Latihan puzzle untuk murid Equator Chess Academy.</span></div></footer>
 
 <div class="dock" id="dock" role="region" aria-label="Pesan PR untuk WhatsApp">
   <div class="bub" id="bub"></div>
@@ -431,7 +462,7 @@ var K=KL[0],fam=-1,tema=0,firstTalk=true;
 var INFO={};KL.forEach(function(k){k.fam.forEach(function(f){f.tema.forEach(function(t){t.sets.forEach(function(s){INFO[s.c]={lv:s.lv,kelas:k.id}})})});k.pr.forEach(function(g){g.items.forEach(function(it){INFO[it.c]={lv:0,kelas:k.id}})})});
 window.ECA_info=INFO;window.ECA_all=ALL;window.ECA_kelasList=KL.map(function(k){return k.id});
 function hop(){kudi.classList.remove('hop');void kudi.offsetWidth;kudi.classList.add('hop')}
-function talk(h,t){var b=$('#kbal');if(!b)return;b.textContent=String(h).replace(/!.*$/,'!');b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}
+function talk(h,t){var b=$('#kbal');if(!b)return;b.textContent=String(h).replace(/!.*$/,'!').replace(/^(Hai|Halo), (\S+)[^!]*!/,'$1, $2!');b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}
 kudi.addEventListener('animationend',function(){});
 function lvName(s){return 'Level '+s.lv+(s.set?' · '+s.set:'')}
 function lat(){}
@@ -590,9 +621,9 @@ var kunci='',memuat=false;
 window.__hero=function(){
   var pf=LS.get('eca.profil',null),tk=LS.get('eca.token',null);if(!$('#posisi')||!tk||!pf)return;
   var R=ratingMurid(pf),lv=levelDari(R);
-  $('#posLbl').textContent='Puzzle '+lv;$('#mulaiT').textContent='Mulai Puzzle '+lv;$('#hi').textContent=kalimat(pf);
+  $('#posLbl').textContent='Puzzle '+lv;$('#hi').textContent=kalimat(pf);
   $('#kbal').textContent='Hai, '+String(pf.nama||'').split(' ')[0]+'!';
-  var g=LS.get('eca.lat.gagal',[]),u=$('#tUlang');u.hidden=!g.length;u.textContent='Ulangi '+g.length+' soal gagal';
+  var g=LS.get('eca.lat.gagal',[]),u=$('#tUlang');u.hidden=!g.length;u.querySelector('.cnt').textContent=g.length;u.setAttribute('aria-label','Ulangi '+g.length+' soal yang belum tepat');
   var pr=pf.gelarBerikut?Math.max(4,Math.min(100,100-Math.round(pf.kurang/3))):100;
   $('#gbar').innerHTML='<b>'+esc(pf.gelar||'')+' · '+pf.rating+'</b><span>'+(pf.gelarBerikut?pf.kurang+' poin lagi menuju '+esc(pf.gelarBerikut):'Gelar tertinggi!')+'</span><div class="tk"><i style="width:'+pr+'%"></i></div>';
   var k=pf.id+'|'+tgl(new Date())+'|'+R;if(k===kunci||memuat)return;memuat=true;
@@ -629,15 +660,20 @@ function tugasBox(){var el=$('#tugasBox');if(!el)return;
   var seen={};try{seen=JSON.parse(localStorage.getItem('eca.seen')||'{}')}catch(e){}
   var belum=T.filter(function(t){return !t.selesai}).sort(function(a,b){return new Date(a.waktu)-new Date(b.waktu)});
   if(!belum.length){el.innerHTML='';return}
-  var ALL=window.ECA_all||{};
-  function judul(t){var a=ALL[t.kode]||{t:''};return esc(t.kode.toUpperCase()+(a.t?' · '+a.t:''))}
-  var t=belum[0],a=ALL[t.kode]||{},hari=Math.max(0,Math.floor((Date.now()-new Date(t.waktu))/864e5));
-  var st=seen[t.kode]?'Sedang':hari>=2?'Sudah '+hari+' hari belum disentuh':'Baru';
-  el.innerHTML='<div class="pita'+(getarSekali?'':' getar')+'" role="region" aria-label="Tugas dari Coach"><div class="wrap"><div class="pt-i"><div class="pt-k"><span class="pt-lbl">Tugas dari Coach</span><span class="pt-st">'+esc(st)+'</span><b class="pt-jd">'+judul(t)+'</b><span class="pt-m">'+(a.n?a.n+' soal':'')+(t.catatan?(a.n?' · ':'')+'“'+esc(t.catatan)+'”':'')+'</span></div>'+
-    '<a class="btn kun" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'">'+(seen[t.kode]?'Lanjut':'Mulai')+'</a></div>'+
-    (belum.length>1?'<button class="pt-lagi" id="ptLagi" aria-expanded="false">+'+(belum.length-1)+' tugas lagi</button><div class="pt-ls" id="ptLs" hidden>'+belum.slice(1).map(function(x){return '<div class="pt-r"><b>'+judul(x)+'</b><a href="'+esc(x.kode)+'.html" data-c="'+esc(x.kode)+'">'+(seen[x.kode]?'Lanjut':'Mulai')+'</a></div>'}).join('')+'</div>':'')+'</div></div>';
+  var ALL=window.ECA_all||{},n=belum.length;
+  function kartu(t){var a=ALL[t.kode]||{},hari=Math.max(0,Math.floor((Date.now()-new Date(t.waktu))/864e5)),lama=!seen[t.kode]&&hari>=2;
+    var st=seen[t.kode]?'Sedang dikerjakan':lama?'Sudah '+hari+' hari belum disentuh':'Baru';
+    return '<div class="nf-c"><div class="tx"><span class="st'+(lama?' lama':'')+'">'+esc(st)+'</span><b>'+esc(t.kode.toUpperCase()+(a.t?' · '+a.t:''))+'</b><small>'+(a.n?a.n+' soal':'')+(t.catatan?(a.n?' · ':'')+'“'+esc(t.catatan)+'”':'')+'</small></div>'+
+      '<a class="btn kun" href="'+esc(t.kode)+'.html" data-c="'+esc(t.kode)+'">'+(seen[t.kode]?'Lanjut':'Mulai')+'</a></div>'}
+  el.innerHTML='<div class="notif"><div class="nf'+(n>1?' multi':'')+(n===2?' dua':'')+(getarSekali?'':' getar')+'" role="region" aria-label="Tugas dari Coach">'+
+    '<div class="nf-h"><span class="nf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1Z"/></svg></span>'+
+    '<div class="nf-t"><h2>Tugas dari Coach!</h2><p>Kerjakan dulu sebelum latihan lain.</p></div>'+(n>1?'<span class="nf-n">'+n+' tugas</span>':'')+'</div>'+
+    '<div class="nf-sc" id="nfSc">'+belum.map(kartu).join('')+'</div>'+
+    (n>1?'<div class="nf-geser" aria-hidden="true">'+belum.map(function(_,k){return '<i'+(k?'':' class="on"')+'></i>'}).join('')+'<span>Geser untuk tugas lain</span></div>':'')+'</div></div>';
   getarSekali=true;
-  var pl=$('#ptLagi');if(pl)pl.onclick=function(){var l=$('#ptLs'),o=l.hidden;l.hidden=!o;pl.setAttribute('aria-expanded',o)}}
+  var sc=$('#nfSc');if(sc&&n>1)sc.addEventListener('scroll',function(){var w=sc.firstChild.offsetWidth+10,k=Math.round(sc.scrollLeft/w);el.querySelectorAll('.nf-geser i').forEach(function(d,x){d.classList.toggle('on',x===k)})},{passive:true})}
+/* gelembung tugas mengecil saat murid menggulir ke bawah supaya tidak menutupi isi */
+addEventListener('scroll',function(){var el=$('#tugasBox');if(el)el.classList.toggle('kecil',scrollY>260)},{passive:true});
 /* modal */
 var mdl=$('#mdl'),mb=$('#mbody');
 function buka(h){mb.innerHTML=h;mdl.classList.add('on');var f=mb.querySelector('input');if(f)setTimeout(function(){f.focus()},60)}
