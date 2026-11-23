@@ -279,11 +279,10 @@ html.s-murid #pr,html.s-murid #semua,html.s-murid .top nav a{display:none}
 .tm-minta{margin-top:10px!important;font-size:.95rem}
 /* pita tugas dari Coach */
 
-/* ===== langit pastel + awan + istana catur (23 Nov siang, revisi coach) ===== */
-:root{--l1:#A9D6F5;--l2:#DDEFF8;--ist:rgba(58,88,140,.2);--bkt:rgba(58,88,140,.1);--bkd:rgba(90,128,96,.16)}
-[data-waktu=pagi]{--l1:#BFE3F7;--l2:#F2F1E6}
-[data-waktu=sore]{--l1:#B4CBEA;--l2:#F8DCC8;--ist:rgba(110,70,110,.2);--bkt:rgba(110,70,110,.1)}
-[data-waktu=malam]{--l1:#9EAAD8;--l2:#E6D6E6;--ist:rgba(60,50,110,.24);--bkt:rgba(60,50,110,.12)}
+/* ===== langit penuh (23 Nov siang, revisi coach 13.47): siang = biru cerah + awan, malam = langit berbintang; mengikuti pengaturan terang/gelap HP ===== */
+:root{--l1:#8CCBF6;--l2:#D2EBFA;--cl:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='700'%3E%3Cdefs%3E%3Cpath id='c' d='M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z'/%3E%3C/defs%3E%3Cg fill='%23fff'%3E%3Cuse href='%23c' transform='translate(30 40) scale(1.3)' fill-opacity='0.85'/%3E%3Cuse href='%23c' transform='translate(330 110) scale(1.7)' fill-opacity='0.7'/%3E%3Cuse href='%23c' transform='translate(150 270) scale(1.0)' fill-opacity='0.8'/%3E%3Cuse href='%23c' transform='translate(390 390) scale(1.2)' fill-opacity='0.75'/%3E%3Cuse href='%23c' transform='translate(30 480) scale(1.6)' fill-opacity='0.7'/%3E%3Cuse href='%23c' transform='translate(250 590) scale(1.1)' fill-opacity='0.85'/%3E%3Cuse href='%23c' transform='translate(430 660) scale(0.8)' fill-opacity='0.7'/%3E%3C/g%3E%3C/svg%3E")}
+html.s-murid,html.s-tamu{background:var(--l2)}
+html.s-murid body,html.s-tamu body{background-color:var(--l2);background-image:var(--cl),linear-gradient(var(--l1),var(--l2) 75%);background-size:520px 700px,100% 100%;background-repeat:repeat,no-repeat}
 html.s-murid .top{background:var(--panel)}
 #posisi{position:relative}
 .awan{position:absolute;left:0;right:0;top:-20px;height:240px;overflow:hidden;z-index:-1;pointer-events:none}
@@ -291,32 +290,26 @@ html.s-murid .top{background:var(--panel)}
 .awan .a1{width:150px;top:18px;left:52%}.awan .a2{width:96px;top:96px;left:4%;animation-duration:90s;opacity:.75}.awan .a3{width:120px;top:150px;left:78%;animation-duration:110s;opacity:.7}
 @keyframes awan{to{transform:translateX(-60px)}}
 #posisi.paused .awan svg{animation-play-state:paused}
-.p-papan{position:relative}
-.ist{position:absolute;pointer-events:none;z-index:-1;fill:var(--ist);-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
-.ist-hp{left:8%;right:8%;top:-44px;width:84%;height:auto}
-.ist-dt{display:none}
-@media(min-width:900px){
- .awan{height:300px}.awan .a1{width:190px;left:58%}.awan .a3{left:86%}
- .ist-hp{display:none}
- .ist-dt{display:block;position:relative;grid-column:2;grid-row:1/3;align-self:end;justify-self:end;width:min(100%,470px);height:auto;margin-bottom:-4px}
+.luna{display:none;position:absolute;z-index:-1;width:34px;height:34px;top:2px;right:18px;pointer-events:none}
+@media(min-width:900px){.awan{height:300px}.awan .a1{width:190px;left:58%}.awan .a3{left:86%}.luna{width:74px;height:74px;top:36px;right:14%}}
+@media(prefers-color-scheme:dark){
+ :root{--l1:#0E1640;--l2:#2B3880;--cl:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='469' cy='579' r='1.3' fill-opacity='.65'/%3E%3Ccircle cx='526' cy='607' r='.9' fill-opacity='.45'/%3E%3Ccircle cx='530' cy='493' r='1.7' fill-opacity='.45'/%3E%3Ccircle cx='102' cy='463' r='1' fill-opacity='.45'/%3E%3Ccircle cx='98' cy='557' r='.7' fill-opacity='.9'/%3E%3Ccircle cx='411' cy='469' r='1.7' fill-opacity='.9'/%3E%3Ccircle cx='167' cy='21' r='1.7' fill-opacity='.45'/%3E%3Ccircle cx='66' cy='42' r='.9' fill-opacity='.45'/%3E%3Ccircle cx='620' cy='36' r='1.3' fill-opacity='.65'/%3E%3Ccircle cx='457' cy='611' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='245' cy='307' r='1.3' fill-opacity='.45'/%3E%3Ccircle cx='93' cy='474' r='1' fill-opacity='.65'/%3E%3Ccircle cx='570' cy='91' r='1' fill-opacity='.65'/%3E%3Ccircle cx='241' cy='531' r='1' fill-opacity='.45'/%3E%3Ccircle cx='77' cy='582' r='.7' fill-opacity='.65'/%3E%3Ccircle cx='116' cy='303' r='1.3' fill-opacity='.45'/%3E%3Ccircle cx='23' cy='6' r='.9' fill-opacity='.45'/%3E%3Ccircle cx='59' cy='487' r='1.3' fill-opacity='.9'/%3E%3Ccircle cx='412' cy='435' r='.7' fill-opacity='.9'/%3E%3Ccircle cx='209' cy='282' r='1' fill-opacity='.45'/%3E%3Ccircle cx='324' cy='346' r='.7' fill-opacity='.65'/%3E%3Ccircle cx='126' cy='143' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='109' cy='17' r='.7' fill-opacity='.65'/%3E%3Ccircle cx='504' cy='187' r='1.7' fill-opacity='.45'/%3E%3Ccircle cx='464' cy='527' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='140' cy='435' r='1.3' fill-opacity='.45'/%3E%3Ccircle cx='410' cy='436' r='.9' fill-opacity='.45'/%3E%3Ccircle cx='282' cy='612' r='1' fill-opacity='.45'/%3E%3Ccircle cx='221' cy='197' r='1.3' fill-opacity='.9'/%3E%3Ccircle cx='596' cy='108' r='.7' fill-opacity='.45'/%3E%3Ccircle cx='224' cy='458' r='1' fill-opacity='.45'/%3E%3Ccircle cx='630' cy='342' r='1' fill-opacity='.65'/%3E%3Ccircle cx='81' cy='82' r='.7' fill-opacity='.45'/%3E%3Ccircle cx='602' cy='254' r='.7' fill-opacity='.9'/%3E%3Ccircle cx='383' cy='386' r='1.7' fill-opacity='.65'/%3E%3Ccircle cx='136' cy='607' r='1.3' fill-opacity='.9'/%3E%3Ccircle cx='144' cy='401' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='163' cy='324' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='261' cy='200' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='573' cy='207' r='1.3' fill-opacity='.65'/%3E%3Ccircle cx='624' cy='86' r='1.3' fill-opacity='.45'/%3E%3Ccircle cx='112' cy='117' r='.7' fill-opacity='.9'/%3E%3Ccircle cx='267' cy='250' r='1.3' fill-opacity='.65'/%3E%3Ccircle cx='436' cy='616' r='1.3' fill-opacity='.65'/%3E%3Ccircle cx='538' cy='185' r='.7' fill-opacity='.45'/%3E%3Ccircle cx='239' cy='496' r='1.7' fill-opacity='.9'/%3E%3Ccircle cx='81' cy='292' r='.9' fill-opacity='.45'/%3E%3Ccircle cx='22' cy='76' r='1' fill-opacity='.65'/%3E%3Ccircle cx='462' cy='261' r='.7' fill-opacity='.45'/%3E%3Ccircle cx='186' cy='294' r='1' fill-opacity='.9'/%3E%3Ccircle cx='591' cy='140' r='.7' fill-opacity='.65'/%3E%3Ccircle cx='147' cy='467' r='1' fill-opacity='.9'/%3E%3Ccircle cx='540' cy='604' r='.9' fill-opacity='.9'/%3E%3Ccircle cx='41' cy='24' r='1.3' fill-opacity='.65'/%3E%3Ccircle cx='325' cy='40' r='.7' fill-opacity='.9'/%3E%3Ccircle cx='82' cy='499' r='.7' fill-opacity='.9'/%3E%3Ccircle cx='324' cy='332' r='.9' fill-opacity='.45'/%3E%3Ccircle cx='83' cy='469' r='1.7' fill-opacity='.65'/%3E%3Ccircle cx='51' cy='138' r='1' fill-opacity='.65'/%3E%3Ccircle cx='92' cy='490' r='.7' fill-opacity='.65'/%3E%3Ccircle cx='36' cy='517' r='1.7' fill-opacity='.45'/%3E%3Ccircle cx='397' cy='394' r='1.7' fill-opacity='.45'/%3E%3Ccircle cx='629' cy='79' r='.7' fill-opacity='.45'/%3E%3Ccircle cx='124' cy='269' r='1.3' fill-opacity='.9'/%3E%3Ccircle cx='344' cy='403' r='1.7' fill-opacity='.65'/%3E%3Ccircle cx='457' cy='479' r='1.7' fill-opacity='.45'/%3E%3Ccircle cx='537' cy='532' r='.7' fill-opacity='.65'/%3E%3Ccircle cx='621' cy='95' r='1.3' fill-opacity='.45'/%3E%3Ccircle cx='241' cy='121' r='1.3' fill-opacity='.9'/%3E%3Ccircle cx='503' cy='267' r='.7' fill-opacity='.65'/%3E%3Cpath d='M90 119v-5M90 121v5M89 120h-5M91 120h5' stroke='%23fff' stroke-width='1.4' stroke-linecap='round' stroke-opacity='.8'/%3E%3Cpath d='M470 299v-5M470 301v5M469 300h-5M471 300h5' stroke='%23fff' stroke-width='1.4' stroke-linecap='round' stroke-opacity='.8'/%3E%3Cpath d='M260 519v-5M260 521v5M259 520h-5M261 520h5' stroke='%23fff' stroke-width='1.4' stroke-linecap='round' stroke-opacity='.8'/%3E%3C/g%3E%3C/svg%3E")}
+ html.s-murid body,html.s-tamu body{background-size:640px 640px,100% 100%}
+ .awan{display:none}.luna{display:block}
+ html.s-murid .top,html.s-murid nav.tabbar{background:#161C47;border-color:#2C3774}
+ html.s-murid .brand,html.s-murid footer img{background:#FFFDF9;border-radius:10px;padding:3px 8px;box-sizing:content-box}
+ html.s-murid .tbtn{color:#E6E3F7}
+ html.s-murid .tbtn[aria-current=page]{background:var(--gold);color:var(--maroon-d)}
+ html.s-murid .tbtn[aria-current=page] .tdot{border-color:var(--maroon-d)}
+ html.s-murid .tdot{border-color:#161C47}
+ html.s-murid :is(.pos-lbl,.giliran,.sek a,.lnk,#temaPz h2,#temaPz .td,#temaPz .pz .nm,#temaPz .pz .nm small,.vh,.sub,footer,footer a,#tamuLayar h1,#tamuLayar p,.tm-minta,.posisi h1){color:#F4F1FF}
+ html.s-murid .pos-lbl{color:#C5CCF5}
+ html.s-murid footer{border-top-color:#2C3774}
+ html.s-murid :is(.kosong h2,.kosong p,.sy-id h1,.sy-id p,.sy-r,.sy-r small){color:#F4F1FF}
+ html.s-murid .sy-r small{color:#C5CCF5}
+ html.s-tamu .tm-logo{background:#FFFDF9;border-radius:10px;padding:4px 10px;box-sizing:content-box}
+ html.s-tamu :is(#tamuLayar h1,#tamuLayar p){color:#F4F1FF}
 }
-
-/* ===== padang rumput (23 Nov siang, revisi coach): langit -> cakrawala -> rumput hijau halus ===== */
-:root{--r1:#D9ECCB;--r2:#C8E0BA;--tuft:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='360'%3E%3Cg fill='none' stroke='%2346823c' stroke-opacity='.3' stroke-width='2' stroke-linecap='round'%3E%3Cpath id='t' d='M60 70q-3-10-6-14M60 70q0-12 1-17M60 70q3-9 7-12'/%3E%3Cpath d='M250 170q-3-10-6-14M250 170q0-12 1-17M250 170q3-9 7-12'/%3E%3Cpath d='M140 300q-3-10-6-14M140 300q0-12 1-17M140 300q3-9 7-12'/%3E%3Cpath d='M360 40q-3-10-6-14M360 40q0-12 1-17M360 40q3-9 7-12'/%3E%3Cpath d='M20 230q-3-10-6-14M20 230q0-12 1-17M20 230q3-9 7-12'/%3E%3C/g%3E%3Cg fill='%23fff' fill-opacity='.85'%3E%3Ccircle cx='170' cy='100' r='3.2'/%3E%3Ccircle cx='330' cy='250' r='3.2'/%3E%3Ccircle cx='70' cy='180' r='3.2'/%3E%3C/g%3E%3Cg fill='%23FFC800' fill-opacity='.9'%3E%3Ccircle cx='170' cy='100' r='1.3'/%3E%3Ccircle cx='330' cy='250' r='1.3'/%3E%3Ccircle cx='70' cy='180' r='1.3'/%3E%3C/g%3E%3C/svg%3E")}
-[data-waktu=pagi]{--r1:#DCEBCB;--r2:#CBE0BC}
-[data-waktu=sore]{--r1:#DDE6C6;--r2:#CDDBB6}
-[data-waktu=malam]{--r1:#CADBC8;--r2:#B9CEB8}
-html.s-murid body{background-color:var(--r1);background-image:var(--tuft),repeating-conic-gradient(rgba(60,120,50,.05) 0 25%,transparent 0 50%),linear-gradient(var(--l1),var(--l2) 160px,var(--r1) 420px,var(--r2));background-size:420px 360px,64px 64px,100% 100%;background-repeat:repeat,repeat,no-repeat}
-html.s-murid #posisi{background:linear-gradient(var(--l1),var(--l2));padding-bottom:24px}
-#posisi::after,.tm-rumput::before{content:"";position:absolute;left:0;right:0;bottom:-1px;height:26px;background:var(--r1);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='26' viewBox='0 0 64 26'%3E%3Cpath d='M0 26V15q4-9 6-12q1 7 3 12q4-6 8-13q0 8 2 13q5-4 9-9q-1 6 0 9q5-7 9-11q0 7 1 11q5-3 8-8q0 5 1 8q4-6 7-10q0 6 1 10L64 15V26z'/%3E%3C/svg%3E") repeat-x bottom/64px 26px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='26' viewBox='0 0 64 26'%3E%3Cpath d='M0 26V15q4-9 6-12q1 7 3 12q4-6 8-13q0 8 2 13q5-4 9-9q-1 6 0 9q5-7 9-11q0 7 1 11q5-3 8-8q0 5 1 8q4-6 7-10q0 6 1 10L64 15V26z'/%3E%3C/svg%3E") repeat-x bottom/64px 26px;z-index:-1;pointer-events:none}
-html.s-murid #temaPz{padding-top:34px}
-.tm-sky{display:none}
-html.s-tamu{background:var(--r1)}html.s-tamu body{background:none}
-html.s-tamu .tm-sky{display:block;position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(var(--l1),var(--l2) 74%)}
-.tm-sky .awan{top:0}
-.tm-sky .ist{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(26% - 1px);width:min(460px,100%);height:auto}
-.tm-rumput{position:absolute;left:0;right:0;bottom:0;height:26%;background:var(--tuft),repeating-conic-gradient(rgba(60,120,50,.05) 0 25%,transparent 0 50%),linear-gradient(var(--r1),var(--r2));background-size:420px 360px,64px 64px,100% 100%}
-.tm-rumput::before{top:-25px;bottom:auto}
 /* hero Posisi Hari Ini */
 .posisi{padding:14px 0 6px;isolation:isolate}
 .pos-g{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);grid-template-areas:"teks" "papan" "aksi"}
@@ -504,7 +497,7 @@ html.s-murid:is([data-v=tugas],[data-v=peringkat],[data-v=saya]) :is(#posisi,#tu
 <script>
 (function(){var d=document.documentElement;function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
 window.ECA_ses=function(){var on='https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSytESMJeKdrebcxwR4JmX-RZfgiTJk1IM8jxFMLQ/exec'!=='',t=g('eca.token')&&g('eca.profil'),p=g('eca.pelatih'),c=!on?'s-terbuka':t?'s-murid':p?'s-pelatih':'s-tamu';d.className=d.className.replace(/\bs-\w+/g,'').trim()+' '+c;return c};window.ECA_ses();
-var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v',tb?tb[1]:'latihan');var j=new Date().getHours();d.setAttribute('data-waktu',j>=5&&j<10?'pagi':j<15&&j>=10?'siang':j<18&&j>=15?'sore':'malam')})();
+var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v',tb?tb[1]:'latihan')})();
 </script>
 </head>
 <body>
@@ -516,8 +509,6 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
   <nav aria-label="Navigasi utama"><a href="#pr">PR Kelas</a><a href="#semua">Semua puzzle</a><a href="#cara">Cara main</a><a class="cm" id="bRuang" href="https://script.google.com/macros/s/AKfycbyzEejXKvwDQqybbybzaSJHQOsYdBRrbKnkI34lZNwDXXmDG4fLQCj79YtcWXiae98k1g/exec" target="_blank" rel="noopener">Ruang Pelatih</a><button class="cm" id="cm" aria-pressed="false" hidden>Mode pelatih</button><button class="cm" id="bMasuk" hidden>Masuk</button><button class="akun" id="bAkun" hidden></button></nav>
 </div></header>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="istanaS" viewBox="0 0 320 170"><path style="fill:var(--bkt)" d="M0 132Q60 104 120 120T240 112T320 118V170H0Z"/><g><rect x="44" y="72" width="34" height="80"/><rect x="40" y="60" width="10" height="14"/><rect x="56" y="60" width="10" height="14"/><rect x="72" y="60" width="10" height="14"/><rect x="40" y="70" width="42" height="6"/><rect x="242" y="82" width="30" height="70"/><rect x="238" y="72" width="9" height="12"/><rect x="252" y="72" width="9" height="12"/><rect x="266" y="72" width="9" height="12"/><rect x="238" y="80" width="38" height="5"/><rect x="78" y="104" width="164" height="48"/><rect x="82" y="96" width="9" height="10"/><rect x="98" y="96" width="9" height="10"/><rect x="114" y="96" width="9" height="10"/><rect x="198" y="96" width="9" height="10"/><rect x="214" y="96" width="9" height="10"/><rect x="230" y="96" width="9" height="10"/><rect x="136" y="44" width="48" height="108"/><path d="M131 46 136 26 147 37 160 16 173 37 184 26 189 46Z"/><rect x="158" y="2" width="4" height="15"/><rect x="154" y="6" width="12" height="4"/></g><path style="fill:rgba(255,255,255,.55)" d="M152 152v-16a8 8 0 0 1 16 0v16zM155 66h10v14h-10zM56 90h10v12h-10zM252 98h10v12h-10z"/><rect x="60" y="34" width="2" height="27"/><path style="fill:#AA3F3F" d="M62 34 78 39 62 44Z"/><path style="fill:var(--bkd)" d="M0 150Q80 134 170 146T320 140V170H0Z"/></symbol></svg>
-<div class="tm-sky" aria-hidden="true"><div class="awan" aria-hidden="true"><svg class="a1" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a2" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a3" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg></div><svg class="ist" viewBox="0 0 320 170"><use href="#istanaS"/></svg><div class="tm-rumput"></div></div>
 <main id="tamuLayar" aria-labelledby="tmH">
   <img class="tm-logo" src="logo-k.svg" alt="Equator Chess Academy" width="119" height="34">
   <div class="tm-kudi"><svg viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg></div>
@@ -533,11 +524,10 @@ var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v'
 
 <section class="posisi" id="posisi" aria-labelledby="hi">
     <div class="awan" aria-hidden="true"><svg class="a1" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a2" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg><svg class="a3" viewBox="0 0 120 44"><path d="M14 44a14 14 0 0 1 2-28 20 20 0 0 1 38-6 18 18 0 0 1 32 4 15 15 0 0 1 20 30z"/></svg></div>
+  <svg class="luna" viewBox="0 0 60 60" aria-hidden="true"><path d="M34 4a26 26 0 1 0 22 38A21 21 0 0 1 34 4z" fill="#FFF1B8"/></svg>
   <div class="wrap pos-g">
-    <svg class="ist ist-dt" viewBox="0 0 320 170" aria-hidden="true"><use href="#istanaS"/></svg>
     <div class="p-teks"><span class="pos-lbl" id="posLbl">Puzzle</span><h1 id="hi">Latih mata taktikmu setiap hari. Pemain kuat lahir dari kebiasaan.</h1></div>
     <div class="p-papan">
-      <svg class="ist ist-hp" viewBox="0 0 320 170" aria-hidden="true"><use href="#istanaS"/></svg>
       <div class="band"><div class="giliran" id="giliran" hidden></div><div class="kp"><div class="kbal" id="kbal">Hai!</div><svg viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg></div></div>
       <a class="papan" id="papanA" href="latihan.html?rak=campur" aria-label="Main posisi ini: mulai latihan puzzle"><div id="pbox"><div class="ph" id="pph">Memuat posisi hari ini…</div></div><span class="p-ketuk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Main posisi ini</span><div class="gbar" id="gbar"></div></a>
     </div>
