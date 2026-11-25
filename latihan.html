@@ -912,7 +912,7 @@ function lanjut(){hideMsg();if(idx>=sesi.length-1)return ringkasan();idx++;KV.sa
 /* ringkasan satu sesi ke tab 5 Hasil Set, supaya Ruang Pelatih menampilkannya seperti Homework (detail per soal ada di tab 16) */
 function kirimRingkas(){if(!API_URL||API_URL.indexOf('__')===0||!M.id||!tokenMurid()||!sesi.length)return;
  const M1=sesi.filter(s=>s.r===1).length,D=sesi.filter(s=>s.r===.5).length,L=sesi.filter(s=>s.r===0&&s.l).length,K=sesi.filter(s=>s.r===0&&!s.l).length;
- const q=LS.get(ANTRE,[]);q.push({aksi:'set',kodePuzzle:'latihan-'+(rakNow?rakNow.id:'campur'),ringkas:{judul:'Latihan: '+nmRak(rakNow),M:M1,D,K,L,jumlah:sesi.length,detik:Math.round((Date.now()-sesiT0)/1000),ratingAwal:sesiR0}});
+ const q=LS.get(ANTRE,[]);q.push({aksi:'set',kodePuzzle:'latihan-'+(rakNow?rakNow.id:'campur'),ringkas:{judul:'Latihan: '+nmRak(rakNow),tema:sesi.map(s=>({t:[].concat(s.p.tema||[]).join(','),r:s.r})),M:M1,D,K,L,jumlah:sesi.length,detik:Math.round((Date.now()-sesiT0)/1000),ratingAwal:sesiR0}});
  LS.set(ANTRE,q.slice(-300));kuras()}
 function ringkasan(){cur=null;kirimRingkas();SX.play('selesai');tampil('sum');$('bBackT').textContent=tx('backPlay');const S=$('sum');
  const nB=sesi.filter(s=>s.r===1).length,nP=sesi.filter(s=>s.r===.5).length,nS=sesi.filter(s=>s.r===0).length,pc=skor/sesi.length;
@@ -922,11 +922,13 @@ function ringkasan(){cur=null;kirimRingkas();SX.play('selesai');tampil('sum');$(
   [[nB,tx('tB')],[nP,tx('tP')],[nS,tx('tS')],[fmt(skor)+'/'+sesi.length,tx('tSk')]].map(([a,b])=>'<div><b>'+a+'</b><span>'+escH(b)+'</span></div>').join('')+'</div><div class="rlist"></div>'+
   '<div class="mrow"><button class="btn kun" id="sumNew"></button><button class="btn ghost" id="sumCh"></button></div>';
  S.querySelector('h2').textContent=h;S.querySelector('.note').textContent=nmRak(rakNow)+' · '+tx('tRun')+': '+best;
+ {const per={},urut=[];sesi.forEach(s=>{const lb=labelTema(s.p.tema),k=lb.utama?lb.utama[0]:lb.babak||'—';if(!per[k]){per[k]={n:0,b:0};urut.push(k)}per[k].n++;if(s.r===1)per[k].b++});
+  const rt=document.createElement('p');rt.className='note';rt.textContent=tx('tema')+': '+urut.map(k=>k+' '+per[k].b+'/'+per[k].n).join(' · ');S.querySelector('.stat').after(rt)}
  S.querySelectorAll('.sum-p svg').forEach((e,i)=>{if(!ri(sesi[i]))e.style.opacity=.35});
  const L=S.querySelector('.rlist');sesi.forEach((s,i)=>{const lb=labelTema(s.p.tema),r=ri(s);const d=document.createElement('div');d.className='rl';
   d.innerHTML='<span class="ri">'+pcSvg(PIDX[r])+'</span><div><b></b><small></small></div><a target="_blank" rel="noopener">Lichess ↗</a>';
   if(!r)d.querySelector('.ri').style.opacity=.4;
-  d.querySelector('b').textContent=(i+1)+'. '+(lb.utama?lb.utama[0]:'—');d.querySelector('small').textContent=tx('rL')[r]+' · '+tx('rating')+' '+s.p.rating;d.querySelector('a').href='https://lichess.org/training/'+s.p.id;L.appendChild(d)});
+  d.querySelector('b').textContent=(i+1)+'. '+(lb.utama?lb.utama[0]:lb.babak||'—');d.querySelector('small').textContent=tx('rL')[r]+' · '+tx('rating')+' '+s.p.rating;d.querySelector('a').href='https://lichess.org/training/'+s.p.id;L.appendChild(d)});
  $('sumNew').textContent=tx('lagi');$('sumCh').textContent=tx('menu');
  $('sumNew').onclick=()=>{if(rakNow.id==='ulang')$('bUlang').click();else mulaiRak(IDX.rak.find(r=>r.id===rakNow.id),tantangan)};$('sumCh').onclick=keHome}
 
