@@ -267,7 +267,7 @@ ECA_tema.pasang()})();</script>
  <button class="ibtn lb" id="snd" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path class="sw" d="M16.5 8.5a5 5 0 0 1 0 7"/><path class="sw" d="M19 6a8.5 8.5 0 0 1 0 12"/><path class="sx" d="M16 9l5 6M21 9l-5 6" hidden/></svg><span class="ll" id="sndL"></span></button>
 </div></header>
 <main>
- <section id="muat" style="max-width:520px;margin:30px auto;text-align:center"><div class="hk" id="muatK" style="width:130px;margin:0 auto"></div><h2 id="muatT" style="font:800 24px var(--head);margin:10px 0"></h2><div class="err" id="muatE" hidden></div><a class="btn kun" id="muatB" href="index.html" hidden style="margin-top:14px;display:inline-flex"><span data-i="keBeranda"></span></a></section>
+ <section id="muat" style="max-width:520px;margin:30px auto;text-align:center"><div class="hk" id="muatK" style="width:130px;margin:0 auto"></div><h2 id="muatT" style="font:800 24px var(--head);margin:10px 0"></h2><div class="err" id="muatE" hidden></div><button class="btn kun" id="muatGo" type="button" hidden style="margin-top:14px;display:inline-flex"><span data-i="go"></span></button><a class="btn kun" id="muatB" href="index.html" hidden style="margin-top:14px;display:inline-flex"><span data-i="keBeranda"></span></a></section>
  <section id="home" hidden>
   <div class="hello" id="hello"></div>
   <div class="kls" id="kls" role="group" hidden></div>
@@ -656,7 +656,9 @@ const SX=(()=>{let ctx=null,master=null,on=true;try{on=localStorage.getItem('eca
   const go=()=>{try{SFX[n](c.currentTime+.02,a)}catch(e){}};
   if(c.state==='running')go();else c.resume().then(()=>{if(c.state==='running')go()}).catch(()=>{})}
  function wake(){if(!on)return;unlock()}
- return{play,wake,siap,ctx(){return init()},set(v){on=v;try{localStorage.setItem('eca_snd',v?'1':'0')}catch(e){}},get on(){return on}}})();
+ /* blokir(): true bila peramban (Safari, iPhone) belum mengizinkan suara karena halaman dibuka lewat tautan tanpa ketukan. */
+ function blokir(){return new Promise(ok=>{const c=init();if(!c||c.state==='running')return ok(false);let sd=false;const fin=()=>{if(!sd){sd=true;ok(c.state!=='running')}};try{c.resume().then(fin).catch(fin)}catch(e){fin()}setTimeout(fin,300)})}
+ return{play,wake,siap,blokir,ctx(){return init()},set(v){on=v;try{localStorage.setItem('eca_snd',v?'1':'0')}catch(e){}},get on(){return on}}})();
 ['pointerdown','touchend','click','keydown'].forEach(ev=>addEventListener(ev,()=>{SX.wake()},{capture:true,passive:true}));
 /* klik halus untuk setiap tombol/tautan (selain papan) */
 addEventListener('pointerdown',e=>{const el=e.target&&e.target.closest&&e.target.closest('button,a[href],[role=button],summary,.btn');if(el&&!el.disabled&&!el.hasAttribute('data-nosfx'))SX.play('klik')},{capture:true,passive:true});
@@ -816,7 +818,7 @@ function warnaRak(){const k=IDX&&rakNow&&IDX.keluarga.find(k=>k.id===rakNow.kelu
  else for(const v of['--frame','--frame-d','--s'])st.removeProperty(v)}
 let sesiT0=0,sesiR0=0;
 function mulaiSesi(list){sesiT0=Date.now();sesiR0=M.rating;sesi=list.map(p=>({p,r:null}));idx=0;streak=0;best=0;skor=0;warnaRak();tampil('play');pillUI();pawnsUI();SX.wake();
- say(instruksi()||tx('mulai'),'mulai');mulaiSoal()}
+ say(instruksi()||tx('mulai'));mulaiSoal()}
 const PIDX={1:'q',5:'n',0:'p'};
 function pawnsUI(up){const P=$('pawns');P.innerHTML='';sesi.forEach((s,i)=>{const e=document.createElement('span');
   if(s.r===null){e.className=i===idx?'now':'td';e.innerHTML=pcSvg('p')}else{const k=s.r===1?1:s.r===.5?5:0;e.className=k?'':'ko';e.innerHTML=pcSvg(PIDX[k]);if(up===i)e.classList.add('up')}
@@ -861,7 +863,7 @@ const ikSol='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 const ikSkip='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l9 7-9 7zM19 5v14"/></svg>';
 /* Lewati: soal dibuang dari sesi tanpa skor, tanpa rating, tanpa dicatat; boleh muncul lagi di sesi lain */
 function lewati(){const me=cur;if(!me||me.done||me.lihat)return;me.lock=true;sesi.splice(idx,1);hideMsg();
- if(!sesi.length)return keHome();if(idx>=sesi.length)return ringkasan();KV.say('lanjut');mulaiSoal()}
+ if(!sesi.length)return keHome();if(idx>=sesi.length)return ringkasan();mulaiSoal()}
 function dockUI(){if(!cur)return;
  if(cur.done){const k=cur.dk.f();return dock(cur.dk.kind,k.t,k.x,[[escH(tx(idx>=sesi.length-1?'hasil':'next'))+ikNext,'ok',lanjut,'bNext']])}
  if(cur.lihat)return;
@@ -960,7 +962,7 @@ addEventListener('click',e=>{if(!$('menu').hidden&&!e.target.closest('#menu')){$
 function showTema(){const me=cur,lb=labelTema(me.p.tema);$('tN').textContent=lb.utama?lb.utama[0]+'.':'';$('tD').textContent=lb.utama?lb.utama[1]:'';
  $('tC').textContent=[...lb.lain,lb.babak,tx('rating')+' '+me.p.rating].filter(Boolean).join(' · ');
  $('bLi').href='https://lichess.org/training/'+me.p.id;anBtnUI();$('stp').hidden=true;$('bRev').setAttribute('aria-expanded','false')}
-function lanjut(){hideMsg();if(idx>=sesi.length-1)return ringkasan();idx++;KV.say('lanjut');if(innerWidth<900)window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});mulaiSoal()}
+function lanjut(){hideMsg();if(idx>=sesi.length-1)return ringkasan();idx++;if(innerWidth<900)window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});mulaiSoal()}
 
 /* ===== ringkasan sesi ===== */
 /* ringkasan satu sesi ke tab 5 Hasil Set, supaya Ruang Pelatih menampilkannya seperti Homework (detail per soal ada di tab 16) */
@@ -1103,9 +1105,13 @@ document.querySelectorAll('#an [data-ia]').forEach(e=>e.setAttribute('aria-label
 /* ===== mulai ===== */
 if(!(Q.get('rak')||Q.get('ulang')==='1'))location.replace('index.html');/* tanpa tujuan: ke beranda baru, bukan menu lama */
 mood('senang');applyI18n();tampil('muat');$('muatK').innerHTML=kudiSvg('mikir');$('muatT').textContent=tx('muatT');KV.preload();
+/* 26 Nov 2026: Safari/iPhone memblokir suara pada halaman yang baru dibuka lewat tautan, sehingga Kudi baru terdengar setelah ketukan acak.
+   Bila suara Kudi nyala tetapi diblokir, tampilkan layar "Mulai" dulu: ketukan itu membuka suara, lalu puzzle pertama dimulai dengan suara utuh. */
+function mulaiSetelahKetuk(fn){if(!KV.on)return fn();SX.blokir().then(b=>{if(!b)return fn();
+ $('muatK').innerHTML=kudiSvg('senang');$('muatT').textContent=tx('mulai');const g=$('muatGo');g.hidden=false;g.onclick=()=>{g.hidden=true;SX.wake();fn()};try{g.focus({preventScroll:true})}catch(e){}})}
 getJSON(DATA_BASE+'indeks.json').then(d=>{IDX=d;renderHome();const r=Q.get('rak');
- if(r){const x=IDX.rak.find(x=>x.id===r);if(x)mulaiRak(x,Q.get('tantangan')==='1');else galat(tx('kosong'))}
- else if(Q.get('ulang')==='1'){if(!$('bUlang').hidden)$('bUlang').click();else galat(tx('kosong'))}})
+ if(r){const x=IDX.rak.find(x=>x.id===r);if(x)mulaiSetelahKetuk(()=>mulaiRak(x,Q.get('tantangan')==='1'));else galat(tx('kosong'))}
+ else if(Q.get('ulang')==='1'){if(!$('bUlang').hidden)mulaiSetelahKetuk(()=>$('bUlang').click());else galat(tx('kosong'))}})
  .catch(()=>galat(tx('muatGagal')));
 
 </script>

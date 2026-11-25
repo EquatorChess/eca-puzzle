@@ -528,7 +528,9 @@ html.s-murid[data-v=tugas] #posisi,html.s-murid[data-v=tugas] #tugasBox,html.s-m
 .sy-r{margin-left:auto;text-align:right;font:800 2.2rem/1 var(--hf);color:var(--maroon)}
 .sy-r small{display:block;font:700 .72rem var(--bf);letter-spacing:.08em;text-transform:uppercase;color:var(--label);margin-bottom:3px}
 .sy-g{display:grid;gap:16px;margin-top:16px}
-@media(min-width:900px){.sy-g{display:block;columns:2;column-gap:16px}.sy-g .kt{break-inside:avoid;margin-bottom:16px}}
+/* 26 Nov 2026: multi-kolom CSS diganti grid dua kolom; di Safari/Mac kartu terbelah antar kolom (break-inside tidak dihormati) */
+.sy-c{display:contents}
+@media(min-width:900px){.sy-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.sy-c{display:flex;flex-direction:column;gap:16px;min-width:0}}
 .kt{background:var(--panel);border:2.5px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 5px 0 var(--line);min-width:0}
 .kt h2{font-size:1.2rem;margin-bottom:10px}
 .kt .lead{margin:0 0 10px;color:var(--muted);font-size:.95rem}
@@ -1165,7 +1167,7 @@ function riwayatHtml(){
 function isiSaya(){var el=$('#sayaBody');if(!el||!profil)return;
   var strip=function(id){var e=document.getElementById(id);return e?e.innerHTML.replace(/ id="[^"]*"/g,''):''};
   el.innerHTML='<div class="sy-id">'+av(profil.avatar)+'<div><h1 class="vh" id="hSaya" tabindex="-1">'+esc(profil.nama)+'</h1><p>Kelas '+esc(profil.kelas)+' · '+(profil.soal||0)+' soal dikerjakan</p></div><div class="sy-r"><small>Rating</small>'+profil.rating+'</div></div>'+
-   '<div class="sy-g"><div class="kt"><h2>Gelar</h2>'+gelarHtml()+'</div><div class="kt"><h2>Rating 30 hari</h2>'+grafikHtml()+'</div><div class="kt"><h2>Rapor tema</h2>'+raporHtml()+'</div><div class="kt"><h2>Riwayat latihan</h2>'+riwayatHtml()+'</div></div>'+
+   '<div class="sy-g"><div class="sy-c"><div class="kt" style="order:1"><h2>Gelar</h2>'+gelarHtml()+'</div><div class="kt" style="order:2"><h2>Rating 30 hari</h2>'+grafikHtml()+'</div></div><div class="sy-c"><div class="kt" style="order:3"><h2>Rapor tema</h2>'+raporHtml()+'</div><div class="kt" style="order:4"><h2>Riwayat latihan</h2>'+riwayatHtml()+'</div></div></div>'+
    '<div class="sy-info"><section class="block"><h2 class="h-sec">Cara main</h2>'+strip('cara').replace(/^[\s\S]*?(<ol)/,'$1')+'</section><section class="block"><h2 class="h-sec">Pertanyaan umum</h2>'+strip('faq').replace(/^[\s\S]*?(<details)/,'$1')+'</section></div>'+
    '<div class="sy-keluar"><button class="btn" type="button" id="bKeluar">Keluar dari HP ini</button></div>';
   $('#bKeluar').onclick=keluarkan;var h=$('#hSaya');if(h&&V==='saya')try{h.focus({preventScroll:true})}catch(e){}}
