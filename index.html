@@ -574,7 +574,7 @@ html.s-murid[data-v=tugas] #posisi,html.s-murid[data-v=tugas] #tugasBox,html.s-m
 .lb-g button{background:none;border:0;color:inherit;font:inherit;padding:6px 13px;cursor:pointer;min-height:30px;-webkit-tap-highlight-color:transparent}
 .lb-g button[aria-pressed=true]{background:#F1ECE5;color:#5A0F1A}
 .lb-g button:focus-visible{outline:2px solid #FFC800;outline-offset:-2px}
-</style>
+/*ringan26*/html.lite .kudi,html.lite .eye,html.lite .pz.on .bob,html.lite .awan svg,html.lite .dengar.on svg path,html.lite .hl-to,html.lite .nf,html.lite .nf-ic::after{animation:none!important}html.lite .awan svg{will-change:auto}html.lite .floor{display:none}html.lite #temaPz .lp,html.lite #saranK .sk svg{filter:none}html.lite #temaPz .pz.sg .lift{filter:none}</style>
 <script>
 (function(){var d=document.documentElement;function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
 window.ECA_ses=function(){var on='https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSytESMJeKdrebcxwR4JmX-RZfgiTJk1IM8jxFMLQ/exec'!=='',t=g('eca.token')&&g('eca.profil'),p=g('eca.pelatih'),c=!on?'s-terbuka':t?'s-murid':p?'s-pelatih':'s-tamu';d.className=d.className.replace(/\bs-\w+/g,'').trim()+' '+c;return c};window.ECA_ses();
@@ -711,7 +711,7 @@ var DATA={"kelas":[{"id":"Starter","lv":[1],"fam":[{"id":"mat","nama":"Skakmat",
 var $=function(s){return document.querySelector(s)},root=document.documentElement;
 var store={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 var seen=store.get('eca.seen',{});
-if((navigator.deviceMemory&&navigator.deviceMemory<=2)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=2))root.classList.add('lite');
+try{if(localStorage.getItem('eca_fx')!=='1')root.classList.add('lite')}catch(e){root.classList.add('lite')}/*ringan26: ringan bawaan*/
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function piece(id){return '<svg viewBox="0 0 232 270" aria-hidden="true"><use href="#'+id+'S" x="9" y="7" width="220" height="260"/><use href="#'+id+'S" x="4.5" y="3.5" width="220" height="260"/><use href="#'+id+'F" width="220" height="260"/></svg>'}
 var KMINI='<svg class="kudimini" viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg>';
