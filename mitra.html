@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="id">
-<head>
+<head><script>/*compat-25nov*/(function(){var d=document,shown={};function box(id,h,m){if(shown[id])return;shown[id]=1;
+function go(){var b=d.createElement('div');b.setAttribute('role','alert');b.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:2147483000;background:#5A0F1A;color:#F1ECE5;font:600 14px/1.4 sans-serif;padding:12px 40px 12px 14px;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.4)';
+b.innerHTML='<b style="display:block;font-size:15px;margin-bottom:3px"></b><span></span>';b.firstChild.textContent=h;b.lastChild.textContent=m;
+var x=d.createElement('button');x.type='button';x.setAttribute('aria-label','Tutup');x.textContent='✕';x.style.cssText='position:absolute;top:6px;right:8px;background:none;border:0;color:#F1ECE5;font-size:20px;padding:4px 8px;cursor:pointer';x.onclick=function(){b.parentNode&&b.parentNode.removeChild(b)};b.appendChild(x);(d.body||d.documentElement).appendChild(b)}
+if(d.body)go();else d.addEventListener('DOMContentLoaded',go)}
+window.addEventListener('error',function(e){if(!e||(e.target&&e.target!==window))return;
+box('err','Halaman belum berjalan penuh / The page did not fully load','Coba muat ulang, atau perbarui browser (Samsung Internet / Chrome). Kode: '+String(e.message||'').slice(0,90)+' · '+(e.lineno||'')+':'+(e.colno||''))});
+function st(){try{localStorage.setItem('eca.__t','1');localStorage.removeItem('eca.__t');return true}catch(x){return false}}
+if(!st()){box('st','Penyimpanan data situs diblokir / Site data is blocked','Hasil dan login tidak bisa tersimpan. Matikan "Blokir cookie" di pengaturan browser atau keluar dari Mode Rahasia, lalu muat ulang. / Turn off cookie blocking or leave Private mode, then reload.')}
+})();</script>
 <title>Ruang Mitra ECA</title>
 <base target="_top">
 <meta charset="utf-8">
@@ -53,7 +62,7 @@ textarea{width:100%;min-height:60px}
 .bar{height:10px;background:#F3E6D6;border-radius:999px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--ok)}
 .bar i.d{background:var(--gold)}
-.modal{position:fixed;inset:0;background:rgba(40,20,20,.45);display:none;z-index:20;overflow:auto;padding:30px 12px}
+.modal{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(40,20,20,.45);display:none;z-index:20;overflow:auto;padding:30px 12px}
 .modal.on{display:block}
 .modal .box{background:var(--bg);border-radius:22px;max-width:1100px;margin:0 auto;padding:20px;position:relative}
 .modal .x{position:absolute;right:14px;top:12px}
@@ -129,7 +138,7 @@ h2{font-size:20px}h3{font-size:16px}
   </section>
 
   <section id="tugas">
-    <div class="row"><button class="btn pri" id="tBeri">Beri tugas</button><span class="small muted">Tugas tampil paling atas di halaman murid sampai dikerjakan, lalu berubah abu-abu dengan centang.</span></div>
+    <div class="row"><button class="btn pri" id="tBeri">Beri tugas</button><span class="small muted">Tugas tampil paling atas di halaman murid sampai dikerjakan, lalu berubah abu-abu dengan centang. Setelah kamu periksa, klik "Sudah ditinjau" agar tugas keluar dari daftar ini.</span></div>
     <div class="card mt"><div id="tDaftar"></div></div>
   </section>
 
@@ -187,7 +196,14 @@ function garis(seri){
 }
 
 /* ---------- muat ---------- */
-$('#bSitus').onclick=function(){var b=this;b.disabled=true;run('tokenPelatih',[],function(r){b.disabled=false;var w=window.open(r.url,'_blank');if(!w){var k=$('#kesitus');k.href=r.url;k.style.display='';k.textContent='Klik di sini untuk melihat sebagai murid';toast('Tautan siap, klik di pojok atas')}else toast('Situs dibuka dalam mode pelatih')});setTimeout(function(){b.disabled=false},6000)};
+/* Buka situs puzzle seperti murid (mode pelatih: puzzle bisa dicoba tanpa mencatat hasil). Jendela dibuka dulu secara sinkron supaya tidak diblokir pop-up. */
+function bukaSitus(btn){var w=null,got=false;try{w=window.open('about:blank','_blank')}catch(e){}
+  if(btn)btn.disabled=true;
+  run(MODE==='admin'?'tokenPelatih':'tokenSitus',[],function(r){got=true;if(btn)btn.disabled=false;
+    if(w&&!w.closed){w.location.href=r.url;toast('Situs puzzle dibuka. Kamu melihatnya seperti murid.')}
+    else{var k=$('#kesitus');k.href=r.url;k.style.display='';k.textContent='Klik di sini untuk membuka situs puzzle';toast('Tautan siap, klik di pojok atas')}});
+  setTimeout(function(){if(btn)btn.disabled=false;if(!got&&w&&!w.closed){try{w.close()}catch(e){}}},9000)}
+$('#bSitus').onclick=function(){bukaSitus(this)};
 
 function beranda(){var r=D.ringkas;
   $('#stat').innerHTML='<div class="card stat"><b>'+r.murid+'</b><span>murid terdaftar</span></div><div class="card stat"><b>'+r.aktif+'</b><span>murid aktif 7 hari terakhir</span></div><div class="card stat"><b>'+r.soal+'</b><span>soal dikerjakan 7 hari terakhir</span></div><div class="card stat"><b>'+D.buntu.length+'</b><span>murid perlu dibantu</span></div>';
@@ -300,17 +316,17 @@ $('#lMasuk').onclick=function(){var kode=$('#lKode').value.trim().toUpperCase(),
 $('#bKeluar').onclick=function(){if(confirm('Keluar dari Ruang Mitra di perangkat ini?'))keluar()};
 
 /* ---------- tab, muat, segarkan ---------- */
-function tabs(){var L=[['beranda','Beranda'],['murid','Murid'],['grup','Grup'],['tugas','Tugas']].concat(ADM?[['akses','Akses puzzle']]:[]).concat([['kelas','Kelas']]).concat(ADM?[['pelatih','Pelatih']]:[]);
+function tabs(){var L=(MODE==='mitra'?[['situs','Situs puzzle \u2197']]:[]).concat([['beranda','Beranda'],['murid','Murid'],['grup','Grup'],['tugas','Tugas']]).concat(ADM?[['akses','Akses puzzle']]:[]).concat([['kelas','Kelas']]).concat(ADM?[['pelatih','Pelatih']]:[]);
   $('#tabs').innerHTML=L.map(function(x){return '<button data-s="'+x[0]+'" aria-pressed="'+(x[0]===TAB_AKTIF)+'">'+x[1]+'</button>'}).join('')}
 function muat(){run('muatAwal',[],function(d){D=d;muatRak().then(function(){if(TAB_AKTIF==='tugas')gambarTugas()});ADM=d.pelatih.peran==='Admin';$('#memuat').style.display='none';
   $('#siapa').textContent=d.pelatih.nama+' · '+d.pelatih.peran;$('#kesitus').href=d.situs;
-  $('#bSitus').style.display=MODE==='admin'?'':'none';$('#bKeluar').style.display=MODE==='mitra'?'':'none';$('#bTambah').style.display=ADM?'':'none';
+  $('#bSitus').style.display='';$('#bSitus').textContent=MODE==='mitra'?'Lihat situs puzzle':'Lihat sebagai murid';$('#bKeluar').style.display=MODE==='mitra'?'':'none';$('#bTambah').style.display=ADM?'':'none';
   var ko=d.kelas.map(function(k){return '<option>'+esc(k.nama)+'</option>'}).join('');$('#fKelas').innerHTML='<option value="">Semua kelas</option>'+ko;$('#tKelas').innerHTML=ko;$('#kPilih').innerHTML=ko;
   $('#tGrup').innerHTML=D.grup.map(function(g){return '<label class="chk"><input type="checkbox" value="'+esc(g.id)+'"> '+esc(g.nama)+'</label>'}).join('')||'<span class="small muted">Belum ada grup.</span>';
   tabs();beranda();daftarMurid();gambarGrup();gambarTugas();if(ADM){gambarAkses();gambarPelatih()}buka(TAB_AKTIF)})}
 function segarkan(){muat()}
 function buka(s){TAB_AKTIF=s;document.querySelectorAll('section').forEach(function(x){x.classList.toggle('on',x.id===s)});document.querySelectorAll('nav.tabs button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.s===s)});if(s==='kelas')kelas()}
-$('#tabs').onclick=function(e){var b=e.target.closest('button');if(b&&D)buka(b.dataset.s)};
+$('#tabs').onclick=function(e){var b=e.target.closest('button');if(!b||!D)return;if(b.dataset.s==='situs'){bukaSitus(b);return}buka(b.dataset.s)};
 
 /* ---------- pembantu ---------- */
 function petaMurid(){var o={};D.murid.forEach(function(m){o[m.id]=m});return o}
@@ -333,7 +349,7 @@ function pilihPuzzle(box,cari,sel,info,onUbah){
   box.onchange=function(e){var c=e.target;if(c.type==='checkbox'){if(c.checked)sel[c.value]=true;else delete sel[c.value];if(onUbah)onUbah()}}}
 
 /* ---------- Grup ---------- */
-function gambarGrup(){var M=petaMurid(),tg={};D.tugas.forEach(function(t){if(t.jenis==='Grup')tg[t.target]=(tg[t.target]||0)+1});
+function gambarGrup(){var M=petaMurid(),tg={};D.tugas.forEach(function(t){if(t.status!=='Selesai'&&t.jenis==='Grup')tg[t.target]=(tg[t.target]||0)+1});
   $('#gTambah').style.display=ADM?'':'none';
   $('#gDaftar').innerHTML=D.grup.length?D.grup.map(function(g){
     return '<div class="card"><div class="row" style="justify-content:space-between"><h3>'+esc(g.nama)+'</h3><span class="pill">'+g.anggota.length+' murid</span></div>'+
@@ -359,11 +375,16 @@ function dialogGrup(id){var g=id?D.grup.filter(function(x){return x.id===id})[0]
     run('simpanGrup',[{id:id||'',nama:$('#eNama').value,kelas:$('#eKelas').value,catatan:$('#eCatatan').value,pelatih:pl,anggota:Object.keys(sel),status:id?$('#eStatus').value:'Aktif'}],function(){toast('Grup tersimpan');$('#modal').classList.remove('on');segarkan()});setTimeout(function(){b.disabled=false},6000)}}
 
 /* ---------- Tugas ---------- */
-function gambarTugas(){var P=petaPuzzle();
-  $('#tDaftar').innerHTML=D.tugas.length?'<table><tr><th>Diberikan</th><th>Kepada</th><th>Puzzle</th><th>Selesai</th><th>Catatan</th><th>Oleh</th><th></th></tr>'+D.tugas.map(function(t){var p=P[t.kode]||{kode:t.kode,judul:'',soal:''},pc=t.dari?Math.round(t.selesai/t.dari*100):0;
-    return '<tr><td class="small">'+tgl(t.waktu)+'</td><td><span class="pill">'+esc(t.jenis)+'</span> <b>'+esc(t.namaTarget)+'</b></td><td>'+labelPuzzle(p)+'</td>'+
-     '<td style="min-width:110px"><div class="bar"><i style="width:'+pc+'%"></i></div><span class="small">'+t.selesai+' dari '+t.dari+'</span></td><td class="small">'+esc(t.catatan||'')+'</td><td class="small muted">'+esc(String(t.pemberi||'').split(' (')[0])+'</td><td><button class="btn warn" data-bt="'+esc(t.id)+'">Batalkan</button></td></tr>'}).join('')+'</table>':'<div class="empty">Belum ada tugas aktif. Klik "Beri tugas".</div>'}
+var TG_SEMUA=false;
+function gambarTugas(){var P=petaPuzzle(),A=D.tugas.filter(function(t){return t.status!=='Selesai'}),R=D.tugas.length-A.length,V=TG_SEMUA?D.tugas:A;
+  var bar=R?'<div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="small muted">'+A.length+' tugas aktif · '+R+' sudah ditinjau</span><label class="chk small"><input type="checkbox" id="tSemua"'+(TG_SEMUA?' checked':'')+'> Tampilkan yang sudah ditinjau</label></div>':'';
+  $('#tDaftar').innerHTML=bar+(V.length?'<table><tr><th>Diberikan</th><th>Kepada</th><th>Puzzle</th><th>Selesai</th><th>Catatan</th><th>Oleh</th><th></th></tr>'+V.map(function(t){var p=P[t.kode]||{kode:t.kode,judul:'',soal:''},pc=t.dari?Math.round(t.selesai/t.dari*100):0,sdh=t.status==='Selesai',siap=!sdh&&t.dari>0&&t.selesai>=t.dari;
+    return '<tr'+(sdh?' style="opacity:.62"':'')+'><td class="small">'+tgl(t.waktu)+'</td><td><span class="pill">'+esc(t.jenis)+'</span> <b>'+esc(t.namaTarget)+'</b></td><td>'+labelPuzzle(p)+'</td>'+
+     '<td style="min-width:110px"><div class="bar"><i style="width:'+pc+'%"></i></div><span class="small">'+t.selesai+' dari '+t.dari+'</span>'+(siap?'<div class="small" style="color:#1B7F3B;font-weight:700">Siap ditinjau</div>':'')+(sdh?'<div class="small muted">&#10003; Sudah ditinjau</div>':'')+'</td><td class="small">'+esc(t.catatan||'')+'</td><td class="small muted">'+esc(String(t.pemberi||'').split(' (')[0])+'</td>'+
+     '<td style="white-space:nowrap">'+(sdh?'<button class="btn" data-ts="'+esc(t.id)+'" data-on="0">Buka lagi</button>':'<button class="btn pri" data-ts="'+esc(t.id)+'" data-on="1" title="Tandai sudah kamu tinjau; tugas keluar dari daftar ini">&#10003; Sudah ditinjau</button>')+' <button class="btn warn" data-bt="'+esc(t.id)+'">Batalkan</button></td></tr>'}).join('')+'</table>'
+    :'<div class="empty">'+(D.tugas.length?'Semua tugas sudah ditinjau. Klik "Beri tugas" untuk tugas baru.':'Belum ada tugas aktif. Klik "Beri tugas".')+'</div>')}
 $('#tBeri').onclick=function(){dialogTugas(null)};
+$('#tDaftar').addEventListener('change',function(e){if(e.target&&e.target.id==='tSemua'){TG_SEMUA=e.target.checked;gambarTugas()}});
 function dialogTugas(pre){var sel={},jenisAwal=(pre&&pre.jenis)||'Grup';
   var J=[['Grup','Satu grup']].concat([['Murid','Satu murid']]).concat(ADM?[['Kelas','Seluruh kelas']]:[]);
   modal('<h2>Beri tugas</h2><div class="row mt"><label>Kepada <select id="dJenis">'+J.map(function(x){return '<option value="'+x[0]+'">'+x[1]+'</option>'}).join('')+'</select></label><select id="dTarget" style="min-width:220px"></select></div>'+
@@ -435,6 +456,7 @@ function cariP(id){return D.daftarPelatih.filter(function(p){return p.id===id})[
 
 /* ---------- aksi klik (tugas, grup, pelatih) ---------- */
 document.addEventListener('click',function(e){var t;
+  if(t=e.target.closest('[data-ts]')){var on=t.dataset.on==='1';t.disabled=true;run('tinjauTugas',[t.dataset.ts,on],function(){toast(on?'Tugas ditandai sudah ditinjau':'Tugas dibuka lagi');segarkan()});setTimeout(function(){t.disabled=false},6000);return}
   if(t=e.target.closest('[data-bt]')){if(confirm('Batalkan tugas ini? Murid tidak akan melihatnya lagi.'))run('batalTugas',[t.dataset.bt],function(){toast('Tugas dibatalkan');segarkan()});return}
   if(t=e.target.closest('[data-lt]')){$('#modal').classList.remove('on');dialogTugas({jenis:'Murid',id:t.dataset.lm,rak:t.dataset.lt});return}
   if(t=e.target.closest('[data-gh]')){var gg=D.grup.filter(function(x){return x.id===t.dataset.gh})[0];if(gg&&confirm('Hapus grup "'+gg.nama+'" secara permanen?\n\nKeanggotaan grup dihapus dan tugas yang diberikan ke grup ini dibatalkan. Muridnya tidak ikut terhapus.\nTindakan ini tidak bisa dibatalkan.'))run('hapusGrup',[gg.id],function(){toast('Grup dihapus');segarkan()});return}
@@ -461,7 +483,7 @@ function pasangKelola(m,id){
   $('#uAkses').onclick=function(){keAkses(id)};
   $('#uHapus').onclick=function(){if(confirm('Hapus murid '+m.nama+' ('+id+') secara permanen?\n\nAkun, kode masuk, keanggotaan grup, dan tugasnya dihilangkan. Riwayat jawaban tetap tersimpan di Sheet.\nTindakan ini tidak bisa dibatalkan.'))run('hapusMurid',[id],function(){toast('Murid dihapus');$('#modal').classList.remove('on');segarkan()})};
   $('#uReset').onclick=function(){if(confirm('Reset PIN '+m.nama+'?'))run('resetPin',[id],function(x){gantiM(x);toast('PIN direset')})}}
-function tugasMurid(m){var P=petaPuzzle(),L=D.tugas.filter(function(t){return(t.jenis==='Murid'&&t.target===m.id)||(t.jenis==='Grup'&&(m.grup||[]).indexOf(t.target)>=0)||(t.jenis==='Kelas'&&t.target===m.kelas)});
+function tugasMurid(m){var P=petaPuzzle(),L=D.tugas.filter(function(t){return t.status!=='Selesai'&&((t.jenis==='Murid'&&t.target===m.id)||(t.jenis==='Grup'&&(m.grup||[]).indexOf(t.target)>=0)||(t.jenis==='Kelas'&&t.target===m.kelas))});
   return '<div class="row"><button class="btn pri" id="uTugas">Beri tugas ke murid ini</button></div><div class="mt">'+(L.length?'<table>'+L.map(function(t){var p=P[t.kode]||{kode:t.kode,judul:'',soal:''};return '<tr><td>'+labelPuzzle(p)+'</td><td class="small muted">'+esc(t.jenis==='Murid'?'Pribadi':t.namaTarget)+'</td></tr>'}).join('')+'</table>':'<div class="empty small">Belum ada tugas aktif.</div>')+'</div>'}
 
 boot();
