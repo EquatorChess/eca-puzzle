@@ -698,6 +698,29 @@ a.papan:focus-visible .p-ketuk{opacity:1}
 @media(prefers-color-scheme:dark){#lgKlBody .lg-kt .no:not(.m1):not(.m2):not(.m3){color:var(--k-tx)}}
 #lgKlBody .lg-kn{margin:10px 0 0;font:700 .8rem/1.5 var(--bf);color:var(--k-mt)}
 
+/* ===== daftar Liga ECL (26 Nov 2026, daftar-liga-26nov) ===== */
+#ligaBody .lg-reg{margin:0 0 20px}
+#ligaBody .lg-reg h2{margin:0}
+#ligaBody .lg-bd{display:inline-block;margin:0 0 8px;padding:4px 11px;border-radius:12px;font:900 .72rem/1.2 var(--bf);letter-spacing:.08em}
+#ligaBody .lg-bd.belum{background:var(--lg-fp);color:var(--lg-fp-h);border:1.5px solid var(--lg-fp-ln)}
+#ligaBody .lg-bd.ok{background:#DDF1E4;color:#14663A;border:1.5px solid #8CCBA5}
+#ligaBody .lg-fm{display:flex;flex-direction:column;gap:12px;margin:14px 0 0}
+#ligaBody .lg-fm label,#ligaBody .lg-fl>span{display:flex;flex-direction:column;gap:5px;font:800 .85rem/1.3 var(--bf);color:var(--k-tx)}
+#ligaBody .lg-fm input{width:100%;box-sizing:border-box;min-height:48px;padding:0 14px;border-radius:14px;border:2px solid var(--k-ln);background:var(--lg-soft);color:var(--k-tx);font:700 1rem var(--bf)}
+#ligaBody .lg-fm input:focus{outline:3px solid var(--lg-chip-ln);outline-offset:1px}
+#ligaBody .lg-fm small{font:700 .75rem/1.4 var(--bf);color:var(--k-mt)}
+#ligaBody .lg-fl .neg{margin-top:6px}
+#ligaBody .lg-er{margin:0;min-height:1.2em;font:800 .85rem/1.4 var(--bf);color:#B3261E}
+#ligaBody .lg-sub{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;border:0;border-radius:26px;background:#F5C542;color:#3A0A12;font:900 1rem var(--hf);cursor:pointer}
+#ligaBody .lg-sub:disabled{opacity:.6;cursor:default}
+#ligaBody .lg-ac{margin:14px 0 0;display:flex}
+#ligaBody .lg-ac .lg-b{flex:1}
+@media(min-width:900px){#ligaBody .lg-g>section:last-child{grid-column:1/-1}}
+@media(prefers-color-scheme:dark){
+ #ligaBody .lg-bd.ok{background:rgba(60,190,120,.18);color:#9BE3B9;border-color:rgba(120,210,160,.5)}
+ #ligaBody .lg-er{color:#FFB4A8}
+}
+
 /* ===== pilihan negara murid (26 Nov 2026, negara-26nov) ===== */
 .neg{display:flex;gap:10px;margin-top:8px}
 .neg button{flex:1;min-height:48px;border:3px solid var(--line);background:#fff;color:var(--maroon);border-radius:16px;font:800 1rem var(--hf);cursor:pointer}
@@ -1490,6 +1513,7 @@ function lgSeri(C){var K={juara1:lg('jumlah juara 1','most 1st places'),sb:lg('t
 function lgLabel(sel,adaNext,isNext){return sel<0?lg('Selesai','Done'):sel===0?lg('Hari ini','Today'):isNext?lg('Berikutnya','Next'):lg('Akan datang','Upcoming')}
 function gambarLiga(box){var C=ligaC,neg=(profil&&profil.negara)||'',T=C.turnamen,n=T.length,i=lgBerikut(C),H='',t,sel;
   H+='<div class="lg-chip">EQUATOR CHESS LEAGUE · SEASON 1</div><p class="lg-lead">'+lg(n+' turnamen online tiap dua minggu untuk murid ECA Indonesia dan Malaysia. Poin dijumlahkan sampai juara akhir liga.',n+' online tournaments every two weeks for ECA students in Indonesia and Malaysia. Points add up to crown the league champion.')+'</p>';
+  H+=lgKartuDaftar(C,T,i,neg);
   if(i<0){H+='<section class="lg-hero" aria-label="'+lg('Liga selesai','League finished')+'"><div class="lg-hm"><div><h2>'+lg('Liga ECL selesai','ECL has finished')+'</h2><p>'+lg('Terima kasih sudah bertanding. Hasil akhir diumumkan oleh admin.','Thank you for playing. Final results are announced by the admin.')+'</p></div></div></section>'}
   else{t=T[i];sel=lgSelisih(t.tgl);
     H+='<section class="lg-hero" aria-label="'+lg('Turnamen berikutnya','Next tournament')+'"><div class="lg-hl"><span><i class="lg-dot"></i>'+lg('TURNAMEN BERIKUTNYA','NEXT TOURNAMENT')+'</span><small>'+lg(t.no+' dari '+n,t.no+' of '+n)+'</small></div>'+
@@ -1505,14 +1529,10 @@ function gambarLiga(box){var C=ligaC,neg=(profil&&profil.negara)||'',T=C.turname
     '<section class="lg-c" aria-labelledby="lgP"><h2 id="lgP">'+lg('Poin per turnamen','Points per tournament')+'</h2><div class="lg-pt" style="margin-top:12px">'+
     C.poin.map(function(p,j){return '<div'+(j<3?' class="m'+(j+1)+'"':'')+'><b>'+p+'</b><span>'+lg('Juara '+(j+1),['1st','2nd','3rd','4th','5th'][j]+' place')+'</span></div>'}).join('')+'<div class="lain"><b>'+C.poinLain+'</b><span>'+lg('Peserta lain','Other players')+'</span></div></div>'+
     '<p>'+lg('Peserta lain: '+C.poinLain+' poin bila menyelesaikan minimal '+C.minSelesaiPersen+'% pertandingan. Poin seri di klasemen akhir: '+lgSeri(C)+'.','Other players: '+C.poinLain+' point if they finish at least '+C.minSelesaiPersen+'% of the games. Final tie-break: '+lgSeri(C)+'.')+'</p></section>'+
-    '<section class="lg-c" aria-labelledby="lgD"><h2 id="lgD">'+lg('Cara daftar','How to join')+'</h2><ol class="lg-st" style="margin-top:12px">'+
-    '<li><span class="n">1</span><div class="t"><span><b>'+lg('Konfirmasi ke admin','Confirm with the admin')+'</b>: '+lg('kirim nama murid dan username Lichess.','send the student name and Lichess username.')+'</span><a class="lg-b wa" href="https://wa.me/'+esc(C.wa)+'?text='+encodeURIComponent(lg('Halo admin ECA, saya ingin mendaftar Liga ECL.\nNama murid: \nUsername Lichess: ','Hello ECA admin, I would like to join ECL.\nStudent name: \nLichess username: '))+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/></svg>WhatsApp '+esc(C.waTampil)+'</a></div></li>'+
-    '<li><span class="n">2</span><div class="t"><span><b>'+lg('Gabung Team ECA','Join Team ECA')+'</b> '+lg('di Lichess.','on Lichess.')+'</span><a class="lg-b" href="'+esc(C.tim)+'" target="_blank" rel="noopener">'+lg('Buka Team Lichess','Open the Lichess team')+'</a></div></li>'+
-    '<li><span class="n">3</span><div class="t"><span><b>'+lg('Masuk turnamen','Enter the tournament')+'</b> '+lg('setelah disetujui admin.','after the admin approves.')+'</span>'+(i>=0&&T[i].swiss?'<a class="lg-b" href="'+esc(T[i].swiss)+'" target="_blank" rel="noopener">'+lg('Buka Tournament 0'+T[i].no,'Open Tournament 0'+T[i].no)+'</a>':'')+'</div></li></ol></section>'+
     '<section class="lg-c" aria-labelledby="lgS"><h2 id="lgS">'+lg('Format turnamen','Tournament format')+'</h2><p class="p" style="font-size:.95rem;color:var(--k-tx)">'+lg('Format Swiss, kontrol waktu '+T[0].kontrol+', '+T[0].babak+' babak. Waktu mulai: '+lgJam(T[0].jam,neg)+'. Turnamen berjalan di Lichess, jadi pastikan akunmu sudah masuk Team ECA.','Swiss format, time control '+T[0].kontrol+', '+T[0].babak+' rounds. Start time: '+lgJam(T[0].jam,neg)+'. Tournaments run on Lichess, so make sure your account has joined Team ECA.')+'</p></section></div>'+
     '<section class="lg-fp" aria-labelledby="lgF"><h2 id="lgF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Fair play</h2><p>'+lg('Dilarang memakai chess engine atau meminta bantuan siapa pun selama pertandingan. Pelanggaran dapat berakibat diskualifikasi.','Using a chess engine or asking anyone for help during a game is not allowed. Violations can lead to disqualification.')+'</p></section>'+
     '<p class="lg-end">'+lg('Mari bertanding, berkembang, dan membangun sportivitas bersama!','Let us compete, grow, and build sportsmanship together!')+'</p>';
-  box.innerHTML=H;klLiga()}
+  box.innerHTML=H;klLiga();ikatDaftarLiga(box)}
 
 
 /* ---------- klasemen Liga ECL (klasemen-26nov): aksi API `liga`, disimpan 5 menit di HP ---------- */
@@ -1524,7 +1544,7 @@ function lgBendera(n){
   return ''}
 function klLiga(){var b=$('#lgKlBody');if(!b||!token)return;
   if(ligaK&&Date.now()-ligaKT<3e5){gambarKl(b,ligaK);return}
-  api({aksi:'liga',token:token}).then(function(j){if(j.keluar)return;if(j.ok){ligaK=j;ligaKT=Date.now()}gambarKl(b,j)},function(){})}
+  api({aksi:'liga',token:token}).then(function(j){if(j.keluar)return;if(j.ok){ligaK=j;ligaKT=Date.now();if(sinkronDaftar(j))return}gambarKl(b,j)},function(){})}
 function gambarKl(b,j){
   if(!j||!j.ok||!j.kl||!j.kl.length)return;
   var C=ligaC||{},sel=0,tot=(j.turnamen||[]).length,H,L=j.kl,tampil=ligaKSemua?L:L.slice(0,10),sy=null,i;
@@ -1539,6 +1559,47 @@ function gambarKl(b,j){
   H+='<p class="lg-kn">'+lg('Garis putus-putus menandai batas 5 besar penerima hadiah akhir.','The dashed line marks the top 5 who receive the final prizes.')+'</p>';
   b.innerHTML=H;
   var t=$('#lgKlSemua');if(t)t.onclick=function(){ligaKSemua=!ligaKSemua;gambarKl(b,j)}}
+
+
+/* ---------- daftar Liga ECL (daftar-liga-26nov): kartu status + form; aksi API `daftarLiga` ---------- */
+function lgKartuDaftar(C,T,i,neg){
+  var p=profil||{},phWa=neg==='MY'?'012 345 6789':'0812 3456 7890',
+    tim='<a class="lg-b" href="'+esc(C.tim)+'" target="_blank" rel="noopener">'+lg('Buka Team Lichess','Open the Lichess team')+'</a>';
+  if(!token||!profil)return '<section class="lg-c lg-reg" aria-labelledby="lgR"><h2 id="lgR">'+lg('Daftar Liga ECL','Join ECL')+'</h2><p>'+lg('Masuk dulu ke akunmu untuk mendaftar.','Sign in to your account first to register.')+'</p></section>';
+  if(p.ligaDaftar)
+    return '<section class="lg-c lg-reg" aria-labelledby="lgR"><span class="lg-bd ok">'+lg('✓ TERDAFTAR','✓ REGISTERED')+'</span><h2 id="lgR">'+esc(p.nama||'')+' · @'+esc(p.lichess||'')+'</h2>'+
+      '<p>'+lg('Namamu sudah terdaftar di Liga ECL. Pastikan akun Lichess-mu sudah masuk Team ECA, lalu gabung turnamen saat dibuka.','You are registered for ECL. Make sure your Lichess account has joined Team ECA, then join the tournament when it opens.')+'</p>'+
+      (p.waAda?'':'<form id="lgForm" class="lg-fm" novalidate><label for="lgWa">'+lg('Tambahkan nomor WhatsApp untuk pengingat turnamen','Add your WhatsApp number for tournament reminders')+'<input id="lgWa" inputmode="tel" autocomplete="tel" placeholder="'+phWa+'"></label><p class="lg-er" id="lgErr" role="alert"></p><button class="lg-sub" type="submit">'+lg('Simpan nomor','Save number')+'</button></form>')+
+      '<div class="lg-ac">'+tim+'</div></section>';
+  return '<section class="lg-c lg-reg" aria-labelledby="lgR"><span class="lg-bd belum">'+lg('BELUM TERDAFTAR','NOT REGISTERED YET')+'</span><h2 id="lgR">'+lg('Daftar Liga ECL','Join ECL')+'</h2>'+
+    '<ol class="lg-st" style="margin-top:12px">'+
+    '<li><span class="n">1</span><div class="t"><span><b>'+lg('Isi data di bawah','Fill in the form below')+'</b> '+lg('lalu tekan Daftar. Namamu langsung tercatat, tidak perlu lewat admin.','then press Register. Your name is recorded right away, no need to go through the admin.')+'</span></div></li>'+
+    '<li><span class="n">2</span><div class="t"><span><b>'+lg('Gabung Team ECA','Join Team ECA')+'</b> '+lg('di Lichess.','on Lichess.')+'</span>'+tim+'</div></li>'+
+    '<li><span class="n">3</span><div class="t"><span><b>'+lg('Masuk turnamen','Enter the tournament')+'</b> '+lg('saat tautannya dibuka.','when its link opens.')+'</span>'+(i>=0&&T[i].swiss?'<a class="lg-b" href="'+esc(T[i].swiss)+'" target="_blank" rel="noopener">'+lg('Buka Tournament 0'+T[i].no,'Open Tournament 0'+T[i].no)+'</a>':'')+'</div></li></ol>'+
+    '<form id="lgForm" class="lg-fm" novalidate>'+
+    (p.negara?'':'<div class="lg-fl"><span>'+lg('Negara','Country')+'</span><div class="neg" id="lgNeg"><button type="button" data-n="ID" aria-pressed="false">Indonesia</button><button type="button" data-n="MY" aria-pressed="false">Malaysia</button></div></div>')+
+    '<label for="lgNama">'+lg('Nama','Name')+'<input id="lgNama" value="'+esc(p.nama||'')+'" maxlength="30" autocomplete="off"></label>'+
+    '<label for="lgUser">'+lg('Username Lichess','Lichess username')+'<input id="lgUser" placeholder="'+lg('mis. aiman_eca','e.g. aiman_eca')+'" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false"><small>'+lg('Boleh juga menempel tautan profil Lichess-mu.','You can also paste your Lichess profile link.')+'</small></label>'+
+    '<label for="lgWa">'+lg('Nomor WhatsApp','WhatsApp number')+'<input id="lgWa" inputmode="tel" autocomplete="tel" placeholder="'+phWa+'"><small>'+lg('Dipakai admin untuk pengingat turnamen.','Used by the admin for tournament reminders.')+'</small></label>'+
+    '<p class="lg-er" id="lgErr" role="alert"></p><button class="lg-sub" type="submit">'+lg('Daftar sekarang','Register now')+'</button></form>'+
+    '<p class="lg-note">'+lg('Sudah menyerahkan nama dan username Lichess lewat admin? Tunggu admin memasukkannya; kartu ini akan berubah menjadi Terdaftar. Ada kendala? ','Already gave your name and Lichess username to the admin? Wait for the admin to enter it; this card will switch to Registered. Any trouble? ')+
+    '<a href="https://wa.me/'+esc(C.wa)+'" target="_blank" rel="noopener">'+lg('Hubungi admin','Contact the admin')+'</a>.</p></section>'}
+function ikatDaftarLiga(box){var f=$('#lgForm');if(!f)return;var neg=(profil&&profil.negara)||'',nb=$('#lgNeg');
+  if(nb)nb.onclick=function(e){var b=e.target.closest('button');if(!b)return;neg=b.dataset.n;nb.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)})};
+  f.onsubmit=function(e){e.preventDefault();var er=$('#lgErr'),tb=f.querySelector('button[type=submit]');
+    if(!neg){er.textContent=lg('Pilih negaramu dulu.','Choose your country first.');return}
+    er.textContent='';tb.disabled=true;
+    api({aksi:'daftarLiga',token:token,negara:neg,nama:($('#lgNama')||{}).value||'',lichess:($('#lgUser')||{}).value||'',wa:($('#lgWa')||{}).value||''}).then(function(j){tb.disabled=false;
+      if(j.keluar)return;
+      if(j.ok){profil=j.profil;ls.set('eca.profil',profil);ligaK=null;gambarLiga(box);if(window.__sapa)window.__sapa(window.ECA_L==='en'?'Registered!':'Terdaftar!','')}
+      else er.textContent=j.pesan||lg('Gagal menyimpan. Coba lagi.','Could not save. Try again.')},
+      function(){tb.disabled=false;er.textContent=lg('Tidak tersambung. Coba lagi.','Could not connect. Try again.')})}}
+/* status dari server (diinput pelatih / nomor WA dilengkapi) menggantikan salinan lama di HP */
+function sinkronDaftar(j){if(!profil||j.daftar===undefined)return false;
+  if(!!profil.ligaDaftar===!!j.daftar&&!!profil.waAda===!!j.waAda&&String(profil.lichess||'')===String(j.lichess||''))return false;
+  profil.ligaDaftar=!!j.daftar;profil.lichess=j.lichess||'';profil.waAda=!!j.waAda;ls.set('eca.profil',profil);
+  if(V==='liga'){var b=$('#ligaBody');if(b)gambarLiga(b)}
+  return true}
 
 
 /* ---------- tanya negara murid lama (negara-26nov): sekali per hari, hanya bila masih kosong ---------- */
