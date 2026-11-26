@@ -355,7 +355,7 @@ body{background-image:repeating-conic-gradient(rgba(90,15,26,.03) 0 25%,transpar
 /* Tema Puzzle (murid, tab Latihan): bidak 2.5D -> laci tema */
 #temaPz{display:none;padding:26px 0 8px}
 html.s-murid #temaPz,html.s-tamu #temaPz,html.s-terbuka #temaPz,html.s-pelatih #temaPz{display:block}
-html.s-murid[data-v=tugas] #temaPz,html.s-murid[data-v=peringkat] #temaPz,html.s-murid[data-v=saya] #temaPz{display:none}
+html.s-murid[data-v=tugas] #temaPz,html.s-murid[data-v=peringkat] #temaPz,html.s-murid[data-v=liga] #temaPz,html.s-murid[data-v=saya] #temaPz{display:none}
 #temaPz h2{font-size:clamp(1.4rem,4.4vw,1.9rem)}
 #temaPz .td{margin:4px 0 0;color:var(--muted);font-size:.98rem}
 #temaPz .trow{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:clamp(0px,1vw,14px);margin-top:14px;padding-top:6px}
@@ -379,7 +379,7 @@ html.s-murid[data-v=tugas] #temaPz,html.s-murid[data-v=peringkat] #temaPz,html.s
 
 #saranK,#papan64{display:none;padding:18px 0 4px}
 html.s-murid #saranK,html.s-murid #papan64{display:block}
-html.s-murid[data-v=tugas] #saranK,html.s-murid[data-v=tugas] #papan64,html.s-murid[data-v=peringkat] #saranK,html.s-murid[data-v=peringkat] #papan64,html.s-murid[data-v=saya] #saranK,html.s-murid[data-v=saya] #papan64{display:none}
+html.s-murid[data-v=tugas] #saranK,html.s-murid[data-v=tugas] #papan64,html.s-murid[data-v=peringkat] #saranK,html.s-murid[data-v=liga] #saranK,html.s-murid[data-v=peringkat] #papan64,html.s-murid[data-v=liga] #papan64,html.s-murid[data-v=saya] #saranK,html.s-murid[data-v=saya] #papan64{display:none}
 #saranK[hidden]{display:none!important}
 #saranK .sk{display:flex;align-items:center;gap:14px;background:var(--panel);border:2.5px solid var(--line);border-bottom-width:5px;border-radius:20px;padding:14px 16px}
 #saranK .sk svg{flex:none;width:54px;height:62px}
@@ -585,6 +585,98 @@ a.papan:focus-visible .p-ketuk{opacity:1}
 .btn.ulg:active{transform:translateY(4px);box-shadow:0 1px 0 var(--maroon)}
 .btn.ulg .cnt{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:99px;background:var(--gold);color:var(--maroon-d);font:800 .8rem/1 var(--bf);font-style:normal;border:2px solid var(--maroon)}
 
+/* ===== Liga ECL (26 Nov 2026, liga-26nov) ===== */
+#ligaBody{--k-card:#FFFDF9;--k-ln:#E2D6CB;--k-tx:#3A0A12;--k-mt:#6E5A5F;--k-btn-ln:#D9CBB8;--k-btn-tx:#5A0F1A;--k-sh:0 2px 10px rgba(83,23,32,.08);--lg-soft:#F8F3EA;--lg-chip:#FDEBB8;--lg-chip-ln:#E8B93A;--lg-chip-tx:#6B4A0A;--lg-fp:#FCE7E3;--lg-fp-ln:#F0A396;--lg-fp-h:#7A1C12;--lg-fp-tx:#5A2018;--lg-na:#F1E9DC}
+.tbaruL{position:absolute;top:1px;left:calc(50% + 2px);background:#C8321F;color:#fff;font:900 .65rem/1 var(--bf);letter-spacing:.04em;padding:2px 6px;border-radius:9px;border:2px solid var(--panel);pointer-events:none}
+.tbaruL[hidden]{display:none}
+.tbtn[aria-current=page] .tbaruL{display:none}
+@media(min-width:900px){.dtabs .tbaruL{top:-8px;left:auto;right:-4px;font-size:.7rem;border-color:var(--bg)}}
+#ligaBody{max-width:1000px}
+.lg-chip{display:inline-block;margin:0 0 10px;padding:5px 11px;border-radius:14px;background:var(--lg-chip);border:1.5px solid var(--lg-chip-ln);color:var(--lg-chip-tx);font:900 .72rem/1.2 var(--bf);letter-spacing:.12em}
+.lg-lead{margin:0 0 16px;font:700 1rem/1.5 var(--bf);color:var(--k-mt);max-width:60ch}
+.lg-hero{margin:0 0 20px;padding:20px;border-radius:24px;background:#531720;color:#fff;display:flex;flex-direction:column;gap:12px}
+.lg-hl{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.lg-hl span{display:inline-flex;align-items:center;gap:7px;font:900 .72rem/1.2 var(--bf);letter-spacing:.12em;color:#F5C542}
+.lg-hl small{font:800 .8rem var(--bf);color:#F0D9DD}
+.lg-dot{width:8px;height:8px;border-radius:50%;background:#F5C542;animation:lgKilau 2.4s ease-in-out infinite}
+@keyframes lgKilau{0%,100%{opacity:.55}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.lg-dot{animation:none}}
+.lg-hm{display:flex;align-items:flex-end;gap:14px}
+.lg-hm>div:first-child{flex:1;min-width:0}
+.lg-hm h2{font:900 1.65rem/1.1 var(--hf);color:#fff;margin:0}
+.lg-hm p{margin:4px 0 0;font:700 .95rem/1.45 var(--bf);color:#F0D9DD}
+.lg-cd{text-align:center;flex:none}
+.lg-cd b{display:block;font:900 3.6rem/.85 var(--hf);color:#F5C542}
+.lg-cd b.kata{font-size:2.1rem;line-height:1}
+.lg-cd span{font:900 .9rem var(--bf)}
+.lg-cta{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:26px;background:#F5C542;color:#3A0A12;text-decoration:none;font:900 1rem var(--hf)}
+.lg-cta svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.lg-cta.off{background:rgba(255,255,255,.14);color:#F0D9DD;border:1.5px solid rgba(255,255,255,.3)}
+.lg-sec{margin:0 0 20px}
+.lg-sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 10px}
+.lg-sh h2,.lg-c h2{font:900 1.25rem/1.2 var(--hf);color:var(--k-tx);margin:0}
+.lg-sh small{font:700 .8rem var(--bf);color:var(--k-mt)}
+.lg-jd{list-style:none;margin:0;padding:2px 2px 8px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.lg-jd::-webkit-scrollbar{display:none}
+.lg-jd li{flex:none;width:132px;scroll-snap-align:start;position:relative;padding:12px;border-radius:18px;background:var(--k-card);border:2px solid var(--k-ln);display:flex;flex-direction:column;gap:6px;color:var(--k-tx)}
+.lg-jd li.nx{background:var(--lg-chip);border-color:var(--lg-chip-ln)}
+.lg-jd li.sd{opacity:.7}
+.lg-jd .n{width:30px;height:30px;border-radius:50%;background:var(--lg-na);color:#3A0A12;display:grid;place-items:center;font:900 .9rem var(--hf)}
+.lg-jd li.nx .n{background:#F5C542}
+.lg-jd b{font:800 .9rem/1.2 var(--hf)}
+.lg-jd .t{font:700 .85rem var(--bf);color:var(--k-mt)}
+.lg-jd .l{align-self:flex-start;font:800 .7rem/1.4 var(--bf);padding:1px 8px;border-radius:8px;background:var(--lg-na);color:#3A0A12}
+.lg-jd li.nx .l{background:#F5C542}
+.lg-note{margin:4px 2px 0;font:700 .8rem/1.4 var(--bf);color:var(--k-mt)}
+@media(min-width:900px){
+ .lg-jd{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));overflow:visible;padding-top:0;position:relative}
+ .lg-jd::before{content:"";position:absolute;left:8%;right:8%;top:30px;height:3px;background:var(--k-ln)}
+ .lg-jd li{width:auto;background:transparent;border:0;align-items:center;text-align:center;padding:12px 6px}
+ .lg-jd li.nx{background:transparent}
+ .lg-jd .n{width:36px;height:36px;border:3px solid var(--k-ln);position:relative;z-index:1}
+ .lg-jd li.nx .n{border-color:var(--lg-chip-ln)}
+ .lg-jd .l{align-self:center}
+}
+@media(min-width:900px){.lg-sh small{display:none}}
+.lg-g{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:0 0 20px}
+@media(min-width:900px){.lg-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lg-c{padding:18px;border-radius:24px;background:var(--k-card);border:1px solid var(--k-ln);box-shadow:var(--k-sh);color:var(--k-tx);min-width:0}
+.lg-c>p,.lg-c .p{margin:10px 0 0;font:700 .85rem/1.45 var(--bf);color:var(--k-mt)}
+.lg-kl{display:flex;align-items:center;gap:12px}
+.lg-kl svg{width:44px;height:44px;flex:none}
+.lg-kl small{display:block;font:700 .85rem var(--bf);color:var(--k-mt)}
+.lg-hd{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.lg-hd li{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:var(--lg-soft)}
+.lg-hd .no{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:900 .8rem var(--hf);color:#3A0A12;background:var(--lg-na);flex:none}
+.lg-hd .no.m1{background:#F5C542}.lg-hd .no.m2{background:#DCE0EA}.lg-hd .no.m3{background:#E3B184}
+.lg-hd b{flex:1;font:800 .95rem var(--bf)}
+.lg-hd span{font:800 .88rem var(--bf);color:var(--k-mt)}
+.lg-pt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.lg-pt div{padding:9px 4px;border-radius:12px;background:var(--lg-na);text-align:center;color:#3A0A12}
+.lg-pt .m1{background:#F5C542}.lg-pt .m2{background:#DCE0EA}.lg-pt .m3{background:#E3B184}.lg-pt .lain{background:var(--lg-soft);color:var(--k-tx)}
+.lg-pt b{display:block;font:900 1.4rem/1 var(--hf)}
+.lg-pt span{display:block;margin-top:3px;font:800 .72rem var(--bf)}
+.lg-st{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.lg-st li{display:flex;gap:12px}
+.lg-st .n{width:28px;height:28px;border-radius:50%;background:#F5C542;color:#3A0A12;display:grid;place-items:center;font:900 .85rem var(--hf);flex:none}
+.lg-st .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;font:700 .9rem/1.45 var(--bf)}
+.lg-st .t b{font-weight:900}
+.lg-b{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 14px;border-radius:22px;border:2px solid var(--k-btn-ln);color:var(--k-btn-tx);text-decoration:none;font:800 .9rem var(--bf);text-align:center}
+.lg-b.wa{background:#1B8A4F;border-color:#1B8A4F;color:#fff}
+.lg-b svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lg-fp{margin:0 0 20px;padding:18px;border-radius:24px;background:var(--lg-fp);border:1.5px solid var(--lg-fp-ln)}
+.lg-fp h2{display:flex;align-items:center;gap:10px;font:900 1.25rem var(--hf);color:var(--lg-fp-h);margin:0}
+.lg-fp svg{width:28px;height:28px;fill:none;stroke:var(--lg-fp-h);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lg-fp p{margin:8px 0 0;font:700 .95rem/1.5 var(--bf);color:var(--lg-fp-tx)}
+.lg-end{margin:6px 0 0;text-align:center;font:800 .95rem/1.4 var(--bf);color:var(--k-mt)}
+@media(prefers-color-scheme:dark){
+ #ligaBody{--k-card:rgba(40,52,126,.94);--k-ln:rgba(255,255,255,.16);--k-tx:#fff;--k-mt:#C5CCF5;--k-btn-ln:rgba(255,255,255,.28);--k-btn-tx:#fff;--k-sh:none;--lg-soft:rgba(255,255,255,.08);--lg-chip:rgba(245,197,66,.16);--lg-chip-ln:rgba(245,197,66,.45);--lg-chip-tx:#F5D68A;--lg-fp:rgba(179,32,58,.22);--lg-fp-ln:rgba(240,163,150,.5);--lg-fp-h:#FFB4A8;--lg-fp-tx:#F6DAD5;--lg-na:rgba(255,255,255,.16)}
+ .lg-jd .n,.lg-jd .l{color:var(--k-tx)}
+ .lg-jd li.nx .n,.lg-jd li.nx .l{color:#3A0A12}
+ .lg-hd .no:not(.m1):not(.m2):not(.m3),.lg-pt div:not(.m1):not(.m2):not(.m3):not(.lain){color:var(--k-tx)}
+ .tbaruL{border-color:#161C47}
+}
+
 /* ===== navigasi murid (langkah C): tab bar HP, tab bilah atas desktop, halaman Tugas / Peringkat / Saya ===== */
 .tabbar,.dtabs{display:none}
 .tbtn{position:relative;border:0;background:transparent;color:var(--maroon);cursor:pointer;font:800 .74rem/1 var(--bf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:14px;min-height:52px}
@@ -609,8 +701,8 @@ a.papan:focus-visible .p-ketuk{opacity:1}
 }
 html.s-murid #konten{display:none}
 .vw{display:none;padding-top:20px;padding-bottom:10px}
-html.s-murid[data-v=tugas] #vTugas,html.s-murid[data-v=peringkat] #vPer,html.s-murid[data-v=saya] #vSaya{display:block}
-html.s-murid[data-v=tugas] #posisi,html.s-murid[data-v=tugas] #tugasBox,html.s-murid[data-v=peringkat] #posisi,html.s-murid[data-v=peringkat] #tugasBox,html.s-murid[data-v=saya] #posisi,html.s-murid[data-v=saya] #tugasBox{display:none}
+html.s-murid[data-v=tugas] #vTugas,html.s-murid[data-v=peringkat] #vPer,html.s-murid[data-v=liga] #vLiga,html.s-murid[data-v=saya] #vSaya{display:block}
+html.s-murid[data-v=tugas] #posisi,html.s-murid[data-v=tugas] #tugasBox,html.s-murid[data-v=peringkat] #posisi,html.s-murid[data-v=liga] #posisi,html.s-murid[data-v=peringkat] #tugasBox,html.s-murid[data-v=liga] #tugasBox,html.s-murid[data-v=saya] #posisi,html.s-murid[data-v=saya] #tugasBox{display:none}
 .vh{font-size:clamp(1.7rem,6.4vw,2.3rem);outline:0}
 .vw .sub{margin-top:4px}
 .gh{font-size:1.1rem;margin:22px 0 10px;color:var(--label)}
@@ -678,7 +770,7 @@ html.s-murid[data-v=tugas] #posisi,html.s-murid[data-v=tugas] #tugasBox,html.s-m
 <script>
 (function(){var d=document.documentElement;function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
 window.ECA_ses=function(){var on='https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSytESMJeKdrebcxwR4JmX-RZfgiTJk1IM8jxFMLQ/exec'!=='',t=g('eca.token')&&g('eca.profil'),p=g('eca.pelatih'),c=!on?'s-terbuka':t?'s-murid':p?'s-pelatih':'s-tamu';d.className=d.className.replace(/\bs-\w+/g,'').trim()+' '+c;return c};window.ECA_ses();
-var tb=location.hash.match(/tab=(tugas|peringkat|saya)/);d.setAttribute('data-v',tb?tb[1]:'latihan')})();
+var tb=location.hash.match(/tab=(tugas|peringkat|liga|saya)/);d.setAttribute('data-v',tb?tb[1]:'latihan')})();
 </script>
 <script>(function(){var RD=null;function sc(){if(RD)return RD;RD=[];for(var i=0;i<document.styleSheets.length;i++){var r;try{r=document.styleSheets[i].cssRules}catch(e){continue}for(var j=0;j<r.length;j++)if(r[j].type===4&&/prefers-color-scheme:\s*dark/.test(r[j].media.mediaText))RD.push(r[j])}return RD}
 window.ECA_tema={get:function(){try{return localStorage.getItem('eca.tema')||''}catch(e){return ''}},
@@ -693,7 +785,7 @@ ECA_tema.pasang()})();</script>
 <a class="skip" href="#konten">Lewati ke konten</a>
 <header class="top"><div class="wrap">
   <a class="brand" href="#" aria-label="Equator Chess Academy, ke atas"><img src="logo-k.svg" alt="Equator Chess Academy" width="111" height="32"></a>
-  <div class="dtabs" role="navigation" aria-label="Menu murid"><button class="tbtn" type="button" data-go="latihan" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M3 12h18M12 3v18" stroke-width="0"/><path d="M3 3h9v9H3zM12 12h9v9h-9z" fill="currentColor" stroke="none"/></svg><span>Latihan</span></button><button class="tbtn" type="button" data-go="tugas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/></svg><span>Tugas</span><i class="tdot" hidden></i></button><button class="tbtn" type="button" data-go="peringkat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21v-8h5v8M9.5 21V6h5v15M15 21V11h5v10M3 21h18"/></svg><span>Peringkat</span><i class="tbaru" hidden>BARU</i></button><button class="tbtn" type="button" data-go="saya"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Saya</span></button></div>
+  <div class="dtabs" role="navigation" aria-label="Menu murid"><button class="tbtn" type="button" data-go="latihan" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M3 12h18M12 3v18" stroke-width="0"/><path d="M3 3h9v9H3zM12 12h9v9h-9z" fill="currentColor" stroke="none"/></svg><span>Latihan</span></button><button class="tbtn" type="button" data-go="tugas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/></svg><span>Tugas</span><i class="tdot" hidden></i></button><button class="tbtn" type="button" data-go="peringkat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21v-8h5v8M9.5 21V6h5v15M15 21V11h5v10M3 21h18"/></svg><span>Peringkat</span><i class="tbaru" hidden>BARU</i></button><button class="tbtn" type="button" data-go="liga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg><span>Liga</span><i class="tbaruL" hidden>BARU</i></button><button class="tbtn" type="button" data-go="saya"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Saya</span></button></div>
   <nav aria-label="Masuk"><button class="btema" id="bTema" type="button" aria-label="Ganti mode tampilan"></button><button class="cm gast" id="bMasuk" type="button">Masuk</button><a class="cm gast go2" id="bMitra" href="mitra.html">Mitra</a><a class="cm gast go2" id="bCoach" href="https://script.google.com/macros/s/AKfycbyzEejXKvwDQqybbybzaSJHQOsYdBRrbKnkI34lZNwDXXmDG4fLQCj79YtcWXiae98k1g/exec">Coach / Admin</a><a class="cm pelo" id="bRuang" href="https://script.google.com/macros/s/AKfycbyzEejXKvwDQqybbybzaSJHQOsYdBRrbKnkI34lZNwDXXmDG4fLQCj79YtcWXiae98k1g/exec" target="_blank" rel="noopener">Ruang Pelatih</a><button class="cm" id="cm" aria-pressed="false" hidden>Mode pelatih</button><button class="akun" id="bAkun" hidden></button></nav>
 </div></header>
 
@@ -739,6 +831,7 @@ ECA_tema.pasang()})();</script>
 
 <section class="vw wrap" id="vTugas" aria-labelledby="hTug"><h1 class="vh" id="hTug" tabindex="-1">Tugas dari Coach</h1><p class="sub" id="tugSub"></p><div id="tugList"></div></section>
 <section class="vw wrap" id="vPer" aria-labelledby="hPer"><h1 class="vh" id="hPer" tabindex="-1">Peringkat</h1><div id="perBody"></div></section>
+<section class="vw wrap" id="vLiga" aria-labelledby="hLiga"><h1 class="vh" id="hLiga" tabindex="-1">Liga ECL</h1><div id="ligaBody"></div></section>
 <section class="vw wrap" id="vSaya" aria-labelledby="hSaya"><div id="sayaBody"></div></section>
 
 <section class="pelhero" id="hero" aria-label="Katalog Homework (mode pelatih)">
@@ -794,7 +887,7 @@ ECA_tema.pasang()})();</script>
 
 <footer><div class="wrap"><img src="logo-k.svg" alt="Equator Chess Academy" width="97" height="28"><span>Latihan puzzle untuk murid Equator Chess Academy.</span></div></footer>
 
-<nav class="tabbar" id="tabbar" aria-label="Menu murid"><button class="tbtn" type="button" data-go="latihan" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M3 12h18M12 3v18" stroke-width="0"/><path d="M3 3h9v9H3zM12 12h9v9h-9z" fill="currentColor" stroke="none"/></svg><span>Latihan</span></button><button class="tbtn" type="button" data-go="tugas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/></svg><span>Tugas</span><i class="tdot" hidden></i></button><button class="tbtn" type="button" data-go="peringkat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21v-8h5v8M9.5 21V6h5v15M15 21V11h5v10M3 21h18"/></svg><span>Peringkat</span><i class="tbaru" hidden>BARU</i></button><button class="tbtn" type="button" data-go="saya"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Saya</span></button></nav>
+<nav class="tabbar" id="tabbar" aria-label="Menu murid"><button class="tbtn" type="button" data-go="latihan" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M3 12h18M12 3v18" stroke-width="0"/><path d="M3 3h9v9H3zM12 12h9v9h-9z" fill="currentColor" stroke="none"/></svg><span>Latihan</span></button><button class="tbtn" type="button" data-go="tugas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/></svg><span>Tugas</span><i class="tdot" hidden></i></button><button class="tbtn" type="button" data-go="peringkat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21v-8h5v8M9.5 21V6h5v15M15 21V11h5v10M3 21h18"/></svg><span>Peringkat</span><i class="tbaru" hidden>BARU</i></button><button class="tbtn" type="button" data-go="liga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg><span>Liga</span><i class="tbaruL" hidden>BARU</i></button><button class="tbtn" type="button" data-go="saya"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Saya</span></button></nav>
 
 <div class="dock" id="dock" role="region" aria-label="Pesan PR untuk WhatsApp">
   <div class="bub" id="bub"></div>
@@ -1055,7 +1148,7 @@ var API='https://script.google.com/macros/s/AKfycbzfJrZz2ydTg4rCd7BlUUnuMbHrJkSy
 var $=function(s){return document.querySelector(s)};
 var ls={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del:function(k){try{localStorage.removeItem(k)}catch(e){}}};
 var MASKOT=[['kudi','Kudi'],['pino','Pino'],['benteng','Benteng']],WARNA={merah:'#FF6B5B',biru:'#3DB8F5',ungu:'#A08BFF',hijau:'#3FD18A',kuning:'#FFC23D',pink:'#FF7EB6'}; /* warna avatar murid: bukan aksen situs */
-var token=ls.get('eca.token',null),profil=ls.get('eca.profil',null);
+var token=ls.get('eca.token',null),profil=ls.get('eca.profil',null),ligaC=null,ligaMuat=false,ligaQ=[];
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function av(a){var p=String(a||'kudi-merah').split('-'),k=/^[a-z0-9]{1,15}$/.test(p[0])?p[0]:'kudi',w=Object.prototype.hasOwnProperty.call(WARNA,p[1])?WARNA[p[1]]:'#F2DBD5';return '<span class="av" style="background:'+w+'"><img alt="" src="maskot/'+k+'.svg"></span>'}
 function api(o){return fetch(API,{method:'POST',body:JSON.stringify(o)}).then(function(r){return r.json()})}
@@ -1151,7 +1244,7 @@ function tampil(){
   if(!token||!profil){document.body.classList.remove('murid');ba.hidden=true}
   else{document.body.classList.add('murid');ba.hidden=false;ba.innerHTML=av(profil.avatar)+'<span class="gl">'+esc(profil.gelar||'')+'</span><b>'+profil.rating+'</b>';ba.setAttribute('aria-label','Profil '+profil.nama+', rating '+profil.rating)}
   catatRating();tugasBox();tabDot();if(window.__hero)window.__hero();muatRapor();
-  if(!token||!profil){if(V!=='latihan')lihat('latihan',true)}else if(V==='tugas')isiTugas();else if(V==='peringkat')isiPer();else if(V==='saya')isiSaya();
+  if(!token||!profil){if(V!=='latihan')lihat('latihan',true)}else if(V==='tugas')isiTugas();else if(V==='peringkat')isiPer();else if(V==='liga')isiLiga();else if(V==='saya')isiSaya();
   if(window.__ulang)window.__ulang();
 }
 /* tamu: boleh melihat beranda; menyentuh puzzle, tema, atau tab membuka jendela Masuk (Murid, Mitra, Coach/Admin) */
@@ -1170,16 +1263,16 @@ var GEL=[['Pion','akhir',0],['Kuda','dasar',800],['Gajah','garis',1100],['Benten
 function tglS(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function bidak(id){return '<svg viewBox="0 0 232 270" aria-hidden="true"><use href="#'+id+'S" x="9" y="7" width="220" height="260"/><use href="#'+id+'S" x="4.5" y="3.5" width="220" height="260"/><use href="#'+id+'F" width="220" height="260"/></svg>'}
 function lihat(v,diam){
-  if(!/^(latihan|tugas|peringkat|saya)$/.test(v))v='latihan';V=v;root.setAttribute('data-v',v);
+  if(!/^(latihan|tugas|peringkat|liga|saya)$/.test(v))v='latihan';V=v;root.setAttribute('data-v',v);
   document.querySelectorAll('[data-go]').forEach(function(b){if(b.dataset.go===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   if(!diam){try{history.replaceState(null,'',v==='latihan'?location.pathname+location.search:'#tab='+v)}catch(e){}}
   window.scrollTo(0,0);
-  if(v==='tugas')isiTugas();else if(v==='peringkat')isiPer();else if(v==='saya')isiSaya();
-  var h={tugas:'#hTug',peringkat:'#hPer'}[v];if(h){var e=$(h);if(e)try{e.focus({preventScroll:true})}catch(x){}}
+  if(v==='tugas')isiTugas();else if(v==='peringkat')isiPer();else if(v==='liga')isiLiga();else if(v==='saya')isiSaya();
+  var h={tugas:'#hTug',peringkat:'#hPer',liga:'#hLiga'}[v];if(h){var e=$(h);if(e)try{e.focus({preventScroll:true})}catch(x){}}
   if(v!=='latihan')segarkan()}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b){e.preventDefault();lihat(b.dataset.go)}
   var br=e.target.closest('a.brand');if(br&&/s-murid/.test(root.className)){e.preventDefault();lihat('latihan')}});
-addEventListener('hashchange',function(){var m=location.hash.match(/tab=(tugas|peringkat|saya)/);if(token&&profil&&/s-murid/.test(root.className))lihat(m?m[1]:'latihan',true)});
+addEventListener('hashchange',function(){var m=location.hash.match(/tab=(tugas|peringkat|liga|saya)/);if(token&&profil&&/s-murid/.test(root.className))lihat(m?m[1]:'latihan',true)});
 addEventListener('focusin',function(e){if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))root.classList.add('kb')});
 addEventListener('focusout',function(){root.classList.remove('kb')});
 function keluarkan(){token=profil=null;ls.del('eca.token');ls.del('eca.profil');perJ=null;lihat('latihan',true);try{history.replaceState(null,'',location.pathname)}catch(e){}tampil()}
@@ -1187,7 +1280,7 @@ function segarkan(){if(!token||Date.now()-sedot<20000)return;sedot=Date.now();
   api({aksi:'profil',token:token}).then(function(j){if(j.keluar){keluarkan();return}if(j.ok){profil=j.profil;ls.set('eca.profil',profil);catatRating();tugasBox();tabDot();if(V==='tugas')isiTugas();if(V==='saya')isiSaya()}},function(){})}
 function catatRating(){if(!profil||!profil.rating)return;var rt=ls.get('eca.lat.rating',{});rt[tglS(new Date())]=profil.rating;var ks=Object.keys(rt).sort();while(ks.length>45)delete rt[ks.shift()];ls.set('eca.lat.rating',rt)}
 function tugasBelum(){var T=(profil&&profil.akses&&profil.akses.tugas)||[];return T.filter(function(t){return !t.selesai})}
-function tabDot(){var n=token&&profil?tugasBelum().length:0;document.querySelectorAll('.tdot').forEach(function(d){d.hidden=!n;var b=d.parentNode;b.setAttribute('aria-label',n?'Tugas, '+n+' belum selesai':'Tugas')});tandaPer()}
+function tabDot(){var n=token&&profil?tugasBelum().length:0;document.querySelectorAll('.tdot').forEach(function(d){d.hidden=!n;var b=d.parentNode;b.setAttribute('aria-label',n?'Tugas, '+n+' belum selesai':'Tugas')});tandaPer();tandaLiga()}
 /* halaman Tugas */
 function kosongHtml(judul,teks){return '<div class="kosong"><svg viewBox="0 0 232 270" aria-hidden="true"><use href="#kudiS" width="220" height="260"/></svg><h2>'+esc(judul)+'</h2><p>'+esc(teks)+'</p><button class="btn kun" type="button" data-go="latihan">Ke Latihan</button></div>'}
 function isiTugas(){var T=(profil&&profil.akses&&profil.akses.tugas)||[],el=$('#tugList'),sub=$('#tugSub');if(!el)return;
@@ -1332,6 +1425,66 @@ function isiSaya(){var el=$('#sayaBody');if(!el||!profil)return;
    '<div class="sy-info"><section class="block"><h2 class="h-sec">Cara main</h2>'+strip('cara').replace(/^[\s\S]*?(<ol)/,'$1')+'</section><section class="block"><h2 class="h-sec">Pertanyaan umum</h2>'+strip('faq').replace(/^[\s\S]*?(<details)/,'$1')+'</section></div>'+
    '<div class="sy-keluar"><button class="btn" type="button" id="bKeluar">Keluar dari HP ini</button></div>';
   $('#bKeluar').onclick=keluarkan;var h=$('#hSaya');if(h&&V==='saya')try{h.focus({preventScroll:true})}catch(e){}}
+
+/* ---------- Liga ECL (26 Nov 2026, liga-26nov): halaman info; data dari liga.json ---------- */
+function lg(a,b){return window.ECA_L==='en'?b:a}
+var LG_HID=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],LG_HEN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],LG_BEN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function lgP(s){var p=String(s).split('-');return [+p[0],+p[1],+p[2]]}
+function lgTgl(s,panjang){var p=lgP(s),h=new Date(Date.UTC(p[0],p[1]-1,p[2])).getUTCDay();
+  return window.ECA_L==='en'?(panjang?LG_HEN[h]+', ':'')+LG_BEN[p[1]-1]+' '+p[2]+', '+p[0]:(panjang?LG_HID[h]+', ':'')+p[2]+' '+BLN[p[1]-1]+' '+p[0]}
+function lgJam(jam,neg){var p=String(jam).split(':'),h=+p[0],m=p[1],f=function(x){return ('0'+x).slice(-2)+'.'+m},w=f(h),y=f((h+1)%24);
+  return neg==='MY'?y+' MYT / '+w+' WIB':w+' WIB / '+y+' MYT'}
+function lgHariIni(){var n=new Date(Date.now()+252e5);return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate())}
+function lgSelisih(s){var p=lgP(s);return Math.round((Date.UTC(p[0],p[1]-1,p[2])-lgHariIni())/864e5)}
+function lgBerikut(C){for(var i=0;i<C.turnamen.length;i++)if(lgSelisih(C.turnamen[i].tgl)>=0)return i;return -1}
+function lgRp(n){return 'Rp'+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function muatLiga(ok,gagal){
+  if(ligaC){ok&&ok();return}
+  ligaQ.push([ok,gagal]);if(ligaMuat)return;ligaMuat=true;
+  fetch('liga.json?v='+Math.floor(Date.now()/6e5)).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ligaC=j;ligaMuat=false;var q=ligaQ;ligaQ=[];q.forEach(function(f){f[0]&&f[0]()})},
+    function(){ligaMuat=false;var q=ligaQ;ligaQ=[];q.forEach(function(f){f[1]&&f[1]()})})}
+function ligaKunci(C){var i=lgBerikut(C);return C.musim+'|'+(i<0?'selesai':C.turnamen[i].no)}
+/* badge BARU: tampil sampai halaman Liga dibuka; muncul lagi saat "turnamen berikutnya" berganti */
+function tandaLiga(){var els=document.querySelectorAll('.tbaruL');
+  function pasang(sembunyi){els.forEach(function(d){d.hidden=sembunyi;var b=d.parentNode;if(sembunyi)b.removeAttribute('aria-label');else b.setAttribute('aria-label',lg('Liga, ada kabar baru','League, new'))})}
+  if(!(token&&profil)){pasang(true);return}
+  if(!ligaC){pasang(true);muatLiga(tandaLiga);return}
+  var k=ligaKunci(ligaC);if(V==='liga')ls.set('eca.liga.lihat',{id:profil.id,k:k});
+  var L=ls.get('eca.liga.lihat',null);pasang(V==='liga'||(!!L&&L.id===profil.id&&L.k===k))}
+function isiLiga(){var h=$('#hLiga'),box=$('#ligaBody');if(h)h.textContent='Liga ECL';if(!box)return;tandaLiga();
+  if(ligaC){gambarLiga(box);return}
+  box.innerHTML='<p>'+lg('Memuat…','Loading…')+'</p>';
+  muatLiga(function(){if(V==='liga')gambarLiga(box)},function(){if(V==='liga')box.innerHTML='<p>'+lg('Tidak tersambung. Coba lagi nanti.','Could not connect. Try again later.')+'</p>'})}
+var LG_PANAH='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+function lgSeri(C){var K={juara1:lg('jumlah juara 1','most 1st places'),sb:lg('total Sonneborn-Berger','total Sonneborn-Berger')};
+  return (C.seri||[]).map(function(x){return K[x]||x}).join(lg(', lalu ',', then '))}
+function lgLabel(sel,adaNext,isNext){return sel<0?lg('Selesai','Done'):sel===0?lg('Hari ini','Today'):isNext?lg('Berikutnya','Next'):lg('Akan datang','Upcoming')}
+function gambarLiga(box){var C=ligaC,neg=(profil&&profil.negara)||'',T=C.turnamen,n=T.length,i=lgBerikut(C),H='',t,sel;
+  H+='<div class="lg-chip">EQUATOR CHESS LEAGUE · SEASON 1</div><p class="lg-lead">'+lg(n+' turnamen online tiap dua minggu untuk murid ECA Indonesia dan Malaysia. Poin dijumlahkan sampai juara akhir liga.',n+' online tournaments every two weeks for ECA students in Indonesia and Malaysia. Points add up to crown the league champion.')+'</p>';
+  if(i<0){H+='<section class="lg-hero" aria-label="'+lg('Liga selesai','League finished')+'"><div class="lg-hm"><div><h2>'+lg('Liga ECL selesai','ECL has finished')+'</h2><p>'+lg('Terima kasih sudah bertanding. Hasil akhir diumumkan oleh admin.','Thank you for playing. Final results are announced by the admin.')+'</p></div></div></section>'}
+  else{t=T[i];sel=lgSelisih(t.tgl);
+    H+='<section class="lg-hero" aria-label="'+lg('Turnamen berikutnya','Next tournament')+'"><div class="lg-hl"><span><i class="lg-dot"></i>'+lg('TURNAMEN BERIKUTNYA','NEXT TOURNAMENT')+'</span><small>'+lg(t.no+' dari '+n,t.no+' of '+n)+'</small></div>'+
+      '<div class="lg-hm"><div><h2>Tournament 0'+t.no+'</h2><p>'+esc(lgTgl(t.tgl,true))+' · '+esc(t.kontrol)+' · '+lg(t.babak+' babak',t.babak+' rounds')+(t.format?' · '+esc(t.format):'')+'<br>'+esc(lgJam(t.jam,neg))+(t.tentatif?'<br>'+lg('Jadwal tentatif','Schedule is tentative'):'')+'</p></div>'+
+      '<div class="lg-cd">'+(sel===0?'<b class="kata">'+lg('Hari ini','Today')+'</b>':sel===1?'<b class="kata">'+lg('Besok','Tomorrow')+'</b>':'<b>'+sel+'</b><span>'+lg('hari lagi','days to go')+'</span>')+'</div></div>'+
+      (t.swiss?'<a class="lg-cta" href="'+esc(t.swiss)+'" target="_blank" rel="noopener">'+lg('Gabung di Lichess','Join on Lichess')+LG_PANAH+'</a>':'<span class="lg-cta off">'+lg('Tautan menyusul','Link coming soon')+'</span>')+'</section>'}
+  H+='<section class="lg-sec" aria-labelledby="lgJ"><div class="lg-sh"><h2 id="lgJ">'+lg('Jadwal','Schedule')+'</h2><small>'+lg('geser untuk melihat','swipe to see more')+'</small></div><ol class="lg-jd">'+
+    T.map(function(x,j){var s=lgSelisih(x.tgl);return '<li class="'+(j===i?'nx':s<0?'sd':'')+'"><span class="n">'+x.no+'</span><b>Tournament 0'+x.no+'</b><span class="t">'+esc(lgTgl(x.tgl,false))+'</span><span class="l">'+lgLabel(s,i>=0,j===i)+'</span></li>'}).join('')+'</ol>'+
+    '<p class="lg-note">'+lg('Jadwal tentatif. Perubahan diumumkan lebih dulu.','Schedule is tentative. Changes are announced in advance.')+'</p></section>';
+  H+='<section class="lg-c lg-sec" aria-labelledby="lgK"><h2 id="lgK">'+lg('Klasemen liga','League standings')+'</h2><p>'+lg('Klasemen muncul di sini setelah Tournament 01 selesai (mulai '+lgTgl(T[0].tgl,false)+'). Dihitung otomatis dari hasil di Lichess. Poin seri: '+lgSeri(C)+'.','Standings appear here after Tournament 01 (starts '+lgTgl(T[0].tgl,false)+'). Calculated automatically from the Lichess results. Tie-break: '+lgSeri(C)+'.')+'</p></section>';
+  H+='<div class="lg-g"><section class="lg-c" aria-labelledby="lgH"><div class="lg-kl"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 8h28v14a14 14 0 0 1-28 0z" fill="#F5C542"/><path d="M18 8h8v14a14 14 0 0 0 6 11.5A14 14 0 0 1 18 22z" fill="#D99E1E"/><path d="M18 12H9a9 9 0 0 0 11 10M46 12h9a9 9 0 0 1-11 10" stroke="#E8B93A" stroke-width="3.5" fill="none"/><rect x="28" y="35" width="8" height="10" fill="#D99E1E"/><rect x="18" y="45" width="28" height="9" rx="3" fill="#8E1730"/><rect x="22" y="48" width="20" height="3" rx="1.5" fill="#F5C542"/></svg><div><h2 id="lgH">'+lg('Hadiah akhir liga','Final league prizes')+'</h2><small>'+lg('5 besar klasemen akhir','Top 5 in the final standings')+'</small></div></div><ol class="lg-hd">'+
+    C.hadiah.map(function(h,j){return '<li><span class="no'+(j<3?' m'+(j+1):'')+'">'+(j+1)+'</span><b>'+lgRp(h.rp)+'</b><span>RM'+h.rm+'</span></li>'}).join('')+'</ol><p>'+lg('E-Certificate: juara 1–3 tiap turnamen dan 5 besar klasemen akhir.','E-Certificate: top 3 of every tournament and the top 5 of the final standings.')+'</p></section>'+
+    '<section class="lg-c" aria-labelledby="lgP"><h2 id="lgP">'+lg('Poin per turnamen','Points per tournament')+'</h2><div class="lg-pt" style="margin-top:12px">'+
+    C.poin.map(function(p,j){return '<div'+(j<3?' class="m'+(j+1)+'"':'')+'><b>'+p+'</b><span>'+lg('Juara '+(j+1),['1st','2nd','3rd','4th','5th'][j]+' place')+'</span></div>'}).join('')+'<div class="lain"><b>'+C.poinLain+'</b><span>'+lg('Peserta lain','Other players')+'</span></div></div>'+
+    '<p>'+lg('Peserta lain: '+C.poinLain+' poin bila menyelesaikan minimal '+C.minSelesaiPersen+'% pertandingan. Poin seri di klasemen akhir: '+lgSeri(C)+'.','Other players: '+C.poinLain+' point if they finish at least '+C.minSelesaiPersen+'% of the games. Final tie-break: '+lgSeri(C)+'.')+'</p></section>'+
+    '<section class="lg-c" aria-labelledby="lgD"><h2 id="lgD">'+lg('Cara daftar','How to join')+'</h2><ol class="lg-st" style="margin-top:12px">'+
+    '<li><span class="n">1</span><div class="t"><span><b>'+lg('Konfirmasi ke admin','Confirm with the admin')+'</b>: '+lg('kirim nama murid dan username Lichess.','send the student name and Lichess username.')+'</span><a class="lg-b wa" href="https://wa.me/'+esc(C.wa)+'?text='+encodeURIComponent(lg('Halo admin ECA, saya ingin mendaftar Liga ECL.\nNama murid: \nUsername Lichess: ','Hello ECA admin, I would like to join ECL.\nStudent name: \nLichess username: '))+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/></svg>WhatsApp '+esc(C.waTampil)+'</a></div></li>'+
+    '<li><span class="n">2</span><div class="t"><span><b>'+lg('Gabung Team ECA','Join Team ECA')+'</b> '+lg('di Lichess.','on Lichess.')+'</span><a class="lg-b" href="'+esc(C.tim)+'" target="_blank" rel="noopener">'+lg('Buka Team Lichess','Open the Lichess team')+'</a></div></li>'+
+    '<li><span class="n">3</span><div class="t"><span><b>'+lg('Masuk turnamen','Enter the tournament')+'</b> '+lg('setelah disetujui admin.','after the admin approves.')+'</span>'+(i>=0&&T[i].swiss?'<a class="lg-b" href="'+esc(T[i].swiss)+'" target="_blank" rel="noopener">'+lg('Buka Tournament 0'+T[i].no,'Open Tournament 0'+T[i].no)+'</a>':'')+'</div></li></ol></section>'+
+    '<section class="lg-c" aria-labelledby="lgS"><h2 id="lgS">'+lg('Format turnamen','Tournament format')+'</h2><p class="p" style="font-size:.95rem;color:var(--k-tx)">'+lg('Format Swiss, kontrol waktu '+T[0].kontrol+', '+T[0].babak+' babak. Waktu mulai: '+lgJam(T[0].jam,neg)+'. Turnamen berjalan di Lichess, jadi pastikan akunmu sudah masuk Team ECA.','Swiss format, time control '+T[0].kontrol+', '+T[0].babak+' rounds. Start time: '+lgJam(T[0].jam,neg)+'. Tournaments run on Lichess, so make sure your account has joined Team ECA.')+'</p></section></div>'+
+    '<section class="lg-fp" aria-labelledby="lgF"><h2 id="lgF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Fair play</h2><p>'+lg('Dilarang memakai chess engine atau meminta bantuan siapa pun selama pertandingan. Pelanggaran dapat berakibat diskualifikasi.','Using a chess engine or asking anyone for help during a game is not allowed. Violations can lead to disqualification.')+'</p></section>'+
+    '<p class="lg-end">'+lg('Mari bertanding, berkembang, dan membangun sportivitas bersama!','Let us compete, grow, and build sportsmanship together!')+'</p>';
+  box.innerHTML=H}
+
 $('#bAkun').onclick=function(){lihat('saya')};
 /* mulai */
 var m=location.hash.match(/masuk=([A-Za-z0-9-]+)/);
@@ -1373,7 +1526,7 @@ if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=pr
 
   /* ---------- kamus ---------- */
   var EXACT = {
-    'Lewati ke konten': 'Skip to content', 'Latihan': 'Practice', 'Tugas': 'Tasks', 'Peringkat': 'Ranking', 'Saya': 'Me', 'Masuk': 'Sign in',
+    'Lewati ke konten': 'Skip to content', 'Latihan': 'Practice', 'Tugas': 'Tasks', 'Peringkat': 'Ranking', 'Liga': 'League', 'BARU': 'NEW', 'Saya': 'Me', 'Masuk': 'Sign in',
     'Mitra': 'Partner', 'Ruang Pelatih': 'Coach Room', 'Ruang Mitra': 'Partner Room', 'Mode pelatih': 'Coach mode', 'Mode pelatih aktif': 'Coach mode is on', 'Halo, Coach!': 'Hello, Coach!',
     'Mode pelatih aktif. Di bawah ini beranda seperti yang dilihat murid. Puzzle bisa kamu buka tanpa mencatat hasil.': 'Coach mode is on. Below is the home page as students see it. You can open puzzles without recording results.',
     'Keluar mode pelatih': 'Exit coach mode', 'Coba Latihan Puzzle seperti murid': 'Try Puzzle Practice like a student', 'Contoh posisi': 'Sample position',

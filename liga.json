@@ -1,0 +1,26 @@
+{
+  "musim": "S1",
+  "nama": "ECL Season 1",
+  "tim": "https://lichess.org/team/equator-chess-academy",
+  "wa": "6282375957615",
+  "waTampil": "+62 823-7595-7615",
+  "poin": [8, 6, 5, 4, 3],
+  "poinLain": 1,
+  "minSelesaiPersen": 50,
+  "seri": ["juara1", "sb"],
+  "hadiah": [
+    { "rp": 500000, "rm": 120 },
+    { "rp": 300000, "rm": 80 },
+    { "rp": 200000, "rm": 50 },
+    { "rp": 150000, "rm": 40 },
+    { "rp": 100000, "rm": 30 }
+  ],
+  "turnamen": [
+    { "no": 1, "tgl": "2026-11-28", "jam": "18:30", "kontrol": "10+3", "babak": 5, "format": "Swiss", "swiss": "https://lichess.org/swiss/1UQbg7Zl", "tentatif": false },
+    { "no": 2, "tgl": "2026-12-12", "jam": "18:30", "kontrol": "10+3", "babak": 5, "format": "Swiss", "swiss": "", "tentatif": true },
+    { "no": 3, "tgl": "2026-12-26", "jam": "18:30", "kontrol": "10+3", "babak": 5, "format": "Swiss", "swiss": "", "tentatif": true },
+    { "no": 4, "tgl": "2027-01-09", "jam": "18:30", "kontrol": "10+3", "babak": 5, "format": "Swiss", "swiss": "", "tentatif": true },
+    { "no": 5, "tgl": "2027-01-23", "jam": "18:30", "kontrol": "10+3", "babak": 5, "format": "Swiss", "swiss": "", "tentatif": true },
+    { "no": 6, "tgl": "2027-02-06", "jam": "18:30", "kontrol": "10+3", "babak": 5, "format": "Swiss", "swiss": "", "tentatif": true }
+  ]
+}
