@@ -677,6 +677,27 @@ a.papan:focus-visible .p-ketuk{opacity:1}
  .tbaruL{border-color:#161C47}
 }
 
+/* ===== klasemen Liga ECL (26 Nov 2026, klasemen-26nov) ===== */
+#lgKlBody .lg-kt{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+#lgKlBody .lg-kt li{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:var(--lg-soft)}
+#lgKlBody .lg-kt li.me{background:var(--lg-chip);box-shadow:inset 0 0 0 2px var(--lg-chip-ln)}
+#lgKlBody .lg-kt li.zona{margin-bottom:12px;position:relative}
+#lgKlBody .lg-kt li.zona::after{content:"";position:absolute;left:8px;right:8px;bottom:-9px;border-bottom:2px dashed var(--lg-chip-ln)}
+#lgKlBody .lg-kt .no{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:900 .8rem var(--hf);color:#3A0A12;background:var(--lg-na);flex:none}
+#lgKlBody .lg-kt .no.m1{background:#F5C542}#lgKlBody .lg-kt .no.m2{background:#DCE0EA}#lgKlBody .lg-kt .no.m3{background:#E3B184}
+#lgKlBody .lg-kt .av{width:34px;height:34px;flex:none}
+#lgKlBody .lg-kt .ph{width:34px;height:34px;border-radius:50%;background:var(--lg-na);flex:none}
+#lgKlBody .lg-kt .nm{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left}
+#lgKlBody .lg-kt .nm b{font:900 .95rem/1.2 var(--bf);color:var(--k-tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lgKlBody .lg-kt .nm small{font:700 .75rem/1.3 var(--bf);color:var(--k-mt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lgKlBody .lg-kt .fl{width:20px;height:14px;flex:none;border-radius:2px}
+#lgKlBody .lg-kt .pt{font:900 1.1rem var(--hf);color:var(--k-tx);min-width:2ch;text-align:right}
+#lgKlBody .lg-kt .pt small{font:800 .7rem var(--bf);color:var(--k-mt);margin-left:2px}
+#lgKlBody .lg-kd{margin:6px 0 0;text-align:center;color:var(--k-mt);font:900 1rem var(--bf)}
+#lgKlBody .lg-kb{margin:12px 0 0;min-height:44px;padding:0 16px;border-radius:14px;border:2px solid var(--k-btn-ln);background:transparent;color:var(--k-btn-tx);font:900 .9rem var(--bf);cursor:pointer}
+@media(prefers-color-scheme:dark){#lgKlBody .lg-kt .no:not(.m1):not(.m2):not(.m3){color:var(--k-tx)}}
+#lgKlBody .lg-kn{margin:10px 0 0;font:700 .8rem/1.5 var(--bf);color:var(--k-mt)}
+
 /* ===== pilihan negara murid (26 Nov 2026, negara-26nov) ===== */
 .neg{display:flex;gap:10px;margin-top:8px}
 .neg button{flex:1;min-height:48px;border:3px solid var(--line);background:#fff;color:var(--maroon);border-radius:16px;font:800 1rem var(--hf);cursor:pointer}
@@ -1478,7 +1499,7 @@ function gambarLiga(box){var C=ligaC,neg=(profil&&profil.negara)||'',T=C.turname
   H+='<section class="lg-sec" aria-labelledby="lgJ"><div class="lg-sh"><h2 id="lgJ">'+lg('Jadwal','Schedule')+'</h2><small>'+lg('geser untuk melihat','swipe to see more')+'</small></div><ol class="lg-jd">'+
     T.map(function(x,j){var s=lgSelisih(x.tgl);return '<li class="'+(j===i?'nx':s<0?'sd':'')+'"><span class="n">'+x.no+'</span><b>Tournament 0'+x.no+'</b><span class="t">'+esc(lgTgl(x.tgl,false))+'</span><span class="l">'+lgLabel(s,i>=0,j===i)+'</span></li>'}).join('')+'</ol>'+
     '<p class="lg-note">'+lg('Jadwal tentatif. Perubahan diumumkan lebih dulu.','Schedule is tentative. Changes are announced in advance.')+'</p></section>';
-  H+='<section class="lg-c lg-sec" aria-labelledby="lgK"><h2 id="lgK">'+lg('Klasemen liga','League standings')+'</h2><p>'+lg('Klasemen muncul di sini setelah Tournament 01 selesai (mulai '+lgTgl(T[0].tgl,false)+'). Dihitung otomatis dari hasil di Lichess. Poin seri: '+lgSeri(C)+'.','Standings appear here after Tournament 01 (starts '+lgTgl(T[0].tgl,false)+'). Calculated automatically from the Lichess results. Tie-break: '+lgSeri(C)+'.')+'</p></section>';
+  H+='<section class="lg-c lg-sec" aria-labelledby="lgK"><h2 id="lgK">'+lg('Klasemen liga','League standings')+'</h2><div id="lgKlBody"><p>'+lg('Klasemen muncul di sini setelah Tournament 01 selesai (mulai '+lgTgl(T[0].tgl,false)+'). Dihitung otomatis dari hasil di Lichess. Poin seri: '+lgSeri(C)+'.','Standings appear here after Tournament 01 (starts '+lgTgl(T[0].tgl,false)+'). Calculated automatically from the Lichess results. Tie-break: '+lgSeri(C)+'.')+'</p></div></section>';
   H+='<div class="lg-g"><section class="lg-c" aria-labelledby="lgH"><div class="lg-kl"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 8h28v14a14 14 0 0 1-28 0z" fill="#F5C542"/><path d="M18 8h8v14a14 14 0 0 0 6 11.5A14 14 0 0 1 18 22z" fill="#D99E1E"/><path d="M18 12H9a9 9 0 0 0 11 10M46 12h9a9 9 0 0 1-11 10" stroke="#E8B93A" stroke-width="3.5" fill="none"/><rect x="28" y="35" width="8" height="10" fill="#D99E1E"/><rect x="18" y="45" width="28" height="9" rx="3" fill="#8E1730"/><rect x="22" y="48" width="20" height="3" rx="1.5" fill="#F5C542"/></svg><div><h2 id="lgH">'+lg('Hadiah akhir liga','Final league prizes')+'</h2><small>'+lg('5 besar klasemen akhir','Top 5 in the final standings')+'</small></div></div><ol class="lg-hd">'+
     C.hadiah.map(function(h,j){return '<li><span class="no'+(j<3?' m'+(j+1):'')+'">'+(j+1)+'</span><b>'+lgRp(h.rp)+'</b><span>RM'+h.rm+'</span></li>'}).join('')+'</ol><p>'+lg('E-Certificate: juara 1–3 tiap turnamen dan 5 besar klasemen akhir.','E-Certificate: top 3 of every tournament and the top 5 of the final standings.')+'</p></section>'+
     '<section class="lg-c" aria-labelledby="lgP"><h2 id="lgP">'+lg('Poin per turnamen','Points per tournament')+'</h2><div class="lg-pt" style="margin-top:12px">'+
@@ -1491,7 +1512,33 @@ function gambarLiga(box){var C=ligaC,neg=(profil&&profil.negara)||'',T=C.turname
     '<section class="lg-c" aria-labelledby="lgS"><h2 id="lgS">'+lg('Format turnamen','Tournament format')+'</h2><p class="p" style="font-size:.95rem;color:var(--k-tx)">'+lg('Format Swiss, kontrol waktu '+T[0].kontrol+', '+T[0].babak+' babak. Waktu mulai: '+lgJam(T[0].jam,neg)+'. Turnamen berjalan di Lichess, jadi pastikan akunmu sudah masuk Team ECA.','Swiss format, time control '+T[0].kontrol+', '+T[0].babak+' rounds. Start time: '+lgJam(T[0].jam,neg)+'. Tournaments run on Lichess, so make sure your account has joined Team ECA.')+'</p></section></div>'+
     '<section class="lg-fp" aria-labelledby="lgF"><h2 id="lgF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Fair play</h2><p>'+lg('Dilarang memakai chess engine atau meminta bantuan siapa pun selama pertandingan. Pelanggaran dapat berakibat diskualifikasi.','Using a chess engine or asking anyone for help during a game is not allowed. Violations can lead to disqualification.')+'</p></section>'+
     '<p class="lg-end">'+lg('Mari bertanding, berkembang, dan membangun sportivitas bersama!','Let us compete, grow, and build sportsmanship together!')+'</p>';
-  box.innerHTML=H}
+  box.innerHTML=H;klLiga()}
+
+
+/* ---------- klasemen Liga ECL (klasemen-26nov): aksi API `liga`, disimpan 5 menit di HP ---------- */
+var ligaK=null,ligaKT=0,ligaKSemua=false;
+function lgBendera(n){
+  if(n==='ID')return '<svg class="fl" viewBox="0 0 20 14" role="img" aria-label="Indonesia"><rect width="20" height="7" fill="#D62C2C"/><rect y="7" width="20" height="7" fill="#fff" stroke="#D9CBB8" stroke-width=".6"/></svg>';
+  if(n==='MY'){var s='',i;for(i=0;i<14;i++)s+='<rect y="'+i+'" width="20" height="1" fill="'+(i%2?'#fff':'#CC0001')+'"/>';
+    return '<svg class="fl" viewBox="0 0 20 14" role="img" aria-label="Malaysia">'+s+'<rect width="10" height="7" fill="#010066"/><circle cx="4" cy="3.5" r="2.2" fill="#FFCC00"/><circle cx="4.8" cy="3.5" r="1.8" fill="#010066"/><circle cx="7" cy="3.5" r=".9" fill="#FFCC00"/></svg>'}
+  return ''}
+function klLiga(){var b=$('#lgKlBody');if(!b||!token)return;
+  if(ligaK&&Date.now()-ligaKT<3e5){gambarKl(b,ligaK);return}
+  api({aksi:'liga',token:token}).then(function(j){if(j.keluar)return;if(j.ok){ligaK=j;ligaKT=Date.now()}gambarKl(b,j)},function(){})}
+function gambarKl(b,j){
+  if(!j||!j.ok||!j.kl||!j.kl.length)return;
+  var C=ligaC||{},sel=0,tot=(j.turnamen||[]).length,H,L=j.kl,tampil=ligaKSemua?L:L.slice(0,10),sy=null,i;
+  (j.turnamen||[]).forEach(function(t){if(t.selesai)sel++});
+  L.forEach(function(r){if(r.saya)sy=r});
+  function baris(r){var per=(r.per||[]).map(function(x,k){return x==null?null:'T'+(k+1)+': '+x}).filter(Boolean).join(' · ');
+    return '<li class="'+(r.saya?'me':'')+(r.pos===5&&L.length>5?' zona':'')+'"><span class="no'+(r.pos<4?' m'+r.pos:'')+'">'+r.pos+'</span>'+(r.avatar?av(r.avatar):'<span class="ph"></span>')+
+      '<span class="nm"><b>'+esc(r.nama)+(r.saya?' ('+lg('kamu','you')+')':'')+'</b><small>@'+esc(r.user)+(per?' · '+esc(per):'')+'</small></span>'+lgBendera(r.negara)+'<span class="pt">'+r.poin+'<small>'+lg('poin','pts')+'</small></span></li>'}
+  H='<p>'+lg('Setelah '+sel+' dari '+tot+' turnamen. Dihitung otomatis dari hasil di Lichess. Poin seri: '+lgSeri(C)+'.','After '+sel+' of '+tot+' tournaments. Calculated automatically from the Lichess results. Tie-break: '+lgSeri(C)+'.')+'</p><ol class="lg-kt">'+tampil.map(baris).join('')+'</ol>';
+  if(!ligaKSemua&&sy&&sy.pos>10)H+='<p class="lg-kd" aria-hidden="true">…</p><ol class="lg-kt">'+baris(sy)+'</ol>';
+  if(L.length>10)H+='<button type="button" class="lg-kb" id="lgKlSemua">'+(ligaKSemua?lg('Tampilkan 10 besar','Show top 10'):lg('Tampilkan semua ('+L.length+')','Show all ('+L.length+')'))+'</button>';
+  H+='<p class="lg-kn">'+lg('Garis putus-putus menandai batas 5 besar penerima hadiah akhir.','The dashed line marks the top 5 who receive the final prizes.')+'</p>';
+  b.innerHTML=H;
+  var t=$('#lgKlSemua');if(t)t.onclick=function(){ligaKSemua=!ligaKSemua;gambarKl(b,j)}}
 
 
 /* ---------- tanya negara murid lama (negara-26nov): sekali per hari, hanya bila masih kosong ---------- */
