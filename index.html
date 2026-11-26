@@ -296,6 +296,49 @@ body.murid #cm,body.murid #bRuang{display:none}
  #perBody{--k-card:rgba(40,52,126,.94);--k-ln:rgba(255,255,255,.16);--k-tx:#fff;--k-mt:#C5CCF5;--k-btn:rgba(255,255,255,.10);--k-btn-ln:rgba(255,255,255,.28);--k-btn-tx:#fff;--k-hl:linear-gradient(90deg,#5B5530,rgba(40,52,126,.94));--k-pan:rgba(40,52,126,.94);--k-bar:rgba(255,255,255,.18);--k-ban:rgba(245,197,66,.16);--k-ban-ln:rgba(245,197,66,.45);--k-kb:#B3203A;--k-kl:#8E1730;--k-n:#F5C542;--k-sh:none;--k-me-bg:#FDEBB8;--k-me-ln:#F5C542}
  html.s-murid .tbaru{border-color:#161C47}
 }
+/* ===== Lencana, Bintang Minggu, dorongan Kudi, Aula Juara, konfeti (26 Nov 2026) ===== */
+.pk-bj{display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:6px;vertical-align:1px}
+.pk-bj:empty{display:none}
+.pk-lc{display:inline-flex;align-items:center;gap:4px;padding:1px 8px 1px 6px;border-radius:999px;font:900 .7rem/1.35 var(--bf);border:1.5px solid rgba(58,10,18,.28);color:#2A1408;white-space:nowrap}
+.pk-lc::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.5;flex:none}
+.pk-lc.t1{background:#E9B98C}.pk-lc.t2{background:#D6DAE3}.pk-lc.t3{background:#F5C542}.pk-lc.t4{background:#C9C0FF}
+.pk-lc.bt{background:#FFE08A}.pk-lc.bt::before{content:"\2605";width:auto;height:auto;background:none;opacity:1;font-size:.8rem;line-height:1}
+.pk-lc.jm{background:#F5C542}.pk-lc.jm::before{content:"\2756";width:auto;height:auto;background:none;opacity:1;font-size:.8rem;line-height:1}
+.pk-bin{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:10px 14px;border-radius:18px;background:var(--k-card);border:2px solid #F5C542;box-shadow:var(--k-sh);color:var(--k-tx);position:relative;z-index:1}
+.pk-bin .av{width:44px;height:44px;flex:none}
+.pk-bin svg.st{width:30px;height:30px;flex:none}
+.pk-bin b{display:block;font:800 1rem/1.25 var(--hf);color:var(--k-tx)}
+.pk-bin small{display:block;font:700 .82rem/1.35 var(--bf);color:var(--k-mt)}
+.pk-nd{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:8px 14px 8px 8px;border-radius:18px;background:var(--k-ban);border:1.5px solid var(--k-ban-ln);color:var(--k-tx);position:relative;z-index:1}
+.pk-nd img{width:44px;height:44px;flex:none}
+.pk-nd span{font:800 .95rem/1.35 var(--bf)}
+.pk-aula{margin-top:22px;position:relative;z-index:1}
+.pk-aula h2{font-size:1.25rem;color:var(--k-tx);margin-bottom:8px}
+.pk-aula>p{margin:0 0 8px;font:700 .9rem/1.4 var(--bf);color:var(--k-mt)}
+.pk-am{margin-bottom:12px;padding:12px 14px;border-radius:18px;background:var(--k-card);border:1px solid var(--k-ln);box-shadow:var(--k-sh);color:var(--k-tx)}
+.pk-am h3{font:800 1rem var(--hf);color:var(--k-tx);margin:0 0 8px}
+.pk-am ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.pk-am li{display:flex;align-items:center;gap:10px;min-height:44px}
+.pk-am .av{width:36px;height:36px;flex:none}
+.pk-am li b{flex:1;min-width:0;font:800 1rem var(--hf);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pk-am li small{font:700 .8rem var(--bf);color:var(--k-mt)}
+.pk-win .pk-w1{display:flex;align-items:center;gap:12px;margin:8px 0 4px;text-align:left}
+.pk-win .pk-w1 .av{width:56px;height:56px;flex:none}
+.pk-win .pk-w1 b{display:block;font:900 1.35rem/1.15 var(--hf);color:var(--k-tx)}
+.pk-win .pk-w1 small{font:800 .85rem var(--bf);color:var(--k-mt)}
+.pk-win .dengar{margin-top:8px;color:var(--k-btn-tx);background:var(--k-btn);border-color:var(--k-btn-ln)}
+.pk-sel{margin:6px 0 0;font:800 .95rem/1.4 var(--bf);color:var(--k-tx)}
+.konfeti{position:fixed;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;z-index:35}
+.konfeti i{position:absolute;top:-14px;width:8px;height:12px;border-radius:2px;animation:konfetiJatuh 2.2s ease-in forwards}
+@keyframes konfetiJatuh{to{transform:translate3d(var(--dx),105vh,0) rotate(540deg);opacity:.85}}
+@media(prefers-reduced-motion:reduce){.konfeti{display:none}}
+.lc-g{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.lc-i{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font:800 .75rem/1.25 var(--bf);color:var(--muted)}
+.lc-i svg{width:100%;max-width:64px;height:auto}
+.lc-i:not(.on) svg{filter:grayscale(1);opacity:.4}
+.lc-i.on{color:var(--maroon)}
+.lc-nx{margin:10px 0 0;font:700 .9rem/1.4 var(--bf);color:var(--muted)}
+.lc-ms{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 /* badge BARU di menu Peringkat */
 .tbaru{position:absolute;top:1px;left:calc(50% + 2px);background:#C8321F;color:#fff;font:900 .65rem/1 var(--bf);letter-spacing:.04em;padding:2px 6px;border-radius:9px;border:2px solid var(--panel);pointer-events:none}
 .tbaru[hidden]{display:none}
@@ -860,7 +903,7 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-all]
   bx.forEach(function(x){document.querySelectorAll('.pk[value="'+x.value+'"]').forEach(function(y){y.checked=!all})});upd()});
 $('#dpv').addEventListener('click',function(){var o=dock.classList.toggle('pv');this.setAttribute('aria-expanded',o);this.textContent=o?'Tutup pesan':'Lihat pesan'});
 $('#dx').addEventListener('click',function(){clearPick();upd()});
-var toast=$('#toast'),tt;function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},2000)}
+var toast=$('#toast'),tt;function say(m,ms){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},ms||2000)}window.__say=say;
 $('#dcp').addEventListener('click',function(){var m=msg(picked());if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(m).then(function(){say('Pesan tersalin')},function(){window.prompt('Salin pesan ini:',m)});else window.prompt('Salin pesan ini:',m)});
 /* mulai: dukung tautan #tema */
 var h=location.hash.slice(1),pf=null,pt=null;
@@ -1174,26 +1217,61 @@ function panelMusim(mu,sy){var n,lbl,cap,pct,hit;
   return '<aside class="pk-pan"><div class="pk-kado">'+KADO+'</div><div class="pk-isi"><h2>Hadiah rahasia <span>'+esc(mu.nama)+'</span></h2><p>Khusus juara 1 kategori Naik musim ini</p>'+
     '<div class="pk-hit">'+hit+'</div><div class="pk-bar" role="progressbar" aria-label="Kemajuan musim" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div><p class="pk-cap">'+cap+'</p></div>'+
     '<p class="pk-aturan">Dihitung dari latihan campuran saja, bukan latihan tema. Syarat: minimal '+mu.minSoal+' soal, benar sendiri tanpa petunjuk.</p>'+syarat+'</aside>'}
+var TONG=[25,50,100,250];
+function chipTier(t){return t>0?'<span class="pk-lc t'+t+'" title="Lencana '+TONG[t-1]+' soal">'+TONG[t-1]+'</span>':''}
+function chipBadge(x){return chipTier(x.tier||0)+(x.bintang?'<span class="pk-lc bt">Bintang Minggu</span>':'')+(x.mus?'<span class="pk-lc jm">Juara '+x.mus+'</span>':'')}
 function barisPer(x,k,mu){
   var pos=x.pos<=3?'<span class="pk-md m'+x.pos+'">'+x.pos+'</span>':'<span class="pk-ps">'+x.pos+'</span>',
-    hd=x.hadiah?'<span class="pk-hd">'+HAD_IKON+'<span>'+(mu.status==='selesai'?'Pemenang sementara':'Berpeluang dapat hadiah')+'</span></span>':'',
+    hd=x.hadiah?'<span class="pk-hd">'+HAD_IKON+'<span>'+(mu.status==='selesai'?(mu.umum?'Pemenang':'Pemenang sementara'):'Berpeluang dapat hadiah')+'</span></span>':'',
     v=k==='naik'?(x.nilai>=0?'+':'')+x.nilai:String(x.nilai),
     lb=k==='naik'?(x.nilai<0?'turun':'naik'):'rating',
-    sub='<span>'+x.soal+' soal</span>'+(k==='naik'?' · <span>rating '+x.rating+'</span>':'');
+    sub='<span>'+x.soal+' soal</span>'+(k==='naik'?' · <span>rating '+x.rating+'</span>':'')+'<span class="pk-bj">'+chipBadge(x)+'</span>';
   return '<li class="pk-r'+(x.saya?' me':'')+(x.hadiah?' pk-h':'')+'"'+(x.saya?' aria-current="true"':'')+'>'+hd+pos+av(x.avatar)+'<div class="pk-nm"><b>'+esc(x.nama)+(x.saya?' <span>(kamu)</span>':'')+'</b><small>'+sub+'</small></div><div class="pk-v"><b>'+v+'</b><small>'+lb+'</small></div></li>'}
+/* kabar sekali saat murid membuka situs: naik peringkat, lencana baru, Bintang Minggu */
+function cekKabar(){var po=profil&&profil.posisi;if(!po||!profil.id)return;
+  var L=ls.get('eca.lb.kabar',null),n=[],kini={id:profil.id,pos:po.naik||0,tier:po.tier||0,bt:!!po.bintang};
+  if(L&&L.id===profil.id){
+    if(po.status==='berjalan'&&kini.pos&&L.pos&&kini.pos<L.pos)n.push('Kamu naik ke peringkat #'+kini.pos+' di Naik musim ini!');
+    if(kini.tier>L.tier)n.push('Lencana baru: '+TONG[kini.tier-1]+' soal benar tanpa petunjuk!');
+    if(kini.bt&&!L.bt)n.push('Kamu jadi Bintang Minggu Ini!')}
+  ls.set('eca.lb.kabar',kini);
+  n.forEach(function(m,i){setTimeout(function(){if(window.__say)window.__say(m,4200)},i*4600)})}
+/* konfeti CSS ringan (2 detik), hanya saat pemenang musim dibuka pertama kali; mati bila HP meminta gerak dikurangi */
+function konfeti(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var c=document.createElement('div'),w=['#F5C542','#F0705F','#4FD1C5','#8B7CF6','#F062A8','#FFFFFF'],h='',i;c.className='konfeti';c.setAttribute('aria-hidden','true');
+  for(i=0;i<28;i++)h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;background:'+w[i%6]+';animation-delay:'+(Math.random()*.5).toFixed(2)+'s;--dx:'+Math.round(Math.random()*80-40)+'px"></i>';
+  c.innerHTML=h;document.body.appendChild(c);setTimeout(function(){if(c.parentNode)c.parentNode.removeChild(c)},2900)}
+/* hari pembukaan hadiah: tutup kado terangkat, bintang keluar */
+var KADO_BUKA=(function(){var a=KADO.indexOf('<rect class="kl" x="48" y="118"'),b=KADO.indexOf('<path d="M236 160'),k=KADO;
+  if(a<0||b<0)return KADO;
+  return k.slice(0,a)+'<path transform="translate(160 118) scale(2.4)" d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3Z" fill="#FFD65A" stroke="#D99E1E" stroke-width=".8"/><g transform="translate(-26 -52) rotate(-16 160 140)">'+k.slice(a,b)+'</g>'+k.slice(b)})();
+function panelJuara(a,sy,mu){var w=a.tiga[0],lain=a.tiga.slice(1),me=(profil&&profil.posisi&&profil.posisi.lencanaMusim||[]).filter(function(x){return x.musim===a.musim})[0];
+  return '<aside class="pk-pan pk-win"><div class="pk-kado">'+KADO_BUKA.replace('Ilustrasi kotak kado berpita kuning, tanda hadiah rahasia','Ilustrasi kotak kado yang sudah terbuka')+'</div><div class="pk-isi"><h2>Hadiah dibuka! <span>'+esc(a.musim)+'</span></h2>'+
+    '<div class="pk-w1">'+av(w.avatar)+'<div><b>'+esc(w.nama)+'</b><small>Juara 1 · +'+w.naik+' · '+w.soal+' soal</small></div></div>'+
+    (lain.length?'<p class="pk-cap">'+lain.map(function(t){return '<span>Juara '+t.pos+': '+esc(t.nama)+'</span>'}).join(' · ')+'</p>':'')+
+    (me?'<p class="pk-sel">Selamat, kamu Juara '+me.pos+'!</p>':'')+
+    '<button type="button" class="dengar" id="dgJuara"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 19V5L7.5 9.5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Dengarkan Kudi</button></div></aside>'}
+function aulaHtml(aula){
+  if(!aula||!aula.length)return '<section class="pk-aula"><h2>Aula Juara</h2><p>Juara tiap musim akan tercatat di sini.</p></section>';
+  return '<section class="pk-aula"><h2>Aula Juara</h2>'+aula.slice().reverse().map(function(a){
+    return '<div class="pk-am"><h3>'+esc(a.musim)+'</h3><ol>'+a.tiga.map(function(t){return '<li><span class="pk-md m'+t.pos+'">'+t.pos+'</span>'+av(t.avatar)+'<b>'+esc(t.nama)+'</b><small>+'+t.naik+'</small></li>'}).join('')+'</ol></div>'}).join('')+'</section>'}
 function gambarPer(j){var box=$('#perBody');
   if(!j.ok){box.innerHTML='<p>'+esc(j.pesan||'Belum bisa dimuat.')+'</p>';return}
   if(j.mati){box.innerHTML='<p>Papan peringkat kelas ini sedang dimatikan pelatih.</p>';return}
   if(!j.musim||!j.naik||!j.rating){box.innerHTML='<p>Papan peringkat sedang diperbarui. Coba lagi nanti.</p>';return}
-  var mu=j.musim,sy=j.saya||{};
+  var mu=j.musim,sy=j.saya||{},rev=mu.status==='selesai'?(j.aula||[]).filter(function(x){return x.musim===mu.nama})[0]:null,bt=j.bintang,nd=j.dorong;mu.umum=!!rev;
   var info=(mu.status==='belum'?'<p class="pk-info">'+(mu.hariMulai<=1?esc(mu.nama)+' dimulai besok':esc(mu.nama)+' dimulai '+mu.hariMulai+' hari lagi')+'</p>':'')+
-    (sy.aktif===false?'<p class="pk-info">Kamu belum masuk papan. Kerjakan satu soal latihan sampai benar, lalu kamu muncul di sini.</p>':'');
+    (sy.aktif===false?'<p class="pk-info">Kamu belum masuk papan. Kerjakan satu soal latihan sampai benar, lalu kamu muncul di sini.</p>':'')+
+    (bt?'<div class="pk-bin"><svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z" fill="#F5C542" stroke="#D99E1E" stroke-width="1.2" stroke-linejoin="round"/></svg>'+av(bt.avatar)+'<div><b>'+(bt.saya?'Kamu Bintang Minggu Ini!':esc(bt.nama))+'</b><small>Bintang Minggu Ini</small><small>'+bt.mg+' soal benar tanpa petunjuk pekan ini</small></div></div>':'');
+  var nudge=nd&&mu.status==='berjalan'?'<div class="pk-nd"><img alt="" src="maskot/kudi.svg"><span>'+(nd.jenis==='atas'?'Tinggal '+nd.poin+' poin lagi menyalip '+esc(nd.nama)+'.':'Tinggal '+nd.poin+' poin lagi masuk 10 besar.')+'</span></div>':'';
   box.innerHTML='<p class="sub"><span>'+esc(mu.nama)+'</span> · <span>'+tglId(mu.mulai)+'</span> – <span>'+tglId(mu.akhir)+'</span> · <span>semua murid aktif</span></p>'+
-    '<div class="pk-grid"><div class="pk-main"><div class="pk-tab" role="group" aria-label="Kategori papan peringkat"><button type="button" data-p="naik">Naik musim ini</button><button type="button" data-p="rating">Rating tertinggi</button></div>'+info+'<div id="lbx"></div></div>'+panelMusim(mu,sy)+'</div>';
+    '<div class="pk-grid"><div class="pk-main"><div class="pk-tab" role="group" aria-label="Kategori papan peringkat"><button type="button" data-p="naik">Naik musim ini</button><button type="button" data-p="rating">Rating tertinggi</button></div>'+info+'<div id="lbx"></div>'+aulaHtml(j.aula)+'</div>'+(rev?panelJuara(rev,sy,mu):panelMusim(mu,sy))+'</div>';
   function isi(k){perK=k;var d=j[k];
     box.querySelectorAll('.pk-tab button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.p===k)});
-    $('#lbx').innerHTML=d&&d.atas&&d.atas.length?'<ol class="pk-lst">'+d.atas.map(function(x){return barisPer(x,k,mu)}).join('')+(d.saya?'<li class="pk-dots" aria-hidden="true">…</li>'+barisPer(d.saya,k,mu):'')+'</ol>':'<p class="pk-info">Belum ada data. Ayo jadi yang pertama!</p>'}
-  isi(perK==='rating'?'rating':'naik');$('.pk-tab').onclick=function(e){var b=e.target.closest('button');if(b)isi(b.dataset.p)}}
+    $('#lbx').innerHTML=(k==='naik'?nudge:'')+(d&&d.atas&&d.atas.length?'<ol class="pk-lst">'+d.atas.map(function(x){return barisPer(x,k,mu)}).join('')+(d.saya?'<li class="pk-dots" aria-hidden="true">…</li>'+barisPer(d.saya,k,mu):'')+'</ol>':'<p class="pk-info">Belum ada data. Ayo jadi yang pertama!</p>')}
+  isi(perK==='rating'?'rating':'naik');$('.pk-tab').onclick=function(e){var b=e.target.closest('button');if(b)isi(b.dataset.p)};
+  var dg=$('#dgJuara');if(dg)dg.onclick=function(){try{var a=new Audio('suara/kudi_badge_brilliant_'+(window.ECA_L==='en'?'en':'id')+'.mp3');a.play().catch(function(){})}catch(e){}};
+  if(rev&&ls.get('eca.lb.konfeti','')!==mu.nama){ls.set('eca.lb.konfeti',mu.nama);konfeti()}}
 /* ---------- rapor server: Kudi menyarankan + Papan 64 Hari (API aksi rapor; cadangan data lokal HP) ---------- */
 var SARAN={fork:['garpu','Fork'],hangingPiece:['gantung','Hanging piece'],trappedPiece:['terjebak','Trapped piece'],capturingDefender:['pembela','Remove the defender'],pin:['pin','Pin'],skewer:['tusuk','Skewer'],discoveredAttack:['terbuka','Discovered attack'],discoveredCheck:['skakterbuka','Discovered check'],doubleCheck:['skakganda','Double check'],mateIn1:['mat1','Mate in 1'],mateIn2:['mat2','Mate in 2'],mateIn3:['mat3','Mate in 3'],mateIn4:['mat45','Mate in 4-5'],mateIn5:['mat45','Mate in 4-5'],backRankMate:['backrank','Back-rank mate']};
 var raporD=null,raporT=0,raporMuat=false;
@@ -1249,10 +1327,16 @@ function riwayatHtml(){
   if(!ks.length)return '<p class="lead">Riwayat harianmu muncul setelah sesi latihan pertama.</p>';
   var mx=Math.max.apply(0,ks.map(function(k){return w[k].n}));
   return (aktif?'<p class="lead">Beruntun: <b>'+rn.n+' hari</b> berturut-turut.</p>':'')+'<div class="rw">'+ks.map(function(k){var d=new Date(k+'T12:00:00'),x=w[k];return '<div class="rw-r"><span>'+HRI[d.getDay()]+' '+d.getDate()+'</span><div class="rw-b"><i style="width:'+Math.max(6,Math.round(x.n/mx*100))+'%"></i></div><b>'+x.b+'/'+x.n+'</b></div>'}).join('')+'</div>'}
+var MEDALI=['#E9B98C','#D6DAE3','#F5C542','#C9C0FF'];
+function lencanaHtml(){var po=profil.posisi||{},tot=po.tot||0,nx=TONG.filter(function(n){return tot<n})[0],ms=po.lencanaMusim||[];
+  return '<ul class="lc-g">'+TONG.map(function(n,i){var on=tot>=n;
+    return '<li class="lc-i'+(on?' on':'')+'"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 4h10l6 18H26zM34 4h10L38 22H28z" fill="#8E1730"/><circle cx="32" cy="40" r="20" fill="'+MEDALI[i]+'" stroke="#5A0F1A" stroke-width="3"/><circle cx="32" cy="40" r="14" fill="none" stroke="#5A0F1A" stroke-opacity=".35" stroke-width="2"/><text x="32" y="46" text-anchor="middle" font-family="Gabarito,system-ui,sans-serif" font-weight="800" font-size="'+(n>=100?15:17)+'" fill="#3A0A12">'+n+'</text></svg><span>'+n+' soal</span><span>'+(on?'Diraih':'Terkunci')+'</span></li>'}).join('')+'</ul>'+
+    '<p class="lc-nx">'+(nx?'Berikutnya: '+(nx-tot)+' soal lagi':'Semua lencana tonggak sudah kamu raih!')+'</p><p class="lc-nx">Soal benar tanpa petunjuk: '+tot+'</p>'+
+    (ms.length||po.bintang?'<ul class="lc-ms">'+ms.map(function(x){return '<li class="pk-lc jm">Juara '+x.pos+' · '+esc(x.musim)+'</li>'}).join('')+(po.bintang?'<li class="pk-lc bt">Bintang Minggu</li>':'')+'</ul>':'')}
 function isiSaya(){var el=$('#sayaBody');if(!el||!profil)return;
   var strip=function(id){var e=document.getElementById(id);return e?e.innerHTML.replace(/ id="[^"]*"/g,''):''};
   el.innerHTML='<div class="sy-id">'+av(profil.avatar)+'<div><h1 class="vh" id="hSaya" tabindex="-1">'+esc(profil.nama)+'</h1><p>Kelas '+esc(profil.kelas)+' · '+(profil.soal||0)+' soal dikerjakan</p></div><div class="sy-r"><small>Rating</small>'+profil.rating+'</div></div>'+
-   '<div class="sy-g"><div class="sy-c"><div class="kt" style="order:1"><h2>Gelar</h2>'+gelarHtml()+'</div><div class="kt" style="order:2"><h2>Rating 30 hari</h2>'+grafikHtml()+'</div></div><div class="sy-c"><div class="kt" style="order:3"><h2>Rapor tema</h2>'+raporHtml()+'</div><div class="kt" style="order:4"><h2>Riwayat latihan</h2>'+riwayatHtml()+'</div></div></div>'+
+   '<div class="sy-g"><div class="sy-c"><div class="kt" style="order:1"><h2>Gelar</h2>'+gelarHtml()+'</div><div class="kt" style="order:2"><h2>Rating 30 hari</h2>'+grafikHtml()+'</div><div class="kt" style="order:3"><h2>Lencana</h2>'+lencanaHtml()+'</div></div><div class="sy-c"><div class="kt" style="order:4"><h2>Rapor tema</h2>'+raporHtml()+'</div><div class="kt" style="order:5"><h2>Riwayat latihan</h2>'+riwayatHtml()+'</div></div></div>'+
    '<div class="sy-info"><section class="block"><h2 class="h-sec">Cara main</h2>'+strip('cara').replace(/^[\s\S]*?(<ol)/,'$1')+'</section><section class="block"><h2 class="h-sec">Pertanyaan umum</h2>'+strip('faq').replace(/^[\s\S]*?(<details)/,'$1')+'</section></div>'+
    '<div class="sy-keluar"><button class="btn" type="button" id="bKeluar">Keluar dari HP ini</button></div>';
   $('#bKeluar').onclick=keluarkan;var h=$('#hSaya');if(h&&V==='saya')try{h.focus({preventScroll:true})}catch(e){}}
@@ -1266,7 +1350,7 @@ else if(/^#masuk$/.test(location.hash)&&!token)setTimeout(pilihMasuk,120);
 var mp=location.hash.match(/pelatih=([A-Za-z0-9._-]+)/);
 if(mp){api({aksi:'cekPelatih',token:mp[1]}).then(function(j){if(j.ok){ls.set('eca.pelatih',{token:mp[1],nama:j.nama});if(window.__pelatih)window.__pelatih(true);if(window.__sapa)window.__sapa('Halo, '+j.nama+'!','Mode pelatih sudah aktif. Ini tampilan beranda murid.')}else if(window.__sapa)window.__sapa('Tautan pelatih tidak berlaku','Buka lagi dari Ruang Pelatih ya.');try{history.replaceState(null,'',location.pathname)}catch(e){}},function(){})}
 else{var pl=ls.get('eca.pelatih',null);if(pl)api({aksi:'cekPelatih',token:pl.token}).then(function(j){if(!j.ok&&!j.galat){ls.del('eca.pelatih');if(window.__pelatih)window.__pelatih(false)}},function(){})}
-if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=profil=null;ls.del('eca.token');ls.del('eca.profil')}else if(j.ok){profil=j.profil;ls.set('eca.profil',profil)}sedot=Date.now();tampil();var sp=sapaPR();if(sp&&window.__sapa)window.__sapa('Hai, '+profil.nama+'!',sp)},function(){});
+if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=profil=null;ls.del('eca.token');ls.del('eca.profil')}else if(j.ok){profil=j.profil;ls.set('eca.profil',profil);cekKabar()}sedot=Date.now();tampil();var sp=sapaPR();if(sp&&window.__sapa)window.__sapa('Hai, '+profil.nama+'!',sp)},function(){});
 })();
 </script>
 <script>/* Terjemahan Inggris beranda ECA (25 Nov 2026). Dibuat sebagai lapisan DOM supaya kode beranda tidak perlu diubah:
@@ -1368,11 +1452,14 @@ if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=pr
     'Pesan PR untuk WhatsApp': 'Homework message for WhatsApp', 'Kosongkan pilihan': 'Clear selection', 'Tutup': 'Close', 'Cari puzzle': 'Search puzzles', 'M1-03 atau Garpu': 'M1-03 or Fork',
     /* peringkat musim */
     'Naik musim ini': 'Rising this season', 'Hadiah rahasia': 'Secret prize', 'Khusus juara 1 kategori Naik musim ini': 'Only for the #1 student in Rising this season',
-    'Berpeluang dapat hadiah': 'Could win the prize', 'Pemenang sementara': 'Provisional winner', 'semua murid aktif': 'all active students', 'naik': 'up', 'turun': 'down', 'BARU': 'NEW',
+    'Berpeluang dapat hadiah': 'Could win the prize', 'Pemenang sementara': 'Provisional winner', 'Pemenang': 'Winner', 'semua murid aktif': 'all active students', 'naik': 'up', 'turun': 'down', 'BARU': 'NEW',
     'Peringkat, ada pembaruan': 'Ranking, updated', 'Kategori papan peringkat': 'Leaderboard category', 'Kemajuan musim': 'Season progress',
     'Ilustrasi kotak kado berpita kuning, tanda hadiah rahasia': 'Illustration of a big gift box with a yellow ribbon, the secret prize',
     'Kamu belum masuk papan. Kerjakan satu soal latihan sampai benar, lalu kamu muncul di sini.': 'You are not on the board yet. Solve one practice puzzle correctly and you will show up here.',
     'Papan peringkat sedang diperbarui. Coba lagi nanti.': 'The leaderboard is being updated. Try again later.',
+    'Bintang Minggu': 'Star of the Week', 'Bintang Minggu Ini': 'Star of the Week', 'Kamu Bintang Minggu Ini!': 'You are the Star of the Week!', 'Kamu jadi Bintang Minggu Ini!': 'You are now Star of the Week!',
+    'Aula Juara': 'Hall of Champions', 'Juara tiap musim akan tercatat di sini.': "Each season's champions will be recorded here.", 'Hadiah dibuka!': 'The prize is revealed!',
+    'Lencana': 'Badges', 'Diraih': 'Earned', 'Terkunci': 'Locked', 'Semua lencana tonggak sudah kamu raih!': 'You have earned every milestone badge!', 'Ilustrasi kotak kado yang sudah terbuka': 'Illustration of an opened gift box',
     'Besok': 'Tomorrow', 'Hari ini': 'Today', 'hari terakhir musim': 'is the last day of the season', 'hari lagi': 'days left', 'hari lagi sampai musim dimulai': 'days until the season starts',
     'musim dimulai': 'the season starts', 'Musim selesai': 'Season over', 'Pemenang diumumkan setelah diperiksa pelatih': 'The winner is announced after the coach checks the results',
     /* atribut */
@@ -1389,6 +1476,15 @@ if(token)api({aksi:'profil',token:token}).then(function(j){if(j.keluar){token=pr
   var SENT = [
     [/^(Hai|Halo), (.+?)!$/, function (m, a, n) { return (a === 'Hai' ? 'Hi' : 'Hello') + ', ' + n + '!'; }],
     [/^Selamat datang, (.+)!$/, 'Welcome, $1!'],
+    [/^Juara (\d)$/, function (m, n) { return ({ 1: '1st place', 2: '2nd place', 3: '3rd place' })[n] || 'Place ' + n; }],
+    [/^Juara (\d) · (Musim \d+)$/, function (m, n, s) { return ({ 1: '1st place', 2: '2nd place', 3: '3rd place' })[n] + ' · ' + tr(s); }],
+    [/^Juara (\d): (.+)$/, function (m, n, a) { return ({ 1: '1st place', 2: '2nd place', 3: '3rd place' })[n] + ': ' + a; }],
+    [/^Juara 1 · \+(\d+) · (\d+) soal$/, '1st place · +$1 · $2 puzzles'],
+    [/^Selamat, kamu Juara (\d)!$/, function (m, n) { return 'Congratulations, you finished in ' + ({ 1: '1st', 2: '2nd', 3: '3rd' })[n] + ' place!'; }],
+    [/^(\d+) soal benar tanpa petunjuk pekan ini$/, '$1 puzzles solved with no hints this week'],
+    [/^Tinggal (\d+) poin lagi menyalip (.+)\.$/, 'Only $1 more points to pass $2.'], [/^Tinggal (\d+) poin lagi masuk 10 besar\.$/, 'Only $1 more points to reach the top 10.'],
+    [/^Lencana (\d+) soal$/, 'Badge: $1 puzzles'], [/^Berikutnya: (\d+) soal lagi$/, 'Next: $1 more puzzles'], [/^Soal benar tanpa petunjuk: (\d+)$/, 'Puzzles solved with no hints: $1'],
+    [/^Kamu naik ke peringkat #(\d+) di Naik musim ini!$/, 'You moved up to rank #$1 in Rising this season!'], [/^Lencana baru: (\d+) soal benar tanpa petunjuk!$/, 'New badge: $1 puzzles solved with no hints!'],
     [/^Musim (\d+)$/, 'Season $1'], [/^Musim (\d+) dimulai besok$/, 'Season $1 starts tomorrow'], [/^Musim (\d+) dimulai (\d+) hari lagi$/, 'Season $1 starts in $2 days'],
     [/^(Mulai |hadiah dibuka )?(\d+) (Jan|Feb|Mar|Apr|Mei|Jun|Jul|Agu|Sep|Okt|Nov|Des) (\d{4})$/, function (m, p, d, b, y) { return (p ? (p === 'Mulai ' ? 'Starts ' : 'prize revealed ') : '') + MON[b] + ' ' + d + ', ' + y; }],
     [/^Hari ke-(\d+) dari (\d+)$/, 'Day $1 of $2'], [/^Syaratmu: (\d+) dari (\d+) soal sah$/, 'Your requirement: $1 of $2 valid puzzles'], [/^Syarat (\d+) soal terpenuhi$/, 'Requirement of $1 puzzles met'],

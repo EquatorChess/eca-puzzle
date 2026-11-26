@@ -58,6 +58,11 @@ textarea{width:100%;min-height:60px}
 .av.big{width:64px;height:64px}
 .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700;background:var(--soft);color:var(--maroon)}
 .pill.ok{background:#E3F8EC;color:#0F6E3E}.pill.bad{background:#FDECEC;color:#9B1C1C}.pill.mid{background:#FFF4D6;color:#7A5200}
+.wa-r{display:grid;grid-template-columns:minmax(120px,1fr) minmax(150px,200px) auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.wa-b{display:flex;gap:6px;flex-wrap:wrap}
+.wa-b a{display:inline-block;text-decoration:none;border:2px solid var(--line);background:#fff;border-radius:10px;padding:5px 10px;font-size:13px;font-weight:700;color:var(--maroon)}
+.wa-b a.sudah{background:#E3F8EC;color:#0F6E3E;border-color:#BFE8D0}
+.wa-b a.off{opacity:.45;pointer-events:none}
 .up{color:var(--ok);font-weight:700}.down{color:var(--bad);font-weight:700}
 .bar{height:10px;background:#F3E6D6;border-radius:999px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--ok)}
@@ -148,6 +153,18 @@ h2{font-size:20px}h3{font-size:16px}
     <div class="row mt"><input id="aCari" placeholder="Cari kode, judul, atau tema" style="flex:1;min-width:200px"><span class="small muted" id="aJum">0 dipilih</span></div>
     <div id="aPuzzle" class="card mt"></div>
     <div class="row mt" style="position:sticky;bottom:0;background:var(--bg);padding:10px 0;border-top:2px solid var(--line)"><button class="btn pri" id="aBuka">Buka yang dicentang</button><button class="btn warn" id="aKunci">Kunci yang dicentang</button><button class="btn" id="aIkuti">Kembalikan ke aturan kelas</button></div>
+  </section>
+
+  <section id="musim">
+    <div class="card"><div class="row"><h2 id="msJudul" style="margin:0">Musim</h2><span class="sp" style="flex:1"></span><button class="btn" id="msSegar">Segarkan</button><button class="btn pri" id="msUmum" style="display:none">Umumkan pemenang</button><button class="btn warn" id="msBatal" style="display:none">Batalkan pengumuman</button></div>
+      <p class="small muted mt" id="msInfo">Memuat…</p></div>
+    <div class="card mt"><h3>Pemenang sementara dan pemeriksaan</h3>
+      <p class="small muted">Hadiah hanya untuk juara 1 kategori Naik musim ini yang berhak (minimal soal sah). Periksa kolom <b>Soal &lt;3 dtk</b> dan <b>Rata-rata dtk</b> bila ada pola mencurigakan. Diskualifikasi tetap menampilkan murid di papan, hanya tidak berhak hadiah; alasan tidak terlihat murid.</p>
+      <div id="msTabel" class="mt"></div></div>
+    <div class="card mt"><h3>Aula Juara</h3><div id="msAula" class="mt"></div></div>
+    <div class="card mt"><h3>Pesan WhatsApp ke orang tua</h3>
+      <p class="small muted">Tombol membuka WhatsApp dengan pesan yang sudah terisi; coach tinggal menekan kirim. Nomor disimpan di kolom <b>WA Orang Tua</b> (tab 1 Murid) dan hanya terlihat oleh Admin. Tanda hijau = sudah dibuka (catatan saja, bukan bukti terkirim).</p>
+      <div id="msWA" class="mt"></div></div>
   </section>
 
   <section id="pelatih">
@@ -316,7 +333,7 @@ $('#lMasuk').onclick=function(){var kode=$('#lKode').value.trim().toUpperCase(),
 $('#bKeluar').onclick=function(){if(confirm('Keluar dari Ruang Mitra di perangkat ini?'))keluar()};
 
 /* ---------- tab, muat, segarkan ---------- */
-function tabs(){var L=(MODE==='mitra'?[['situs','Situs puzzle \u2197']]:[]).concat([['beranda','Beranda'],['murid','Murid'],['grup','Grup'],['tugas','Tugas']]).concat(ADM?[['akses','Akses puzzle']]:[]).concat([['kelas','Kelas']]).concat(ADM?[['pelatih','Pelatih']]:[]);
+function tabs(){var L=(MODE==='mitra'?[['situs','Situs puzzle \u2197']]:[]).concat([['beranda','Beranda'],['murid','Murid'],['grup','Grup'],['tugas','Tugas']]).concat(ADM?[['akses','Akses puzzle'],['musim','Musim']]:[]).concat([['kelas','Kelas']]).concat(ADM?[['pelatih','Pelatih']]:[]);
   $('#tabs').innerHTML=L.map(function(x){return '<button data-s="'+x[0]+'" aria-pressed="'+(x[0]===TAB_AKTIF)+'">'+x[1]+'</button>'}).join('')}
 function muat(){run('muatAwal',[],function(d){D=d;muatRak().then(function(){if(TAB_AKTIF==='tugas')gambarTugas()});ADM=d.pelatih.peran==='Admin';$('#memuat').style.display='none';
   $('#siapa').textContent=d.pelatih.nama+' · '+d.pelatih.peran;$('#kesitus').href=d.situs;
@@ -324,8 +341,50 @@ function muat(){run('muatAwal',[],function(d){D=d;muatRak().then(function(){if(T
   var ko=d.kelas.map(function(k){return '<option>'+esc(k.nama)+'</option>'}).join('');$('#fKelas').innerHTML='<option value="">Semua kelas</option>'+ko;$('#tKelas').innerHTML=ko;$('#kPilih').innerHTML=ko;
   $('#tGrup').innerHTML=D.grup.map(function(g){return '<label class="chk"><input type="checkbox" value="'+esc(g.id)+'"> '+esc(g.nama)+'</label>'}).join('')||'<span class="small muted">Belum ada grup.</span>';
   tabs();beranda();daftarMurid();gambarGrup();gambarTugas();if(ADM){gambarAkses();gambarPelatih()}buka(TAB_AKTIF)})}
+
+/* ---------- Musim: pemenang sementara, diskualifikasi, Aula Juara, pesan WhatsApp orang tua (Admin) ---------- */
+var MS=null,BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+function tID(t){var p=String(t).split('-');return p.length===3?(+p[2])+' '+BLN[+p[1]-1]+' '+p[0]:t}
+function muatMusim(){if(!ADM)return;$('#msInfo').textContent='Memuat…';run('musimPel',[],function(d){MS=d;gambarMusim()})}
+function pekanIni(){var d=new Date(),h=(d.getDay()+6)%7;d.setDate(d.getDate()-h);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function gambarMusim(){var m=MS.musim,sel=m.status==='selesai';
+  $('#msJudul').textContent=m.nama+' · '+(m.status==='berjalan'?'berjalan':m.status==='belum'?'belum mulai':'selesai');
+  $('#msInfo').textContent=tID(m.mulai)+' sampai '+tID(m.akhir)+(m.status==='berjalan'?' · hari ke-'+m.hariKe+' dari '+m.total+', '+m.hariLagi+' hari lagi':'')+' · syarat hadiah: minimal '+MS.minSoal+' soal sah'+(MS.sudahUmumkan?' · pemenang SUDAH diumumkan':sel?' · musim selesai, periksa lalu umumkan pemenang':'');
+  $('#msUmum').style.display=sel&&!MS.sudahUmumkan?'':'none';$('#msBatal').style.display=MS.sudahUmumkan?'':'none';
+  $('#msTabel').innerHTML=MS.daftar.length?'<table><tr><th>#</th><th></th><th>Murid</th><th>Naik</th><th>Soal sah</th><th>Soal &lt;3 dtk</th><th>Rata-rata dtk</th><th>Status</th><th></th></tr>'+MS.daftar.map(function(x){
+    var st=x.dq?'<span class="pill bad">Diskualifikasi</span><div class="small muted">'+esc(x.alasanDq)+'</div>':x.hadiah?'<span class="pill ok">'+(sel?'Pemenang':'Pemenang sementara')+'</span>':x.berhak?'<span class="pill">Berhak</span>':'<span class="pill mid">Belum berhak ('+x.sah+'/'+MS.minSoal+')</span>';
+    var curiga=x.cepat>0&&x.nCampur>0&&x.cepat/x.nCampur>=.2;
+    return '<tr><td>'+x.pos+'</td><td>'+avatar(x.avatar)+'</td><td><b>'+esc(x.nama)+'</b><div class="small muted">'+esc(x.kelas)+' · rating '+x.rating+'</div></td><td><b>'+(x.naik>=0?'+':'')+x.naik+'</b></td><td>'+x.sah+'</td><td'+(curiga?' class="down"':'')+'>'+x.cepat+' dari '+x.nCampur+'</td><td>'+x.dtk+'</td><td>'+st+'</td><td><button class="btn'+(x.dq?'':' warn')+'" data-dq="'+esc(x.id)+'" data-v="'+(x.dq?0:1)+'">'+(x.dq?'Batalkan':'Diskualifikasi')+'</button></td></tr>'}).join('')+'</table>':'<div class="empty">Belum ada murid aktif di papan musim.</div>';
+  $('#msAula').innerHTML=MS.aula.length?MS.aula.slice().reverse().map(function(a){return '<div style="margin-bottom:10px"><b>'+esc(a.musim)+'</b> <span class="small muted">diumumkan '+esc(a.tgl)+'</span><div class="small">'+a.tiga.map(function(t){return 'Juara '+t.pos+': <b>'+esc(t.nama)+'</b> (+'+t.naik+')'}).join(' · ')+'</div></div>'}).join(''):'<div class="small muted">Belum ada pemenang diumumkan.</div>';
+  gambarWA()}
+function teksWA(jenis,m){var S=D.situs,t='Halo Bapak/Ibu orang tua '+m.nama+'! Kami dari Equator Chess Academy.\n\n',mu=MS.musim;
+  if(jenis==='papan')return t+'Kabar baru dari ECA Puzzle: Papan Peringkat sekarang satu untuk semua murid aktif (lintas kelas), dengan dua kategori, yaitu "Naik musim ini" dan "Rating tertinggi".\n\n'+mu.nama+' berjalan '+tID(mu.mulai)+' sampai '+tID(mu.akhir)+'. Ada hadiah rahasia untuk juara 1 kategori "Naik musim ini" (syarat: minimal '+MS.minSoal+' soal latihan campuran, benar sendiri tanpa petunjuk).\n\nYang tampil di papan hanya nama panggilan dan avatar, tanpa nama lengkap atau foto. Ananda bisa melihatnya di menu Peringkat: '+S+'\n\nTerima kasih sudah mendampingi latihan '+m.nama+'!';
+  if(jenis.indexOf('lencana')===0)return t+'Selamat! '+m.nama+' mendapat Lencana '+MS.tonggak[m.tier-1]+' soal di ECA Puzzle, karena sudah mengerjakan '+MS.tonggak[m.tier-1]+' soal dengan benar tanpa petunjuk. Konsistensi latihan yang bagus. Terus semangat!\n\nLihat lencananya di menu Saya: '+S;
+  if(jenis.indexOf('bintang')===0)return t+'Selamat! '+m.nama+' menjadi Bintang Minggu Ini di ECA Puzzle: paling banyak mengerjakan soal benar tanpa petunjuk pekan ini. Terima kasih sudah mendukung latihannya di rumah.\n\nLihat papan peringkat: '+S;
+  var j=(m.lencanaMusim||[]).filter(function(x){return x.musim===mu.nama})[0]||(m.lencanaMusim||[])[0];
+  return t+'Kabar gembira! '+m.nama+' meraih Juara '+j.pos+' Papan Peringkat '+j.musim+' (kategori Naik musim ini).'+(j.pos===1?' Sebagai juara 1, ananda berhak atas hadiah rahasia musim ini. Kami akan menghubungi Bapak/Ibu untuk serah terima hadiah.':' Hasil ini tercatat di Aula Juara ECA.')+'\n\nSelamat, dan terima kasih atas dukungannya!';}
+function tautWA(m,jenis){return m.wa?'https://wa.me/'+m.wa+'?text='+encodeURIComponent(teksWA(jenis,m)):''}
+function gambarWA(){var pk=pekanIni();
+  $('#msWA').innerHTML=MS.murid.map(function(m){
+    var J=[['papan','Pengumuman papan',1]];
+    if(m.tier>0)J.push(['lencana'+m.tier,'Lencana '+MS.tonggak[m.tier-1],1]);
+    if(m.bintang)J.push(['bintang_'+pk,'Bintang Minggu',1]);
+    if((m.lencanaMusim||[]).length)J.push(['juara_'+MS.musim.nama.replace(/\W/g,''),'Juara musim',1]);
+    return '<div class="wa-r"><div><b>'+esc(m.nama)+'</b><div class="small muted">'+esc(m.kelas)+' · '+esc(m.id)+'</div></div>'+
+      '<div><input data-wa="'+esc(m.id)+'" value="'+esc(m.waAsli)+'" placeholder="WA orang tua, mis. 0812…" style="width:100%"></div>'+
+      '<div class="wa-b">'+J.map(function(j){var k=j[0]+'|'+m.id,sdh=MS.kirim[k];
+        return '<a href="'+(m.wa?esc(tautWA(m,j[0])):'#')+'" target="_blank" rel="noopener" data-k="'+esc(k)+'" class="'+(sdh?'sudah':'')+(m.wa?'':' off')+'" title="'+(m.wa?(sdh?'Sudah dibuka '+esc(sdh):'Buka WhatsApp'):'Isi nomor WA dulu')+'">'+(sdh?'✓ ':'')+esc(j[1])+'</a>'}).join('')+'</div></div>'}).join('')||'<div class="empty">Belum ada murid yang masuk.</div>'}
+$('#msSegar').onclick=muatMusim;
+$('#msUmum').onclick=function(){if(!confirm('Umumkan pemenang '+MS.musim.nama+'? Tiga besar yang berhak akan masuk Aula Juara dan terlihat semua murid.'))return;run('umumkanPemenang',[],function(d){MS=d;gambarMusim();toast('Pemenang diumumkan.')})};
+$('#msBatal').onclick=function(){if(!confirm('Batalkan pengumuman pemenang '+MS.musim.nama+'? Aula Juara untuk musim ini dikosongkan.'))return;run('batalAula',[MS.musim.nama],function(d){MS=d;gambarMusim();toast('Pengumuman dibatalkan.')})};
+$('#msTabel').onclick=function(e){var b=e.target.closest('button[data-dq]');if(!b)return;var id=b.dataset.dq,v=b.dataset.v==='1',al='';
+  if(v){al=prompt('Alasan diskualifikasi (hanya terlihat pelatih):');if(!al||!al.trim())return}
+  run('diskualifikasi',[id,al,v],function(d){MS=d;gambarMusim();toast(v?'Murid didiskualifikasi dari hadiah.':'Diskualifikasi dibatalkan.')})};
+$('#msWA').onchange=function(e){var i=e.target.closest('input[data-wa]');if(!i)return;run('ubahMurid',[i.dataset.wa,{'WA Orang Tua':i.value}],function(){toast('Nomor tersimpan.');muatMusim()})};
+$('#msWA').onclick=function(e){var a=e.target.closest('a[data-k]');if(!a||a.classList.contains('off'))return;
+  run('tandaWA',[a.dataset.k],function(m){MS.kirim=m;a.classList.add('sudah')})};
 function segarkan(){muat()}
-function buka(s){TAB_AKTIF=s;document.querySelectorAll('section').forEach(function(x){x.classList.toggle('on',x.id===s)});document.querySelectorAll('nav.tabs button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.s===s)});if(s==='kelas')kelas()}
+function buka(s){TAB_AKTIF=s;document.querySelectorAll('section').forEach(function(x){x.classList.toggle('on',x.id===s)});document.querySelectorAll('nav.tabs button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.s===s)});if(s==='kelas')kelas();if(s==='musim')muatMusim()}
 $('#tabs').onclick=function(e){var b=e.target.closest('button');if(!b||!D)return;if(b.dataset.s==='situs'){bukaSitus(b);return}buka(b.dataset.s)};
 
 /* ---------- pembantu ---------- */
