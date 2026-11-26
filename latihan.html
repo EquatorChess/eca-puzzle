@@ -901,12 +901,12 @@ svg.addEventListener('pointercancel',()=>{if(drag){const[ox,oy]=xy(drag.s);drag.
 Object.assign(I18N.id,{promoT:'Pilih bidak promosi',pn:{q:'Menteri',r:'Benteng',b:'Gajah',n:'Kuda'}});
 Object.assign(I18N.en,{promoT:'Choose a promotion piece',pn:{q:'Queen',r:'Rook',b:'Bishop',n:'Knight'}});
 function askPromo(side){return new Promise(res=>{const o=document.createElement('div');o.className='promo';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label',tx('promoT'));
- const h=document.createElement('b');h.textContent=tx('promoT');o.appendChild(h);const row=document.createElement('div');row.className='pr';o.appendChild(row);let done=false;
+ const h=document.createElement('b');h.textContent=tx('promoT');o.appendChild(h);const row=document.createElement('div');row.className='pr';o.appendChild(row);let done=false,armed=false;const ok=e=>armed||e.detail===0;/*promosi-sentuh26*/
  const fin=v=>{if(done)return;done=true;document.removeEventListener('keydown',kd,true);o.remove();res(v)};
  const kd=e=>{if(e.key==='Escape'){e.stopPropagation();fin(null)}};document.addEventListener('keydown',kd,true);
  for(const t of['q','r','b','n']){const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',tx('pn')[t]);
-  b.innerHTML='<svg viewBox="-10 -10 220 260" aria-hidden="true"><use href="#'+side+t+'"/></svg><span></span>';b.lastChild.textContent=tx('pn')[t];b.onclick=e=>{e.stopPropagation();fin(t)};row.appendChild(b)}
- o.addEventListener('click',e=>{if(e.target===o)fin(null)});o.tabIndex=-1;$('bw').appendChild(o);try{o.focus({preventScroll:true})}catch(e){}})}
+  b.innerHTML='<svg viewBox="-10 -10 220 260" aria-hidden="true"><use href="#'+side+t+'"/></svg><span></span>';b.lastChild.textContent=tx('pn')[t];b.onclick=e=>{e.stopPropagation();if(!ok(e))return;fin(t)};row.appendChild(b)}
+ o.addEventListener('pointerdown',()=>{armed=true},true);o.addEventListener('click',e=>{if(e.target===o&&ok(e))fin(null)});o.tabIndex=-1;$('bw').appendChild(o);try{o.focus({preventScroll:true})}catch(e){}})}
 async function tryMove(f,t){if(AN.on)return anMove(f,t);const me=cur,exp=me.p.moves[me.ply];const C=legal(me.pos).filter(m=>m.f===f&&m.t===t);
  if(!C.length){select(-1);boardFx('shake');say(tx('illegal'));buzz(30);return}
  /* promosi: empat pilihan -> murid memilih bidak sendiri (jawaban benar bila sama dengan kunci, atau langkahnya mat) */
