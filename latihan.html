@@ -549,7 +549,7 @@ function labelTema(tags){const L=LANG==='en'?2:0,ada=PRIO.filter(k=>tags.include
  return{utama:ut.length?[TEMA[ut[0]][L],TEMA[ut[0]][L+1]]:null,lain:ut.slice(1,3).map(k=>TEMA[k][L]),babak:b?TEMA[b][L]:''}}
 
 /* ===== pemutar Latihan ECA (versi 2, 22 Nov 2026 malam) =====
-   Data: latihan/rak/indeks.json + latihan/rak/<rak>/<ember>.json (ember = rating//100). Soal {id,fen,moves[],rating,tema[]}; moves[0] = langkah LAWAN.
+   Data: latihan/rak/indeks.json + latihan/rak/<rak>/<ember>.json dan <ember>_<k>.json (bagian; indeks rak.bagian) (ember = rating//100). Soal {id,fen,moves[],rating,tema[]}; moves[0] = langkah LAWAN.
    Aturan coach: layar soal hanya papan + "Putih/Hitam jalan" (instruksi hanya untuk murid Starter di rak tema); tema tampil SESUDAH soal;
    Petunjuk = sorot kotak bidak (skor 0,5), tanpa panah; "Lihat solusi" baru muncul setelah salah 3x dalam satu soal;
    hanya percobaan pertama dihitung; langkah mat apa pun diterima. Kesulitan mengikuti rating murid (rating -100; Tantangan +200). */
@@ -564,7 +564,7 @@ const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}
 const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 const Q=new URLSearchParams(location.search);
 const SESI_N=Math.max(3,Math.min(30,parseInt(Q.get('n'),10)||10));
-const TAHAP=Math.max(1,Math.min(3,parseInt(Q.get('tahap'),10)||1)); /* rak tahap 2-3 sudah ada datanya, tampil nanti (?tahap=3 untuk melihat) */
+const TAHAP=Math.max(1,Math.min(3,parseInt(Q.get('tahap'),10)||2)); /* tahap 1-2 tampil (dibuka 26 Nov 2026); tahap 3 (master, kalkulasi) disembunyikan: ?tahap=3 untuk melihat */
 const MIN_RAK=30;           /* rak tampil bila soal di sekitar rating murid >= ini */
 const SALAH_SOLUSI=1;       /* tombol Lihat solusi muncul setelah salah sebanyak ini dalam satu soal (keputusan coach 22 Nov 23.15: sejak salah pertama) */
 const NOX3=3;               /* pesan 'masih belum tepat' + suara tak_apa baru setelah salah sebanyak ini */
@@ -723,7 +723,10 @@ function elo(rs,skor){const k=M.n<30?40:20,h=1/(1+Math.pow(10,(rs-M.rating)/400)
 /* ===== data rak ===== */
 let IDX=null;const CACHE={};
 async function getJSON(u){const r=await fetch(u,{cache:'no-cache'});if(!r.ok)throw new Error(r.status);return r.json()}
-function ember(rak,e){const k=rak+'/'+e;if(!CACHE[k])CACHE[k]=getJSON(DATA_BASE+k+'.json').then(d=>d.soal).catch(()=>[]);return CACHE[k]}
+/* soal satu pita dibagi ke bagian-bagian (<ember>.json, <ember>_1.json, ...); tiap bagian sama bagusnya dan tersebar di seluruh pita, jadi cukup memuat sebagian */
+function shard(rak,e,k){const key=rak+'/'+e+(k?'_'+k:'');if(!CACHE[key])CACHE[key]=getJSON(DATA_BASE+key+'.json').then(d=>d.soal).catch(()=>[]);return CACHE[key]}
+const bagian=(rak,e)=>Math.max(1,(rak.bagian||{})[e]||1);
+const ORDE={};function urutan(rid,e,n){const k=rid+'/'+e;if(!ORDE[k]){const a=[...Array(n).keys()];for(let i=n-1;i>0;i--){const x=Math.floor(Math.random()*(i+1));[a[i],a[x]]=[a[x],a[i]]}ORDE[k]=a}return ORDE[k]}
 const eOf=r=>Math.max(IDX.ember[0],Math.min(IDX.ember[1],Math.floor(r/100)));
 const targetR=ch=>M.rating+(ch?200:-100);
 /* soal Lichess termudah ~400-500: untuk menilai rak mana yang tampil, target dijaga minimal 550 (murid Starter rating 400 tetap melihat rak) */
@@ -732,10 +735,13 @@ function tersedia(rak,t){const j=rak.jumlah||{},e=eOf(Math.max(LANTAI,t));let n=
 const LIHAT='eca.lat.lihat';
 function tandai(id){let a=LS.get(LIHAT,[]);a.push(id);if(a.length>4000)a=a.slice(-4000);LS.set(LIHAT,a)}
 /* ambil SESI_N soal sekitar target: ember dilebarkan sampai cukup, dahulukan yang belum pernah; urut naik */
-async function ambilSesi(rak,t){const j=rak.jumlah||{},e0=eOf(t),seen=new Set(LS.get(LIHAT,[]));let lo=e0-1,hi=e0+1,pool=[];
- for(let w=0;w<8;w++){const es=[];for(let e=lo;e<=hi;e++)if(j[e])es.push(e);
-  pool=(await Promise.all(es.map(e=>ember(rak.id,e)))).flat();
-  if(pool.filter(p=>!seen.has(p.id)).length>=SESI_N*2||(lo<=IDX.ember[0]&&hi>=IDX.ember[1]))break;lo--;hi++}
+async function ambilSesi(rak,t){const j=rak.jumlah||{},e0=eOf(t),seen=new Set(LS.get(LIHAT,[])),L={};let lo=e0-1,hi=e0+1,pool=[];
+ const baruN=()=>pool.filter(p=>!seen.has(p.id)&&Math.abs(p.rating-t)<=150).length,CUKUP=SESI_N*4;
+ for(let w=0;w<8;w++){
+  for(;;){const es=[];for(let e=lo;e<=hi;e++)if(j[e]&&(L[e]||0)<bagian(rak,e))es.push(e);
+   if(!es.length||baruN()>=CUKUP)break;
+   const add=await Promise.all(es.map(e=>{const k=L[e]||0;L[e]=k+1;return shard(rak.id,e,urutan(rak.id,e,bagian(rak,e))[k])}));pool=pool.concat(add.flat())}
+  if(baruN()>=CUKUP||(lo<=IDX.ember[0]&&hi>=IDX.ember[1]))break;lo--;hi++}
  let baru=pool.filter(p=>!seen.has(p.id));if(baru.length<SESI_N)baru=pool;
  baru.sort((a,b)=>Math.abs(a.rating-t)-Math.abs(b.rating-t));
  let cand=baru.filter(p=>Math.abs(p.rating-t)<=150);if(cand.length<SESI_N*2)cand=baru.slice(0,SESI_N*3);const out=[];while(out.length<SESI_N&&cand.length)out.push(cand.splice(Math.floor(Math.random()*cand.length),1)[0]);
