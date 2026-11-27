@@ -951,6 +951,7 @@ html.lite .pt-hint svg{animation:none}
 html.lite .nf-r .nf-ic,html.lite .nf-r.getar .nf-ic{animation:none}
 @media(prefers-reduced-motion:reduce){.nf-r .nf-ic{animation:none!important}}
 </style>
+<style>/*kb27css*/@media(min-width:560px){#temaPz .trow{flex-wrap:wrap;row-gap:14px;max-width:100%}}</style>
 </head>
 <body>
 <div class="lbar" id="langBar"><div class="wrap"><span class="lb-t">Bahasa</span><div class="lb-g" role="group" aria-label="Language / Bahasa"><button type="button" data-l="id" aria-pressed="true">Indonesia</button><button type="button" data-l="en" aria-pressed="false">English</button></div></div></div>
@@ -1371,7 +1372,7 @@ function tugasBox(){var el=$('#tugasBox');if(!el)return;
 /* modal */
 var mdl=$('#mdl'),mb=$('#mbody');
 function buka(h){mb.innerHTML=h;mdl.classList.add('on');var f=mb.querySelector('input');if(f)setTimeout(function(){f.focus()},60)}
-function tutup(){mdl.classList.remove('on')}
+function tutup(){mdl.classList.remove('on');if(typeof kbLepas==='function')kbLepas()}
 $('#mx').onclick=tutup;mdl.addEventListener('click',function(e){if(e.target===mdl)tutup()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')tutup()});
 function kudiKecil(){return '<div class="mkudi"><img alt="" src="maskot/kudi.svg"><div>'}
@@ -1460,8 +1461,21 @@ function lihat(v,diam){
 document.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b){e.preventDefault();lihat(b.dataset.go)}
   var br=e.target.closest('a.brand');if(br&&/s-murid/.test(root.className)){e.preventDefault();lihat('latihan')}});
 addEventListener('hashchange',function(){var m=location.hash.match(/tab=(tugas|peringkat|liga|saya)/);if(token&&profil&&/s-murid/.test(root.className))lihat(m?m[1]:'latihan',true)});
-addEventListener('focusin',function(e){if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))root.classList.add('kb')});
-addEventListener('focusout',function(){root.classList.remove('kb')});
+/*kb27*/
+var kbT=0,kbTm=0,kbH0=innerHeight,kbTipe=/^(text|search|tel|url|email|password|number|)$/i;
+function kbTeks(e){return !!e&&(e.tagName==='TEXTAREA'||e.tagName==='SELECT'||(e.tagName==='INPUT'&&kbTipe.test(e.type||'')))}
+function kbTinggi(){var v=window.visualViewport;return v?v.height:innerHeight}
+function kbLepas(){root.classList.remove('kb');if(kbTm){clearInterval(kbTm);kbTm=0}kbH0=Math.max(innerHeight,kbTinggi())}
+function kbCek(){if(!root.classList.contains('kb')){if(kbTm){clearInterval(kbTm);kbTm=0}return}
+  if(!kbTeks(document.activeElement)){kbLepas();return}
+  if(Date.now()-kbT>900&&kbH0-kbTinggi()<120)kbLepas()}
+addEventListener('focusin',function(e){if(!kbTeks(e.target))return;if(!root.classList.contains('kb'))kbH0=Math.max(kbH0,innerHeight);
+  kbT=Date.now();root.classList.add('kb');if(!kbTm)kbTm=setInterval(kbCek,700)});
+addEventListener('focusout',function(){setTimeout(function(){if(!kbTeks(document.activeElement))kbLepas()},60)});
+if(window.visualViewport)visualViewport.addEventListener('resize',function(){if(root.classList.contains('kb'))kbCek();else kbH0=Math.max(innerHeight,kbTinggi())});
+addEventListener('resize',function(){if(!root.classList.contains('kb'))kbH0=Math.max(innerHeight,kbTinggi())});
+addEventListener('pageshow',kbLepas);addEventListener('hashchange',kbLepas);
+document.addEventListener('visibilitychange',kbLepas);
 function keluarkan(){token=profil=null;ls.del('eca.token');ls.del('eca.profil');perJ=null;lihat('latihan',true);try{history.replaceState(null,'',location.pathname)}catch(e){}tampil()}
 function segarkan(){if(!token||Date.now()-sedot<20000)return;sedot=Date.now();
   api({aksi:'profil',token:token}).then(function(j){if(j.keluar){keluarkan();return}if(j.ok){profil=j.profil;ls.set('eca.profil',profil);catatRating();tugasBox();tabDot();if(V==='tugas')isiTugas();if(V==='saya')isiSaya()}},function(){})}
